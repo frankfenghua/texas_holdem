@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/buttonProfilStatistik"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ProfilStatistiken" />
+
+    <EditText
+        android:id="@+id/editTextProfilName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" 
+        >
+
+        <requestFocus />
+    </EditText>
+
+    <ImageButton
+        android:id="@+id/imageButtonProfilBild"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@android:drawable/ic_menu_crop" />
+
+</LinearLayout>

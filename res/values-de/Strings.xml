@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ModusEinzelspieler">Einzelspieler</string>
+    <string name="ModusMehrspieler">Mehrspielerspiel erstellen</string>
+    <string name="app_name">Texas-Holdem</string>
+    <string name="StartNeuesSpiel">Neues Spiel</string>
+    <string name="StartProfil">Profil</string>
+    <string name="StartStatistiken">Statistiken</string>
+    <string name="ProfilStatistiken">Statistiken</string>
+    <string name="ModusSpielBeitreten">Spiel beitreten</string><string-array name="Testspiele">
+        <item >Spiel 1</item>
+        <item >Spiel2</item>
+        <item >Spiel3</item>
+    </string-array>
+    
+    <string name="SpielEinstellungenAnzahlSpieler">Anzahl Spieler</string>
+    <string name="SpielEinstellungenStartkapital">Startkapital</string>
+    <string name="SpielEinstellungenBlinds">Blinds erhöhen nach:</string>
+    <string name="SpielEinstellungenStart">Spiel erstellen</string>
+    <string-array name="SpielEinstellungenBlindsArt">
+        <item >Zeit</item>
+        <item >Runden</item>
+    </string-array>
+    <string-array name="SpielEinstellungenAnzahlGegner">
+        <item >2</item>
+        <item >3</item>
+        <item >4</item>
+        <item >5</item>
+        <item >6</item>
+        <item >7</item>
+        <item >8</item>
+    </string-array>
+    <string name="GegnerEinstellungenMenschen">Menschliche Gegner</string>
+    <string name="GegnerEinstellungenStärke">Stärke Computergegner</string>
+    <string name="GegnerEinstellungenComputer">Computer Gegner</string>
+    <string name="SpielPot">Pot</string>
+    <string name="SpielBlind">Blind</string>
+    <string name="SpielNeed">noch benötigt</string>
+    <string name="SpielEinsatz">Einsatz</string>
+    <string name="SpielCall">Call</string>
+    <string name="SpielOut">Out</string>
+    <string name="SpielSetzen">Setzen</string>
+    
+</resources>

@@ -38,7 +38,7 @@
     <string name="SpielNeed">noch benötigt</string>
     <string name="SpielEinsatz">Einsatz</string>
     <string name="SpielCall">Call</string>
-    <string name="SpielOut">Out</string>
-    <string name="SpielSetzen">Setzen</string>
+    <string name="SpielOut">Fold</string>
+    <string name="SpielSetzen">Raise</string>
     
 </resources>

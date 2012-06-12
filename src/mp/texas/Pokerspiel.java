@@ -15,7 +15,7 @@ public class Pokerspiel
 	private ArrayList<Spieler> alleSpieler;
 	private Spieler lastRaise;
 	private int einsatz;
-	private Spieler bigBlindSpieler;
+	private Spieler smallBlindSpieler;
 	
 	
 	public Pokerspiel(ArrayList<Spieler> alleSpieler, int Startkapital, int blindModus, int blindZeitRundenWert, int blindBetrag)
@@ -30,35 +30,65 @@ public class Pokerspiel
 			n.setChips(Startkapital);
 		}
 		alleSpieler=(ArrayList<Spieler>) spielerMischen(alleSpieler);
-		bigBlindSpieler=alleSpieler.get(0);
+		smallBlindSpieler=alleSpieler.get(0);
 		aktiverSpieler=alleSpieler.get(0);
 	}
 	
 	public void austeilen()
 	{
+		blindWeitergeben();
 		blatt.blattMischen(blatt.getKarten());
 		for(Spieler n:alleSpieler)
 		{
 			n.setHand(blatt.handGeben());
 		}
-	}
-	
-	public ArrayList<Spieler> spielerMischen(ArrayList<Spieler> liste)
-	{
-			for(int i=0;i<1000;i++)
-			{
-				int rand1=(int)(Math.random()*liste.size());
-				int rand2=(int)(Math.random()*liste.size());
-				Spieler temp=liste.get(rand1);
-				liste.remove(rand1);
-				liste.add(rand2, temp);
-			}
-		return liste;
+		blindsEinzahlen();
 	}
 	
 	
-	public ArrayList<Spieler> bewerten()
+	////////////////////////////////////////////////////////////////////////////
+	///////////////////////////BLINDS VERWALTEN/////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////
+	public void blindsEinzahlen()
 	{
+		
+	}
+	
+	public void blindWeitergeben()
+	{
+		
+	}
+	
+	///////////////////////////////////////////////////////////////////////////
+	/////////////////////////Bietrunden////////////////////////////////////////
+	private void Preflop()
+	{
+		//Bietrunde vor den ersten Gemeinschaftskarten
+	}
+	
+	private void Flop()
+	{
+		//Bietrunde nach den ersten 3 Karten
+	}
+	
+	private void TurnCard()
+	{
+		//Bietrunde nach der TurnCard
+	}
+	
+	private void RiverCard()
+	{
+		//Bietrunde nach der RiverCard
+	}
+	
+	
+
+	
+	
+	public ArrayList<Spieler> ShowDown()
+	{
+		
+		int[] best={0,0};
 		ArrayList<Spieler> aktive=new ArrayList<Spieler>();
 		for(Spieler n:alleSpieler)
 		{
@@ -73,15 +103,28 @@ public class Pokerspiel
 	
 		for(Spieler n:aktive)
 		{
-			if(RoyalFlush(n.getHand()));
-			{sieger.add(n);}
+			int[] temp=RoyalFlush(n.getHand());
+			if(temp[0]!=0)
+			{
+				int besser = intHigher(best, temp);
+				if(besser==2)
+				{
+					sieger.clear();
+					sieger.add(n);
+				}
+				if(besser==3)
+				{
+					sieger.add(n);
+				}
+				
+			}
 		}
 		if(sieger.size()>0)
 		{return sieger;}
 		
 		for(Spieler n:aktive)
 		{
-			if(StraightFlush(n.getHand()));
+			if(StraightFlush(n.getHand())!=null);
 			{sieger.add(n);}
 		}
 		if(sieger.size()>0)
@@ -89,7 +132,7 @@ public class Pokerspiel
 			
 		for(Spieler n:aktive)
 		{
-			if(Vierling(n.getHand()));
+			if(Vierling(n.getHand())!=null);
 			{sieger.add(n);}
 		}
 		if(sieger.size()>0)
@@ -97,7 +140,7 @@ public class Pokerspiel
 		
 		for(Spieler n:aktive)
 		{
-			if(FullHouse(n.getHand()));
+			if(FullHouse(n.getHand())!=null);
 			{sieger.add(n);}
 		}
 		if(sieger.size()>0)
@@ -105,7 +148,7 @@ public class Pokerspiel
 		
 		for(Spieler n:aktive)
 		{
-			if(Flush(n.getHand()));
+			if(Flush(n.getHand())!=null);
 			{sieger.add(n);}
 		}
 		if(sieger.size()>0)
@@ -113,7 +156,7 @@ public class Pokerspiel
 		
 		for(Spieler n:aktive)
 		{
-			if(Straight(n.getHand()));
+			if(Straight(n.getHand())!=null);
 			{sieger.add(n);}
 		}
 		if(sieger.size()>0)
@@ -121,7 +164,7 @@ public class Pokerspiel
 		
 		for(Spieler n:aktive)
 		{
-			if(Drilling(n.getHand()));
+			if(Drilling(n.getHand())!=null);
 			{sieger.add(n);}
 		}
 		if(sieger.size()>0)
@@ -129,7 +172,7 @@ public class Pokerspiel
 		
 		for(Spieler n:aktive)
 		{
-			if(ZweiPaar(n.getHand()));
+			if(ZweiPaar(n.getHand())!=null);
 			{sieger.add(n);}
 		}
 		if(sieger.size()>0)
@@ -138,7 +181,7 @@ public class Pokerspiel
 		
 		for(Spieler n:aktive)
 		{
-			if(EinPaar(n.getHand()));
+			if(EinPaar(n.getHand())!=null);
 			{sieger.add(n);}
 		}
 		if(sieger.size()>0)
@@ -146,7 +189,7 @@ public class Pokerspiel
 		
 		for(Spieler n:aktive)
 		{
-			if(HighCard(n.getHand()));
+			if(HighCard(n.getHand())!=null);
 			{sieger.add(n);}
 		}
 		if(sieger.size()>0)
@@ -154,55 +197,106 @@ public class Pokerspiel
 		return sieger;
 	}
 	
-	private int RoyalFlush(Hand hand)
+	
+	//Bewertung der Hand
+	
+	//1
+	private int[] RoyalFlush(Hand hand)
 	{
 		
-		return false;
+		return null; //0 heißt kein RoyalFlush
+					//1 heißt RoyalFlush
 	}
 	
-	private int StraightFlush(Hand hand)
+	//2
+	private int[] StraightFlush(Hand hand)
 	{
-		return false;
+		return null;	//0 heißt kein Straight Flush
+					//ansonsten gibt die Zahl den Wert der höchsten Karte an
 	}
 	
-	private int Vierling(Hand hand)
+	//3
+	private int[] Vierling(Hand hand)
 	{
-		return false;
+		
+		return null;	//0 heißt kein Vierling
+					//ansonsten gibt die Zahl den Wert des Vierlings an
 	}
 	
-	private int FullHouse(Hand hand)
+	//4
+	private int[] FullHouse(Hand hand)
 	{
-		return false;
+		return null;	//0 heißt kein Full House
+					//ansonsten gibt die Zahl zuerst den Drilling und danach die des Paares
 	}
 	
-	private int Flush(Hand hand)
+	//5
+	private int[] Flush(Hand hand)
 	{
-		return false;
+		return null; //0 ansonsten die Werte absteigend der Karten des Flush
 	}
 	
-	private int Straight(Hand hand)
+	//6
+	private int[] Straight(Hand hand)
 	{
-		return false;
+		return null;	//0 fall nicht, ansonsten wird der Wert der höchsten Karte zurückgegeben
 	}
 	
-	private int Drilling(Hand hand)
+	//7
+	private int[] Drilling(Hand hand)
 	{
-		return false;
+		return null;	//0 falls nicht, ansonsten wird der Wert des Drilling zurückgegeben
+					//sowie der Wert der 4te und 5ten Karte 
 	}
 	
-	private int ZweiPaar(Hand hand)
+	//8
+	private int[] ZweiPaar(Hand hand)
 	{
-		return false;
+		return null; //0 falls nicht, ansonsten wird zuerst der Wert des höchsten Paares und dann der des zweiten Paares zurückgegeben
+					//sowie die fünft höchste Karte
 	}
 	
-	private int EinPaar(Hand hand)
+	//9
+	private int[] EinPaar(Hand hand)
 	{
-		return false;
+		return null; //0 falls nicht, ansonten der Kartenwert des Paares
+					// dritte vierte und fünfte Karte
 	}
 	
-	private int HighCard(Hand hand)
+	//10
+	private int[] HighCard(Hand hand)
 	{
-		return false;
+		return null; //Wert der höchsten Karten
+	}
+	
+	private int intHigher(int[] int1, int[] int2)
+	{
+		for(int i=0;i<int2.length;i++)
+		{
+			if(int1[i]>int2[i])
+			{
+				return 1;	//int1 ist größer
+			}
+			
+			if(int1[i]<int2[i])
+			{
+				return 2;	//int2 ist größer
+			}
+		}
+		return 3;			//beide gleich
+	}
+	
+	public ArrayList<Spieler> spielerMischen(ArrayList<Spieler> liste)
+	{
+			for(int i=0;i<1000;i++)
+			{
+				int rand1=(int)(Math.random()*liste.size());
+				int rand2=(int)(Math.random()*liste.size());
+				Spieler temp=liste.get(rand1);
+				liste.remove(rand1);
+				liste.add(rand2, temp);
+			}
+		return liste;
 	}
 	
 }

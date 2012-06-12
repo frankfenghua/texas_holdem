@@ -35,8 +35,17 @@ public class Blatt
 	
 	public ArrayList<Karte> blattMischen(ArrayList<Karte> liste)
 	{
+		for(int i=0;i<1000;i++)
+		{
+			int rand1=(int)(Math.random()*52);
+			int rand2=(int)(Math.random()*52);
+			Karte temp=liste.get(rand1);
+			liste.remove(rand1);
+			liste.add(rand2, temp);
+		}
 		return liste;
 	}
+	
 	
 	public Hand handGeben()
 	{

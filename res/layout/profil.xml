@@ -19,11 +19,16 @@
 
         <requestFocus />
     </EditText>
-
+
+    <Gallery
+        android:id="@+id/gallery1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
     <ImageButton
         android:id="@+id/imageButtonProfilBild"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_crop" />
 
 </LinearLayout>

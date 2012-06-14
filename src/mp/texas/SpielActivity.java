@@ -116,4 +116,24 @@ public class SpielActivity extends Activity
 		super.onStop();
 	}
 
+	/*
+	String ns = Context.NOTIFICATION_SERVICE;
+	NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
+	
+	int icon = R.drawable.as;
+	CharSequence tickerText = "Hello";
+	long when = System.currentTimeMillis();
+	Notification notification = new Notification(icon, tickerText, when);
+	
+	Context context = getApplicationContext();
+	CharSequence contentTitle = "My notification";
+	CharSequence contentText = "Hello World!";
+	Intent notificationIntent = new Intent(this, profilActivity.class);
+	PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+	notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+	
+	final int HELLO_ID = 1;
+	mNotificationManager.notify(HELLO_ID, notification);
+*/
+	
 }

@@ -2,6 +2,14 @@ package mp.texas;
 
 import java.util.ArrayList;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+
 public class Blatt 
 {
 	private ArrayList<Karte> karten;
@@ -66,6 +74,8 @@ public class Blatt
 		
 		return temp;
 	}
+	
+
 	
 
 }

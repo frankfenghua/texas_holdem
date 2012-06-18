@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ModusEinzelspieler">Einzelspieler</string>
+    <string name="ModusEinzelspieler">Einzelspieler-Modus</string>
     <string name="ModusMehrspieler">Mehrspielerspiel erstellen</string>
     <string name="app_name">Texas-Holdem</string>
     <string name="StartNeuesSpiel">Neues Spiel</string>
@@ -18,7 +18,7 @@
     <string name="SpielEinstellungenBlinds">Blinds erhöhen nach:</string>
     <string name="SpielEinstellungenStart">Spiel erstellen</string>
     <string-array name="SpielEinstellungenBlindsArt">
-        <item >Zeit</item>
+        <item >Zeit (min)</item>
         <item >Runden</item>
     </string-array>
     <string-array name="SpielEinstellungenAnzahlGegner">
@@ -40,5 +40,10 @@
     <string name="SpielCall">Call</string>
     <string name="SpielOut">Fold</string>
     <string name="SpielSetzen">Raise</string>
+    <string name="BigBlind">Big Blind</string>
+    <string name="zero">0</string>
+    <color name="Grau">#90202020</color>
+    <string name="ModusMehrspielerBeitreten">Mehrspielerspiel beitreten</string>
+   
     
 </resources>

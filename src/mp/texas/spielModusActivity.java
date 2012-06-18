@@ -2,13 +2,17 @@ package mp.texas;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 
 public class spielModusActivity extends Activity 
@@ -16,7 +20,9 @@ public class spielModusActivity extends Activity
 
 	Button einzelspieler;
 	Button mehrspielerNeu;
-	Spinner spielwahl;
+	Button mehrspielerBeitreten;
+	App app;
+
 	
 	
 	@Override
@@ -27,14 +33,16 @@ public class spielModusActivity extends Activity
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.spielmodus);
+		app=(App)getApplication();
 		einzelspieler=(Button) findViewById(R.id.buttonSpielModusEinzelspieler);
 		einzelspieler.setOnClickListener(
 				new View.OnClickListener() 
 				{             
 					public void onClick(View v) 
 					{                Log.d("Button", "Einzelspielerspiel"); 
+					app.singlegame=true;
 					startActivity(new Intent(getApplicationContext(),SpielEinstellungenActivity.class));
-            
+					
 					}         
 				});
 				
@@ -44,35 +52,32 @@ public class spielModusActivity extends Activity
 				{             
 					public void onClick(View v) 
 					{                Log.d("Button", "Mehrspieler Neu"); // Perform action on click
+					app.singlegame=false;
 					startActivity(new Intent(getApplicationContext(),SpielEinstellungenActivity.class));
-
-					
+		
 					}         
 				});
 		
-		spielwahl=(Spinner) findViewById(R.id.spinnerSpielModusWahl);
-		spielwahl.setOnItemSelectedListener(new OnItemSelectedListener() 
-		{
+		mehrspielerBeitreten=(Button) findViewById(R.id.buttonModusSpielBeitreten);
+		mehrspielerBeitreten.setOnClickListener(
+				new View.OnClickListener() 
+				{             
+					public void onClick(View v) 
+					{               
+						Log.d("Button", "Mehrspieler Beitreten"); // Perform action on click
+						app.singlegame=false;
+						startActivity(new Intent(getApplicationContext(),BeitretenActivity.class));
 
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				Log.d("Modus","gewählt");
-				// TODO Auto-generated method stub
-				
-			}
+					}         
+				});
+		
 
-			public void onNothingSelected(AdapterView<?> arg0) {
-				Log.d("Modus", "Nichts gewählt");
-				// TODO Auto-generated method stub
-				
-			}             
-     
-		});
 	
 	}
 	
 								
-							
+
+
 
 	@Override
 	protected void onPause() {

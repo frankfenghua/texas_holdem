@@ -30,11 +30,16 @@
             android:name=".SpielEinstellungenActivity" >
         </activity>
         
+                <activity
+            android:name=".BeitretenActivity" >
+        </activity>
+        
                                 <activity
             android:name=".GegnerEinstellungenActivity" >
         </activity>
                                       <activity
-            android:name=".SpielActivity" >
+            android:name=".SpielActivity" 
+            android:windowSoftInputMode="stateHidden">
         </activity>
     </application>
 

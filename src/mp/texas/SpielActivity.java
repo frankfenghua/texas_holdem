@@ -3,7 +3,9 @@ package mp.texas;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 
@@ -21,6 +24,12 @@ public class SpielActivity extends Activity
 	Button call;
 	Button out;
 	Button setzen;
+	int pot;
+	int need;
+	int blind;
+	TextView textPot;
+	TextView textNeed;
+	TextView textBlind;
 	ListView gegner;
 	SeekBar SeekBarEinsatz;
 	EditText EditTextEinsatz;
@@ -31,6 +40,8 @@ public class SpielActivity extends Activity
 	ImageView gemeinschaftsKarte3;
 	ImageView gemeinschaftsKarte4;
 	ImageView gemeinschaftsKarte5;
+	Editable editable;
+	
 
 	
 	
@@ -71,16 +82,67 @@ public class SpielActivity extends Activity
 				});
 				
 		
+			textPot=(TextView) findViewById(R.id.SpielPotZahl);
+			textPot.setText("12345");
+			textNeed=(TextView) findViewById(R.id.SpielNeedZahl);
+			textNeed.setText("2345");
+			textBlind=(TextView) findViewById(R.id.SpielBlindZahl);
+			textBlind.setText("345");
 			
-			EditTextEinsatz=(EditText) findViewById(R.id.editTextSpielEinstellungenStartkapital);
+			EditTextEinsatz=(EditText) findViewById(R.id.editTextSpielEinsatz);
+			
+			
+			EditTextEinsatz.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+				
+				public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+					// TODO Auto-generated method stub
+					if(v.getText().length()!=0)
+					{
+					SeekBarEinsatz.setProgress(Integer.valueOf(v.getText().toString()));
+					}
+					return false;
+				
+			}});
+			
 			SeekBarEinsatz=(SeekBar) findViewById(R.id.seekBarSpielEinsatz);
+			SeekBarEinsatz.setMax(100);
+			SeekBarEinsatz.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+				
+				public void onStopTrackingTouch(SeekBar seekBar) {
+					// TODO Auto-generated method stub
+	    	           //EditTextEinsatz.setText("55");
+
+				}
+				
+				public void onStartTrackingTouch(SeekBar seekBar) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				public void onProgressChanged(SeekBar seekBar, int progress,
+						boolean fromUser) {
+					EditTextEinsatz.setText(String.valueOf(progress));
+					Log.d("SeekBar",String.valueOf(progress));
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
 			meineKarte1=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte1);
 			meineKarte2=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte2);
+			meineKarte1.setImageBitmap(Karte.getKartenBild(0, Karte.Herz, getApplicationContext()));
+			meineKarte2.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, getApplicationContext()));
 			gemeinschaftsKarte1=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte1);
 			gemeinschaftsKarte2=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte2);			
 			gemeinschaftsKarte3=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte3);
 			gemeinschaftsKarte4=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte4);
 			gemeinschaftsKarte5=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte5);
+			gemeinschaftsKarte1.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, getApplicationContext()));
+			gemeinschaftsKarte2.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, getApplicationContext()));
+			gemeinschaftsKarte3.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, getApplicationContext()));
+			gemeinschaftsKarte4.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, getApplicationContext()));
+			gemeinschaftsKarte5.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, getApplicationContext()));
+
 	}
 	
 								
@@ -116,6 +178,19 @@ public class SpielActivity extends Activity
 		super.onStop();
 	}
 
+
+
+
+	@Override
+	public void onBackPressed() 
+	{
+	
+		
+	
+	}
+
+	
+	
 	/*
 	String ns = Context.NOTIFICATION_SERVICE;
 	NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);

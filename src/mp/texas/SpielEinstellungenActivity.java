@@ -20,6 +20,8 @@ public class SpielEinstellungenActivity extends Activity
 	Spinner blindsArt;
 	EditText editTextStartkapital;
 	EditText editTextBlindsWert;
+	EditText editTextBigBlind;
+	App app;
 	
 	
 	@Override
@@ -30,6 +32,7 @@ public class SpielEinstellungenActivity extends Activity
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.spieleinstellungen);
+		app=(App)getApplication();
 		spielStarten=(Button) findViewById(R.id.buttonSpielEinstellungenSpielStarten);
 		spielStarten.setOnClickListener(
 				new View.OnClickListener() 
@@ -77,8 +80,13 @@ public class SpielEinstellungenActivity extends Activity
 			});
 			
 			editTextStartkapital=(EditText) findViewById(R.id.editTextSpielEinstellungenStartkapital);
+			editTextStartkapital.setText("5000");
+
 			editTextBlindsWert=(EditText) findViewById(R.id.editTextSpielEinstellungenBlindsWert);
-	
+			editTextBlindsWert.setText("10");
+			
+			editTextBigBlind=(EditText) findViewById(R.id.editTextSpielEinstellungenBigBlind);
+			editTextBigBlind.setText("100");
 	}
 	
 								

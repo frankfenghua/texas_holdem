@@ -6,84 +6,88 @@
     android:gravity="bottom"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/SpielEinstellungenAnzahlSpieler" />
-
-    <Spinner
-        android:id="@+id/spinnerSpielEinstellungenANzahlGegner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/SpielEinstellungenAnzahlGegner" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/SpielEinstellungenStartkapital" />
-
-    <EditText
-        android:id="@+id/editTextSpielEinstellungenStartkapital"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number" >
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/SpielEinstellungenBlinds" />
-
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@color/Grau"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/SpielEinstellungenAnzahlSpieler" />
 
         <Spinner
-            android:id="@+id/spinnerSpielEinstellungenBlindsArt"
+            android:id="@+id/spinnerSpielEinstellungenANzahlGegner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:entries="@array/SpielEinstellungenBlindsArt" />
+            android:entries="@array/SpielEinstellungenAnzahlGegner" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/SpielEinstellungenStartkapital" />
 
         <EditText
-            android:id="@+id/editTextSpielEinstellungenBlindsWert"
+            android:id="@+id/editTextSpielEinstellungenStartkapital"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10"
             android:inputType="number" />
 
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/BigBlind" />
-
-    <EditText
-        android:id="@+id/editTextSpielEinstellungenBigBlind"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
-
-        <Button
-            android:id="@+id/buttonSpielEinstellungenSpielStarten"
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/SpielEinstellungenStart" />
+            android:text="@string/SpielEinstellungenBlinds" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <Spinner
+                android:id="@+id/spinnerSpielEinstellungenBlindsArt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/SpielEinstellungenBlindsArt" />
+
+            <EditText
+                android:id="@+id/editTextSpielEinstellungenBlindsWert"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/BigBlind" />
+
+        <EditText
+            android:id="@+id/editTextSpielEinstellungenBigBlind"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/buttonSpielEinstellungenSpielStarten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/SpielEinstellungenStart" />
+        </LinearLayout>
 
     </LinearLayout>
 

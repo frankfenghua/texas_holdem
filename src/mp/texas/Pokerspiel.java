@@ -9,7 +9,7 @@ public class Pokerspiel
 	private final int Runden=1;
 	private final int Zeit=2;
 	private int blindZeitRundenWert;
-	private int blindModus;
+	private String blindModus;
 	private int blindBetrag;
 	private Spieler aktiverSpieler;
 	private ArrayList<Spieler> alleSpieler;
@@ -18,7 +18,7 @@ public class Pokerspiel
 	private Spieler smallBlindSpieler;
 	
 	
-	public Pokerspiel(ArrayList<Spieler> alleSpieler, int Startkapital, int blindModus, int blindZeitRundenWert, int blindBetrag)
+	public Pokerspiel(ArrayList<Spieler> alleSpieler, int Startkapital, String blindModus, int blindZeitRundenWert, int blindBetrag)
 	{
 		this.alleSpieler=alleSpieler;
 		this.blindModus=blindModus;
@@ -29,9 +29,9 @@ public class Pokerspiel
 		{
 			n.setChips(Startkapital);
 		}
-		alleSpieler=(ArrayList<Spieler>) spielerMischen(alleSpieler);
-		smallBlindSpieler=alleSpieler.get(0);
-		aktiverSpieler=alleSpieler.get(0);
+		//alleSpieler=(ArrayList<Spieler>) spielerMischen(alleSpieler);
+		//smallBlindSpieler=alleSpieler.get(0);
+		//aktiverSpieler=alleSpieler.get(0);
 	}
 	
 	public void austeilen()

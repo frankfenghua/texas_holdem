@@ -1,5 +1,7 @@
 package mp.texas;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +19,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -30,6 +33,8 @@ public class GegnerEinstellungenActivity extends Activity
 	TextView menschlicheGegner;
 	LinearLayout layoutGegner;
 	LinearLayout layoutMain;
+	ScrollView scroll;
+	ArrayList<Profil> mitspieler=new ArrayList<Profil>();
 	App app;
 	
 	@Override
@@ -41,6 +46,11 @@ public class GegnerEinstellungenActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gegnereinstellungen);
 		app=(App)getApplication();
+		scroll=(ScrollView)findViewById(R.id.scrollViewGegnerEinstellungen);
+		mitspieler.add(new Profil());
+		mitspieler.add(new Profil());
+		mitspieler.add(new Profil());
+	
 		text=new TextView(this);
 		text.setText("Hallo");
 		
@@ -50,7 +60,8 @@ public class GegnerEinstellungenActivity extends Activity
 		
 				if(app.singlegame==false)
 		{
-		    layoutMain.addView(produceLayoutGegner(),1);
+		    scroll.addView(produceLayoutGegner(),0);
+		    		   
 		}
 				else{
 			menschlicheGegner.setVisibility(View.INVISIBLE);
@@ -62,53 +73,30 @@ public class GegnerEinstellungenActivity extends Activity
 				{             
 					public void onClick(View v) 
 					{                Log.d("Button", "Neues Spiel starten"); // Perform action on click 
+						app.GegnerLevel=gegnerLevel.getProgress();
+						Log.d("Level",String.valueOf(app.GegnerLevel));
+						//app.Mitspieler mit SPielern füllen
+						//app.pokerspiel= new Pokerspiel(app.Mitspieler, app.Startkapital, app.BlindsArt, app.BlindsWert, app.BigBlind);
 						startActivity(new Intent(getApplicationContext(),SpielActivity.class));
+					
 					}         
 				});
 				
-
 		gegnerLevel=(SeekBar)findViewById(R.id.seekBarGegnerEinstellungenLevel);
 		gegnerLevel.setMax(100);
 	}
 	
 	public LinearLayout produceLayoutGegner()
 	{
+		//ScrollView scroll=new ScrollView(getApplicationContext());
 		LinearLayout temp=new LinearLayout(this);
 		temp.setOrientation(LinearLayout.VERTICAL);
-	
-		temp.setBackgroundColor(R.color.Grau);
 		
-				
-		RelativeLayout gegnerLayout=new RelativeLayout(getApplicationContext());
-		//HIER FOR SCHLEIFE ÜBER ALLE MITSPIELER
-		ImageView bild=new ImageView(this);
-		CheckBox check=new CheckBox(this);
-		
-		bild.setImageResource(R.drawable.as);
-		bild.setAdjustViewBounds(true);
-		bild.setScaleType(ScaleType.CENTER_INSIDE);
-		bild.setMaxHeight(80);
-		bild.setId(1);
-		
-		TextView name=new TextView(this);
-		name.setText("SPIELERNAME");
-		//gegnerLayout.setOrientation(LinearLayout.HORIZONTAL);
-		LayoutParams params=new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		params.addRule(RelativeLayout.RIGHT_OF, 1);
-		params.addRule(RelativeLayout.CENTER_VERTICAL);
-		gegnerLayout.addView(bild);
-		gegnerLayout.addView(name,params);
-		 
-		LayoutParams params2=new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-		params2.addRule(RelativeLayout.CENTER_VERTICAL);
-		gegnerLayout.addView(check,params2);
-		check.setChecked(true);
-		gegnerLayout.setGravity(Gravity.CENTER_VERTICAL+Gravity.FILL_HORIZONTAL);
-
-		temp.addView(gegnerLayout);
-		//HIER ENDE DER WHILESCHLEIFE
-		
+		for(Profil n : mitspieler)
+		{
+			temp.addView(Gegnervorschau(n));
+		}
+		//scroll.addView(temp);
 		return temp;
 		
 	}
@@ -142,6 +130,40 @@ public class GegnerEinstellungenActivity extends Activity
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		super.onStop();
+	}
+	
+	private RelativeLayout Gegnervorschau(Profil gegner)
+	{
+		RelativeLayout gegnerLayout=new RelativeLayout(getApplicationContext());
+		//HIER FOR SCHLEIFE ÜBER ALLE MITSPIELER
+		ImageView bild=new ImageView(this);
+		CheckBox check=new CheckBox(this);
+		
+		bild.setImageResource(R.drawable.as); //(gegner.getImage()
+		bild.setAdjustViewBounds(true);
+		bild.setScaleType(ScaleType.CENTER_INSIDE);
+		bild.setMaxWidth(60);
+		bild.setId(1);
+		
+		TextView name=new TextView(this);
+		name.setText("SPIELERNAME"); //gegner.getName()
+		
+		
+		gegnerLayout.addView(bild,0);
+		
+		LayoutParams params=new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
+		params.addRule(RelativeLayout.RIGHT_OF, 1);
+		params.addRule(RelativeLayout.CENTER_VERTICAL);
+		
+		gegnerLayout.addView(name,params);
+		 
+		LayoutParams params2=new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+		params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		params2.addRule(RelativeLayout.CENTER_VERTICAL);
+		gegnerLayout.addView(check,params2);
+		check.setChecked(true);
+		return gegnerLayout;
+		
 	}
 
 }

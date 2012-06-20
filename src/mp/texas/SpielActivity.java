@@ -130,19 +130,21 @@ public class SpielActivity extends Activity
 			
 			meineKarte1=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte1);
 			meineKarte2=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte2);
-			meineKarte1.setImageBitmap(Karte.getKartenBild(0, Karte.Herz, getApplicationContext()));
-			meineKarte2.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, getApplicationContext()));
+			meineKarte1.setImageBitmap(Karte.getKartenBild(0, Karte.Herz, meineKarte1.getWidth(), meineKarte1.getHeight(),getApplicationContext()));
+			
+			meineKarte2.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz,meineKarte2.getWidth(), meineKarte2.getHeight(), getApplicationContext()));
+			Log.d("Karte",String.valueOf(meineKarte1.getHeight()));
 			gemeinschaftsKarte1=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte1);
 			gemeinschaftsKarte2=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte2);			
 			gemeinschaftsKarte3=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte3);
 			gemeinschaftsKarte4=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte4);
 			gemeinschaftsKarte5=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte5);
-			gemeinschaftsKarte1.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, getApplicationContext()));
-			gemeinschaftsKarte2.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, getApplicationContext()));
-			gemeinschaftsKarte3.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, getApplicationContext()));
-			gemeinschaftsKarte4.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, getApplicationContext()));
-			gemeinschaftsKarte5.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, getApplicationContext()));
-
+			gemeinschaftsKarte1.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, gemeinschaftsKarte1.getWidth(), gemeinschaftsKarte1.getHeight(), getApplicationContext()));
+			gemeinschaftsKarte2.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, gemeinschaftsKarte2.getWidth(), gemeinschaftsKarte2.getHeight(), getApplicationContext()));
+			gemeinschaftsKarte3.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, gemeinschaftsKarte3.getWidth(), gemeinschaftsKarte3.getHeight(), getApplicationContext()));
+			gemeinschaftsKarte4.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, gemeinschaftsKarte4.getWidth(), gemeinschaftsKarte4.getHeight(), getApplicationContext()));
+			gemeinschaftsKarte5.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, gemeinschaftsKarte5.getWidth(), gemeinschaftsKarte5.getHeight(), getApplicationContext()));
+ 
 	}
 	
 								
@@ -179,15 +181,6 @@ public class SpielActivity extends Activity
 	}
 
 
-
-
-	@Override
-	public void onBackPressed() 
-	{
-	
-		
-	
-	}
 
 	
 	

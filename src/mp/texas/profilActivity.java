@@ -171,7 +171,7 @@ public class profilActivity extends Activity
 	private void LoadPicture(int actionCode)
 	{
 		Intent i = new Intent(                        
-				Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);                                 
+		Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);                                 
 		startActivityForResult(i, 2);
 	}
 	

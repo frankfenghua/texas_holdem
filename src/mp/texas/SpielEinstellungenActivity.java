@@ -39,6 +39,38 @@ public class SpielEinstellungenActivity extends Activity
 				{             
 					public void onClick(View v) 
 					{                Log.d("Button", "Spiel Starten"); // Perform action on click 
+					app.AnzahlSpieler=Integer.valueOf(anzahlGegner.getSelectedItem().toString());
+					//
+					if(editTextStartkapital.getText().length()>0)
+					{
+						app.Startkapital=Integer.valueOf(editTextStartkapital.getText().toString());
+					}
+					else	
+					{
+						app.Startkapital=5000;
+					}
+					
+					app.BlindsArt=blindsArt.getSelectedItem().toString();
+					
+					if(editTextBlindsWert.getText().length()>0)
+					{
+						app.BlindsWert=Integer.valueOf(editTextBlindsWert.getText().toString());
+					}
+					else	
+					{
+						app.BlindsWert=10;
+					}
+					
+					if(editTextBigBlind.getText().length()>0)
+					{
+						app.BigBlind=Integer.valueOf(editTextBigBlind.getText().toString());
+					}
+					else	
+					{
+						app.BigBlind=100;
+					}
+					
+					
 					startActivity(new Intent(getApplicationContext(),GegnerEinstellungenActivity.class));
 					}         
 				});

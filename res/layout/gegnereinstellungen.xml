@@ -7,40 +7,50 @@
     android:gravity="bottom"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textViewGegnerMenschlich"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/GegnerEinstellungenMenschen" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/GegnerEinstellungenStärke" />
-
-    <SeekBar
-        android:id="@+id/seekBarGegnerEinstellungenLevel"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center" >
+        android:background="@color/Grau"
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/buttonGegnerEinstellungenSpielStarten"
+        <TextView
+            android:id="@+id/textViewGegnerMenschlich"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/SpielEinstellungenStart" />
+            android:text="@string/GegnerEinstellungenMenschen" />
+
+        <ScrollView
+            android:id="@+id/scrollViewGegnerEinstellungen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3" >
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/GegnerEinstellungenStärke" />
+
+        <SeekBar
+            android:id="@+id/seekBarGegnerEinstellungenLevel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/buttonGegnerEinstellungenSpielStarten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/SpielEinstellungenStart" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

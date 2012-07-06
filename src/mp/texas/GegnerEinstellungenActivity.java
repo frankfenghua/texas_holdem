@@ -2,6 +2,8 @@ package mp.texas;
 
 import java.util.ArrayList;
 
+import mp.texas.push.PushService;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -46,6 +48,7 @@ public class GegnerEinstellungenActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gegnereinstellungen);
 		app=(App)getApplication();
+		
 		scroll=(ScrollView)findViewById(R.id.scrollViewGegnerEinstellungen);
 		mitspieler.add(new Profil());
 		mitspieler.add(new Profil());
@@ -66,17 +69,34 @@ public class GegnerEinstellungenActivity extends Activity
 				else{
 			menschlicheGegner.setVisibility(View.INVISIBLE);
 		}
+				Log.d("Button", "Hier");
+				ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
+				Log.d("Button", "Hier2");
+				App.pokerspiel = new Pokerspiel();
+				Log.d("Button", "Hier2.5");
+
+				App.selbst = new Spieler();
+				Log.d("Button", "Hier2.7");
+
+				ArrayList<Spieler> spielers = App.pokerspiel.getAlleSpieler();
+				Log.d("Button", "Hier3");
+// 				spielers.add(selbst);
+//				HIERMIT GIBT ES PROBLEME!!!!!! KEINE AHNUNG WARUM?!				
+				ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
+				Log.d("beigetreten", App.ProfilName + " has joined the game");
 		
 		spielStarten=(Button) findViewById(R.id.buttonGegnerEinstellungenSpielStarten);
 		spielStarten.setOnClickListener(
 				new View.OnClickListener() 
 				{             
 					public void onClick(View v) 
-					{                Log.d("Button", "Neues Spiel starten"); // Perform action on click 
+					{   Log.d("Button", "Neues Spiel starten"); // Perform action on click 
+					
 						app.GegnerLevel=gegnerLevel.getProgress();
 						Log.d("Level",String.valueOf(app.GegnerLevel));
 						//app.Mitspieler mit SPielern füllen
 						//app.pokerspiel= new Pokerspiel(app.Mitspieler, app.Startkapital, app.BlindsArt, app.BlindsWert, app.BigBlind);
+						ClientPokerspielService.actionSpielErstellen(getApplicationContext());
 						startActivity(new Intent(getApplicationContext(),SpielActivity.class));
 					
 					}         

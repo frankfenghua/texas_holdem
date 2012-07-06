@@ -86,7 +86,7 @@
                 android:id="@+id/buttonSpielEinstellungenSpielStarten"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/SpielEinstellungenStart" />
+                android:text="@string/SpielEinstellungenStart2" />
         </LinearLayout>
 
     </LinearLayout>

@@ -18,6 +18,17 @@ public class Spieler
 		nochDrin=true;
 	}
 	
+	public Spieler(String namearg, int chipsarg)
+	{
+		profil.setName(namearg);
+		this.setChips(chipsarg);
+		nochDrin=true;
+	}
+	
+	public Spieler() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int setzen(int chipsarg)
 	{
 		if(chips>chipsarg)
@@ -68,6 +79,4 @@ public class Spieler
 	public void setChipsImPot(int chipsImPot) {
 		this.chipsImPot = chipsImPot;
 	}
-	
-
 }

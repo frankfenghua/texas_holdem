@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/textView4"
-                android:text="@string/GegnerEinstellungenStärke" />
+                android:text="@string/GegnerEinstellungenStaerke" />
 
             <TextView
                 android:id="@+id/textView6"

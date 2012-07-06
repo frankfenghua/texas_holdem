@@ -2,12 +2,16 @@ package mp.texas;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 public class Pokerspiel 
 {
+	private String name;
+	private int startkapital;  // wird vorläufig zur übergabe aus SPielEInstellungenAct. gebraucht
 	private int pot;
 	private Blatt blatt;
-	private final int Runden=1;
-	private final int Zeit=2;
+	private final int Runden=1; //??
+	private final int Zeit=2; //??
 	private int blindZeitRundenWert;
 	private String blindModus;
 	private int blindBetrag;
@@ -17,10 +21,20 @@ public class Pokerspiel
 	private int einsatz;
 	private Spieler smallBlindSpieler;
 	
+	public Pokerspiel(){
+		//leere Konstruktor zur Spieleröffnung
+	}
+	
+	public Pokerspiel(int startkapitalarg, int blindZeitRundenWertarg, String blindModusarg, int blindBetragarg){
+		this.startkapital=startkapitalarg;
+		this.blindBetrag=blindBetragarg;
+		this.blindZeitRundenWert=blindZeitRundenWertarg;
+		this.blindModus=blindModusarg;
+	}
 	
 	public Pokerspiel(ArrayList<Spieler> alleSpieler, int Startkapital, String blindModus, int blindZeitRundenWert, int blindBetrag)
 	{
-		this.alleSpieler=alleSpieler;
+		this.setAlleSpieler(alleSpieler);
 		this.blindModus=blindModus;
 		this.blindBetrag=blindBetrag;
 		this.blindZeitRundenWert=blindZeitRundenWert;
@@ -38,7 +52,7 @@ public class Pokerspiel
 	{
 		blindWeitergeben();
 		blatt.blattMischen(blatt.getKarten());
-		for(Spieler n:alleSpieler)
+		for(Spieler n:getAlleSpieler())
 		{
 			n.setHand(blatt.handGeben());
 		}
@@ -90,7 +104,7 @@ public class Pokerspiel
 		
 		int[] best={0,0};
 		ArrayList<Spieler> aktive=new ArrayList<Spieler>();
-		for(Spieler n:alleSpieler)
+		for(Spieler n:getAlleSpieler())
 		{
 			if(n.isNochDrin())
 			{
@@ -298,5 +312,53 @@ public class Pokerspiel
 			}
 		return liste;
 	}
+
+
+	public int getStartkapital() {
+		return startkapital;
+	}
+
+	public void setStartkapital(int startkapital) {
+		this.startkapital = startkapital;
+	}
+
+	public int getBlindZeitRundenWert() {
+		return blindZeitRundenWert;
+	}
+
+	public void setBlindZeitRundenWert(int blindZeitRundenWert) {
+		this.blindZeitRundenWert = blindZeitRundenWert;
+	}
+
+	public String getBlindModus() {
+		return blindModus;
+	}
+
+	public void setBlindModus(String blindModus) {
+		this.blindModus = blindModus;
+	}
+
+	public int getBlindBetrag() {
+		return blindBetrag;
+	}
+
+	public void setBlindBetrag(int blindBetrag) {
+		this.blindBetrag = blindBetrag;
+	}
+
+	public ArrayList<Spieler> getAlleSpieler() {
+		return alleSpieler;
+	}
+
+	public void setAlleSpieler(ArrayList<Spieler> alleSpieler) {
+		this.alleSpieler = alleSpieler;
+	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}	
 }

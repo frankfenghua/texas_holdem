@@ -16,7 +16,7 @@ public class Pokerspiel
 	private String blindModus;
 	private int blindBetrag;
 	private Spieler aktiverSpieler;
-	private ArrayList<Spieler> alleSpieler;
+	private ArrayList<Spieler> alleSpieler = new ArrayList<Spieler>();
 	private Spieler lastRaise;
 	private int einsatz;
 	private Spieler smallBlindSpieler;
@@ -302,6 +302,10 @@ public class Pokerspiel
 	
 	public ArrayList<Spieler> spielerMischen(ArrayList<Spieler> liste)
 	{
+		if(liste.size() == 0)
+			return liste;
+		else
+		{
 			for(int i=0;i<1000;i++)
 			{
 				int rand1=(int)(Math.random()*liste.size());
@@ -310,6 +314,7 @@ public class Pokerspiel
 				liste.remove(rand1);
 				liste.add(rand2, temp);
 			}
+		}
 		return liste;
 	}
 

@@ -213,10 +213,10 @@ public class ClientPokerspielService extends Service {
 	
 	private void erstellen()
 		{
-		
-		App.pokerspiel.setAlleSpieler(App.pokerspiel.spielerMischen(App.pokerspiel.getAlleSpieler())); 
+		App.pokerspiel.setAlleSpieler(App.pokerspiel.spielerMischen(App.Mitspieler)); 
 		// alle angemeldeten Spieler werden initial gesmischt
 		PushService.actionPublishStart(getApplicationContext());
+		log("erstellen geht bis hier3:");
 		}
 	
 

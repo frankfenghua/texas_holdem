@@ -31,6 +31,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 import android.widget.SpinnerAdapter;
 
@@ -62,7 +63,7 @@ public class PushService extends Service {
 	// Zeit wie lange die Verbindung aufrecht erhalten wird (in sekunden)
 	private static short MQTT_KEEP_ALIVE = 60 * 15;
 	// QoS=2 bedeutet, dass jeden Nachricht genau einmal geliefert wird.
-	private static int[] MQTT_QUALITIES_OF_SERVICE = { 0 };
+	private static int[] MQTT_QUALITIES_OF_SERVICE = { 2 };
 	private static int MQTT_QUALITY_OF_SERVICE = 0;
 	// Bedeutet, dass immer nur der aktuellste Spielstand gespeichert wird (no
 	// retain)
@@ -394,7 +395,7 @@ public class PushService extends Service {
 		if (mStarted == true && mConnection != null ) {
 			Log.w(TAG, "Subscribing to new game");
 
-			String subscribeTopic = MQTT_CLIENT_ID + "/" + App.aktuellesSpielID; //"/#";
+			String subscribeTopic = MQTT_CLIENT_ID + "/game/" + App.aktuellesSpielID; //"/#";
 			try {
 				mConnection. subscribeToTopic(subscribeTopic);
 
@@ -811,7 +812,7 @@ public class PushService extends Service {
 			
 			String s = new String(payload);
 
-			showNotification(s);
+//			showNotification(s);
 //			hier muss bei dem angekommenen Stirng getestet werden, um welche Art nachricht es sich handelt 
 //			und entsprechend auseinander genommen werden
 			
@@ -820,21 +821,29 @@ public class PushService extends Service {
 
 			if(items.get(0).equalsIgnoreCase("OPEN"))
 			{	
+	
+			String message_s = items.get(1);
+			App.addOpenGame(items.get(1),Integer.parseInt(items.get(3)), Integer.parseInt(items.get(5)), items.get(7), Integer.parseInt(items.get(9)), Integer.parseInt(items.get(11)));
+
+			final Message msg = Message.obtain();
+			msg.obj = message_s;
+					
+			BeitretenActivity.mHandler.post(new Runnable(){
+		        public void run() {
+					BeitretenActivity.mHandler.handleMessage(msg);
+		        }
+		    });
 			
-			BeitretenActivity.spinnerAdapter.add(items.get(1));
-			//erschafft ein weiteres Element bei OpenGame
-			App.addOpenGame(items.get(1),Integer.parseInt(items.get(2)), Integer.parseInt(items.get(3)), items.get(4), Integer.parseInt(items.get(5)), Integer.parseInt(items.get(6)));
+			msg.recycle();
+			
 			//App.offeneSpiele.add();
 			log(items.get(1) + "," +items.get(2) + "," + items.get(3) + "," +items.get(4) + "," +items.get(5) + "," +items.get(6)) ;
-			
-			BeitretenActivity.spinnerAdapter.notifyDataSetChanged(); 
-			
-//			eigentlich muss nur der "string" des Ÿbernommenen Spiels und die Daten irgendwo zwischen gespeichert werden!
-//			muss noch gemacht werden
+
 			
 			}
 			else if (items.get(0).equalsIgnoreCase("JOIN"))
 			{
+				showNotification(s);
 			App.addSpieler(items.get(1));
 			log(items.get(1) + " has joined the game");
 		
@@ -842,20 +851,19 @@ public class PushService extends Service {
 			
 			else if (items.get(0).equalsIgnoreCase("STARTEN"))
 			{
-//			asdfs
-			
+//			log(items.get(1) + "," +items.get(2) + "," +items.get(3) + "," +items.get(4) + "," +items.get(5) + "," +items.get(6) 
+//					+ "," +items.get(7) + "," +items.get(8) + "," +items.get(9) + "," +items.get(10) + "," +items.get(11) + "," +items.get(12) 
+//					+ "," +items.get(13) + "," +items.get(14) );
 				
 				
 			}
 			else if (items.get(0).equalsIgnoreCase("UPDATEN"))
 			{
-			
+				log("test" + items.toString());	
+				updateGamestate(s);
 			}
 			
-			
-			log("test" + items.toString());
-			
-			updateGamestate(s);
+
 			
 			
 			log("Got message: " + s);

@@ -4,6 +4,8 @@ import mp.texas.push.PushService;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,12 +20,24 @@ public class BeitretenActivity extends Activity {
 	public static Spinner spielwahl;
 	public static ArrayAdapter<String> spinnerAdapter;
 	
+	public static Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+        	super.handleMessage(msg);
+        	String text = (String)msg.obj;
+        	spinnerAdapter.add(text);
+        	spinnerAdapter.notifyDataSetChanged();
+        }
+       
+	};
+	
 	 @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.beitreten);
 
+		
 	PushService.actionLaden(getApplicationContext());
 		
 	spielwahl=(Spinner)findViewById(R.id.spinnerBeitretenSpiele);
@@ -32,9 +46,7 @@ public class BeitretenActivity extends Activity {
 	spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
 	spielwahl.setAdapter(spinnerAdapter); 
 	spinnerAdapter.add("Spiele werden geladen"); 
-//	spinnerAdapter.add("Spiel 1");
-//	spinnerAdapter.add("Spiel 2");
-//	spinnerAdapter.notifyDataSetChanged(); 
+	
 	
 	spielwahl.setOnItemSelectedListener(new OnItemSelectedListener() 
 	{
@@ -48,9 +60,11 @@ public class BeitretenActivity extends Activity {
 			}
 			else 
 			{
+//				Log.d("beitretenActivity0", Integer.toString(arg2));
 				beitretenbutton.setEnabled(true);
+//				Log.d("beitretenActivity", Integer.toString(App.offeneSpiele.size()));
 				App.aktuellesSpielID = App.offeneSpiele.get(arg2-1).getName();
-				
+				Log.d("beitretenActivity2", App.getAktuellesSpielID());
 			}
 			
 		}
@@ -85,6 +99,5 @@ public class BeitretenActivity extends Activity {
 	{
 		return null;
 	}
-	 
-}
 
+}

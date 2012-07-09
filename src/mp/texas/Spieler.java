@@ -4,7 +4,7 @@ import android.widget.Toast;
 
 public class Spieler 
 {
-	private Profil profil;
+	private Profil profil = new Profil();
 	private Hand hand;
 	private int chips;
 	private boolean nochDrin=true;

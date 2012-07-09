@@ -69,14 +69,11 @@ public class GegnerEinstellungenActivity extends Activity
 				else{
 			menschlicheGegner.setVisibility(View.INVISIBLE);
 		}
-				Log.d("Button", "Hier");
-				ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
-				Log.d("Button", "Hier2");
+//				ClientPokerspielService.actionSpielErstellen(getApplicationContext());
+				
 				App.pokerspiel = new Pokerspiel();
-				Log.d("Button", "Hier2.5");
 
 				App.selbst = new Spieler();
-				Log.d("Button", "Hier2.7");
 
 				ArrayList<Spieler> spielers = App.pokerspiel.getAlleSpieler();
 				Log.d("Button", "Hier3");

@@ -70,6 +70,7 @@ public class SpielEinstellungenActivity extends Activity
 					{
 						app.BigBlind=100;
 					}
+					PushService.actionSubscribe(getApplicationContext());
 					ClientPokerspielService.actionSpielEroeffnen(getApplicationContext());
 					startActivity(new Intent(getApplicationContext(),GegnerEinstellungenActivity.class));
 					}         

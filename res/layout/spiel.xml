@@ -322,36 +322,37 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:paddingLeft="0dp" >
-
+
         <ImageView
             android:id="@+id/ImageViewSpielGemeinsschaftskarte1"
-            android:layout_width="60dp"
+            android:layout_width="40dp"
             android:layout_height="100dp"
             android:src="@drawable/as" />
-
+
         <ImageView
             android:id="@+id/ImageViewSpielGemeinsschaftskarte2"
-            android:layout_width="60dp"
+            android:layout_width="40dp"
             android:layout_height="100dp"
             android:src="@drawable/as" />
-
+
         <ImageView
             android:id="@+id/ImageViewSpielGemeinsschaftskarte3"
-            android:layout_width="60dp"
+            android:layout_width="40dp"
             android:layout_height="100dp"
             android:src="@drawable/as" />
-
+
         <ImageView
             android:id="@+id/ImageViewSpielGemeinsschaftskarte4"
-            android:layout_width="60dp"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+            android:src="@drawable/as" />
+
+        <ImageView
+            android:id="@+id/ImageViewSpielGemeinsschaftskarte5"
+            android:layout_width="40dp"
             android:layout_height="100dp"
             android:src="@drawable/as" />
 
-        <ImageView
-            android:id="@+id/ImageViewSpielGemeinsschaftskarte5"
-            android:layout_width="60dp"
-            android:layout_height="100dp"
-            android:src="@drawable/as" />
     </LinearLayout>
 
     <LinearLayout
@@ -443,28 +444,27 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
-
-        <SeekBar
-            android:id="@+id/seekBarSpielEinsatz"
-            android:layout_width="228dp"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
-
-        <EditText
-            android:id="@+id/editTextSpielEinsatz"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="number"
-            android:text="@string/zero"
-             
-             >
-
-            <requestFocus />
-        </EditText>
     </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seekBarSpielEinsatz"
+        android:layout_width="228dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.30"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <EditText
+        android:id="@+id/editTextSpielEinsatz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="number"
+        android:text="@string/zero" >
+
+        <requestFocus />
+    </EditText>
 
     <LinearLayout
         android:layout_width="fill_parent"

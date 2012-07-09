@@ -16,7 +16,7 @@ public class Pokerspiel
 	private Spieler lastRaise;
 	private int einsatz;
 	private Spieler smallBlindSpieler;
-	
+	private Gemeinschaftskarten gemeinschaftskarten;
 	
 	public Pokerspiel(ArrayList<Spieler> alleSpieler, int Startkapital, String blindModus, int blindZeitRundenWert, int blindBetrag)
 	{
@@ -127,6 +127,7 @@ public class Pokerspiel
 			if(StraightFlush(n.getHand())!=null);
 			{sieger.add(n);}
 		}
+		
 		if(sieger.size()>0)
 		{return sieger;}
 			
@@ -203,6 +204,19 @@ public class Pokerspiel
 	//1
 	private int[] RoyalFlush(Hand hand)
 	{
+		int[] farben ={0,0,0,0};
+		for(Karte n:gemeinschaftskarten.getGemeinschaftskarten())
+		{
+		farben[n.getFarbe()]++;
+		}
+		farben[hand.getKarte1().getFarbe()]++;
+		farben[hand.getKarte2().getFarbe()]++;
+		
+		for(int n; n<4;n++)
+		if(farben[n]>=4)
+		{
+		
+		}
 		
 		return null; //0 heiﬂt kein RoyalFlush
 					//1 heiﬂt RoyalFlush

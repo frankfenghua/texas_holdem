@@ -130,7 +130,7 @@ public class SpielActivity extends Activity
 			
 			meineKarte1=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte1);
 			meineKarte2=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte2);
-			meineKarte1.setImageBitmap(Karte.getKartenBild(0, Karte.Herz, meineKarte1.getWidth(), meineKarte1.getHeight(),getApplicationContext()));
+			meineKarte1.setImageBitmap(Karte.getKartenBild(Karte.Dame, Karte.Herz, meineKarte1.getWidth(), meineKarte1.getHeight(),getApplicationContext()));
 			
 			meineKarte2.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz,meineKarte2.getWidth(), meineKarte2.getHeight(), getApplicationContext()));
 			Log.d("Karte",String.valueOf(meineKarte1.getHeight()));
@@ -139,11 +139,11 @@ public class SpielActivity extends Activity
 			gemeinschaftsKarte3=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte3);
 			gemeinschaftsKarte4=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte4);
 			gemeinschaftsKarte5=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte5);
-			gemeinschaftsKarte1.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, gemeinschaftsKarte1.getWidth(), gemeinschaftsKarte1.getHeight(), getApplicationContext()));
-			gemeinschaftsKarte2.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, gemeinschaftsKarte2.getWidth(), gemeinschaftsKarte2.getHeight(), getApplicationContext()));
-			gemeinschaftsKarte3.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, gemeinschaftsKarte3.getWidth(), gemeinschaftsKarte3.getHeight(), getApplicationContext()));
-			gemeinschaftsKarte4.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, gemeinschaftsKarte4.getWidth(), gemeinschaftsKarte4.getHeight(), getApplicationContext()));
-			gemeinschaftsKarte5.setImageBitmap(Karte.getKartenBild(0, Karte.Kreuz, gemeinschaftsKarte5.getWidth(), gemeinschaftsKarte5.getHeight(), getApplicationContext()));
+			gemeinschaftsKarte1.setImageBitmap(Karte.getKartenBild(Karte.Konig, Karte.Kreuz, gemeinschaftsKarte1.getWidth(), gemeinschaftsKarte1.getHeight(), getApplicationContext()));
+			gemeinschaftsKarte2.setImageBitmap(Karte.getKartenBild(Karte.Dame, Karte.Kreuz, gemeinschaftsKarte2.getWidth(), gemeinschaftsKarte2.getHeight(), getApplicationContext()));
+			gemeinschaftsKarte3.setImageBitmap(Karte.getKartenBild(Karte.Funf, Karte.Kreuz, gemeinschaftsKarte3.getWidth(), gemeinschaftsKarte3.getHeight(), getApplicationContext()));
+			gemeinschaftsKarte4.setImageBitmap(Karte.getKartenBild(Karte.Neun, Karte.Kreuz, gemeinschaftsKarte4.getWidth(), gemeinschaftsKarte4.getHeight(), getApplicationContext()));
+			gemeinschaftsKarte5.setImageBitmap(Karte.getKartenBild(Karte.Zwei, Karte.Kreuz, gemeinschaftsKarte5.getWidth(), gemeinschaftsKarte5.getHeight(), getApplicationContext()));
  
 	}
 	

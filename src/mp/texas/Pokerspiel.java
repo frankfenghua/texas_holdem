@@ -6,7 +6,6 @@ import android.util.Log;
 
 public class Pokerspiel 
 {
-	private int peter;
 	private String name;
 	private int startkapital;  // wird vorläufig zur übergabe aus SPielEInstellungenAct. gebraucht
 	private int pot;

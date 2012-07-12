@@ -14,9 +14,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.TextView;
 
 public class BeitretenActivity extends Activity {
 	Button beitretenbutton;
+	TextView anzahlspieler;
+	TextView startkapital;
+	TextView blindserhohennach;
+	TextView bigBlind;
+	TextView computergegner;
+	TextView human;
 	public static Spinner spielwahl;
 	public static ArrayAdapter<String> spinnerAdapter;
 	
@@ -65,19 +72,27 @@ public class BeitretenActivity extends Activity {
 //				Log.d("beitretenActivity", Integer.toString(App.offeneSpiele.size()));
 				App.aktuellesSpielID = App.offeneSpiele.get(arg2-1).getName();
 				Log.d("beitretenActivity2", App.getAktuellesSpielID());
+				draw();
 			}
+			
 			
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {
 			Log.d("Modus", "Nichts gewählt");
 			// TODO Auto-generated method stub
-			
+			draw();
 		}             
  
 	});
+	anzahlspieler=(TextView) findViewById(R.id.BeitretenAnzahlSpieler);
+	computergegner=(TextView) findViewById(R.id.BeitretenComputergegner);
+	bigBlind=(TextView) findViewById(R.id.BeitretenBigBlind);
+	blindserhohennach=(TextView) findViewById(R.id.BeitretenBlindsNach);
+	startkapital=(TextView) findViewById(R.id.BeitretenStartkapital);
 	
-	 beitretenbutton = (Button) findViewById(R.id.button1);		        			
+	
+	beitretenbutton = (Button) findViewById(R.id.button1);		        			
 		beitretenbutton.setOnClickListener(new OnClickListener() {		    				
 			public void onClick(View v) 		        								
 			{		        															
@@ -95,9 +110,20 @@ public class BeitretenActivity extends Activity {
 	 }
 	 
 	
+	 private void draw()
+	 {
+		 startkapital.setText(String.valueOf(App.pokerspiel.getStartkapital()));
+		 anzahlspieler.setText(String.valueOf(App.pokerspiel.getAlleSpieler().size()));
+		 computergegner.setText(String.valueOf(App.pokerspiel.getComputergegnerLevel()));
+		 bigBlind.setText(String.valueOf(App.pokerspiel.getBlindBetrag()));
+		 blindserhohennach.setText(String.valueOf(App.pokerspiel.getBlindZeitRundenWert()));
+	 }
+	 
 	private Pokerspiel SpieleLaden()
 	{
+		
 		return null;
 	}
 
+	
 }

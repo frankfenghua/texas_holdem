@@ -32,7 +32,7 @@ public class App extends Application
 	public static ArrayList<Pokerspiel> offeneSpiele = new ArrayList<Pokerspiel>();
 	public static String aktuellesSpielID;
 	
-	public static Pokerspiel pokerspiel;
+	public static Pokerspiel pokerspiel=null;
 	public static Spieler selbst;
 
 	public static void addSpieler(String neuerSpielerarg)

@@ -11,11 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Push" />
-    <Button
+
+    <Button
         android:id="@+id/pokerspiel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Testspiel erstellen" />
+        android:text="Testspiel erstellen" />
+
     <TextView
         android:id="@+id/target_text"
         android:layout_width="202dp"
@@ -31,7 +33,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/StartNeuesSpiel" />
-
+
+
+
+
+
     <Button
         android:id="@+id/button2"
         android:layout_width="fill_parent"

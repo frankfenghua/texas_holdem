@@ -6,7 +6,8 @@
     android:background="@drawable/texas_holdem_icon"
     android:gravity="bottom|center_horizontal"
     android:orientation="vertical" >
-
+
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

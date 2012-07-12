@@ -13,20 +13,18 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="@string/ProfilStatistiken" />
-
+
     <EditText
         android:id="@+id/editTextProfilName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="160dp"
         android:ems="10"
         android:gravity="center" >
 
         <requestFocus />
     </EditText>
-
+
     <ImageButton
         android:id="@+id/imageButtonProfilBild"
         android:layout_width="wrap_content"

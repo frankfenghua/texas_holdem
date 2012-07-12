@@ -10,6 +10,7 @@ public class Spieler
 	private boolean nochDrin=true;
 	private double anzahlZigaretten=19;
 	private int chipsImPot=0;
+	public int[] ergebnis={0,0,0,0,0,0};
 	
 	public Spieler(Profil profilarg, int chipsarg)
 	{

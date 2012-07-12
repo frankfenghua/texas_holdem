@@ -17,12 +17,14 @@ public final class R {
     }
     public static final class color {
         public static final int Grau=0x7f070000;
+        public static final int Green=0x7f070001;
     }
     public static final class drawable {
         public static final int as=0x7f020000;
         public static final int ic_launcher=0x7f020001;
         public static final int playingcards=0x7f020002;
-        public static final int texas_holdem_icon=0x7f020003;
+        public static final int table=0x7f020003;
+        public static final int texas_holdem_icon=0x7f020004;
     }
     public static final class id {
         public static final int BeitretenAnzahlSpieler=0x7f080008;
@@ -75,6 +77,14 @@ public final class R {
         public static final int TextView22=0x7f080018;
         public static final int TextView23=0x7f080017;
         public static final int TextView24=0x7f080020;
+        public static final int TextView25=0x7f08005f;
+        public static final int TextView26=0x7f080060;
+        public static final int TextView27=0x7f080061;
+        public static final int TextView28=0x7f080062;
+        public static final int TextView29=0x7f08005c;
+        public static final int TextView30=0x7f08005b;
+        public static final int TextView31=0x7f08005e;
+        public static final int TextView32=0x7f08005d;
         public static final int button1=0x7f08000e;
         public static final int button2=0x7f08001c;
         public static final int buttonGegnerEinstellungenSpielStarten=0x7f080013;
@@ -126,6 +136,7 @@ public final class R {
         public static final int spiel=0x7f030005;
         public static final int spieleinstellungen=0x7f030006;
         public static final int spielmodus=0x7f030007;
+        public static final int spielneu=0x7f030008;
     }
     public static final class string {
         public static final int BigBlind=0x7f050017;

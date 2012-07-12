@@ -30,7 +30,10 @@ public class startActivity extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-
+		if(App.pokerspiel!=null)
+		{
+			startActivity(new Intent(getApplicationContext(),SpielActivity.class));
+		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		

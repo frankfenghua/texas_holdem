@@ -86,6 +86,7 @@ public class SpielEinstellungenActivity extends Activity
 					int arg2, long arg3) {
 				Log.d("Modus","Gegner anzahl gewählt");
 				// TODO Auto-generated method stub
+				app.AnzahlSpieler=arg2+2;
 				
 			}
 

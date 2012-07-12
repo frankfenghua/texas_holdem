@@ -1,5 +1,6 @@
 package mp.texas;
 
+import mp.texas.push.PushService;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ public class SpielEinstellungenActivity extends Activity
 	EditText editTextStartkapital;
 	EditText editTextBlindsWert;
 	EditText editTextBigBlind;
-	App app;
+	static App app;
 	
 	
 	@Override
@@ -69,10 +70,12 @@ public class SpielEinstellungenActivity extends Activity
 					{
 						app.BigBlind=100;
 					}
-					
-					
+					PushService.actionSubscribe(getApplicationContext());
+					ClientPokerspielService.actionSpielEroeffnen(getApplicationContext());
 					startActivity(new Intent(getApplicationContext(),GegnerEinstellungenActivity.class));
 					}         
+					
+					// hier Push Service eroeffnen ...
 				});
 				
 		anzahlGegner=(Spinner) findViewById(R.id.spinnerSpielEinstellungenANzahlGegner);
@@ -83,6 +86,7 @@ public class SpielEinstellungenActivity extends Activity
 					int arg2, long arg3) {
 				Log.d("Modus","Gegner anzahl gewählt");
 				// TODO Auto-generated method stub
+				app.AnzahlSpieler=arg2+2;
 				
 			}
 

@@ -6,7 +6,8 @@
     android:background="@drawable/texas_holdem_icon"
     android:gravity="bottom|center_horizontal"
     android:orientation="vertical" >
-
+
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -58,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/textView4"
-                android:text="@string/GegnerEinstellungenStärke" />
+                android:text="@string/GegnerEinstellungenStaerke" />
 
             <TextView
                 android:id="@+id/textView6"

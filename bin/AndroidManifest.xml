@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="mp.texas"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="7" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <application
+        android:name="App"
+        android:icon="@drawable/texas_holdem_icon"
+        android:label="@string/app_name" >
+<!--         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" -->
+        <activity
+            android:name=".startActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".profilActivity" >
+        </activity>
+        <activity
+            android:name=".spielModusActivity" >
+        </activity>
+                <activity
+            android:name=".SpielEinstellungenActivity" >
+        </activity>
+        
+                <activity
+            android:name=".BeitretenActivity" >
+        </activity>
+        
+                                <activity
+            android:name=".GegnerEinstellungenActivity" >
+        </activity>
+                <activity
+            android:name=".SpielActivity" 
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        
+        <service android:name="mp.texas.push.PushService" android:label="Push Notifications Service"></service>
+        <service android:name=".ClientPokerspielService" android:label="Client Poker Service" ></service>        
+        
+    </application>
+
+</manifest>

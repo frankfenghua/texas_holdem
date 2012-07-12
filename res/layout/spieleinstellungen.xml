@@ -5,7 +5,8 @@
     android:background="@drawable/texas_holdem_icon"
     android:gravity="bottom"
     android:orientation="vertical" >
-
+
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -86,7 +87,7 @@
                 android:id="@+id/buttonSpielEinstellungenSpielStarten"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/SpielEinstellungenStart" />
+                android:text="@string/SpielEinstellungenStart2" />
         </LinearLayout>
 
     </LinearLayout>

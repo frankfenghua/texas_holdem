@@ -6,13 +6,13 @@
     android:background="@drawable/texas_holdem_icon"
     android:gravity="bottom"
     android:orientation="vertical" >
-
+
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/Grau"
         android:orientation="vertical" >
-
+        
         <TextView
             android:id="@+id/textViewGegnerMenschlich"
             android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/GegnerEinstellungenStärke" />
+            android:text="@string/GegnerEinstellungenStaerke" />
 
         <SeekBar
             android:id="@+id/seekBarGegnerEinstellungenLevel"

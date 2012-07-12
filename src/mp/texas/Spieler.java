@@ -4,12 +4,13 @@ import android.widget.Toast;
 
 public class Spieler 
 {
-	private Profil profil;
+	private Profil profil = new Profil();
 	private Hand hand;
 	private int chips;
 	private boolean nochDrin=true;
 	private double anzahlZigaretten=19;
 	private int chipsImPot=0;
+	public int[] ergebnis={0,0,0,0,0,0};
 	
 	public Spieler(Profil profilarg, int chipsarg)
 	{
@@ -18,6 +19,17 @@ public class Spieler
 		nochDrin=true;
 	}
 	
+	public Spieler(String namearg, int chipsarg)
+	{
+		profil.setName(namearg);
+		this.setChips(chipsarg);
+		nochDrin=true;
+	}
+	
+	public Spieler() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int setzen(int chipsarg)
 	{
 		if(chips>chipsarg)
@@ -68,6 +80,4 @@ public class Spieler
 	public void setChipsImPot(int chipsImPot) {
 		this.chipsImPot = chipsImPot;
 	}
-	
-
 }

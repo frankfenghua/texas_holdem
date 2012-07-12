@@ -17,6 +17,8 @@
     <string name="SpielEinstellungenStartkapital">Startkapital</string>
     <string name="SpielEinstellungenBlinds">Blinds erhöhen nach:</string>
     <string name="SpielEinstellungenStart">Spiel erstellen</string>
+        <string name="SpielEinstellungenStart2">Spiel eröffnen</string>
+    
     <string-array name="SpielEinstellungenBlindsArt">
         <item >Zeit (min)</item>
         <item >Runden</item>
@@ -31,7 +33,7 @@
         <item >8</item>
     </string-array>
     <string name="GegnerEinstellungenMenschen">Menschliche Gegner</string>
-    <string name="GegnerEinstellungenStärke">Stärke Computergegner</string>
+    <string name="GegnerEinstellungenStaerke">Stärke Computergegner</string>
     <string name="GegnerEinstellungenComputer">Computer Gegner</string>
     <string name="SpielPot">Pot</string>
     <string name="SpielBlind">Blind</string>
@@ -42,8 +44,9 @@
     <string name="SpielSetzen">Raise</string>
     <string name="BigBlind">Big Blind</string>
     <string name="zero">0</string>
-    <color name="Grau">#90202020</color>
+   	<color name="Grau">#90202020</color>
     <string name="ModusMehrspielerBeitreten">Mehrspielerspiel beitreten</string>
+    <color name="Green">#99CC00</color>
    
     
 </resources>

@@ -15,9 +15,6 @@ import org.apache.http.client.utils.URLEncodedUtils;
 public class App extends Application 
 {
 	
-	public static String ProfilName="Reiner Zufall";
-	public static Drawable ProfilBild=null; 
-	
 	public static boolean newOpenedGame = true;
 	public static boolean singlegame;
 	public static int AnzahlSpieler;
@@ -27,7 +24,6 @@ public class App extends Application
 	public static int BigBlind;
 	public static ArrayList<Spieler> Mitspieler= new ArrayList<Spieler>();
 	public static int GegnerLevel;
-	
 	
 	public static ArrayList<Pokerspiel> offeneSpiele = new ArrayList<Pokerspiel>();
 	public static String aktuellesSpielID;
@@ -105,6 +101,12 @@ public class App extends Application
 
 	public static void setAktuellesSpielID(String aktuellesSpielID) {
 		App.aktuellesSpielID = aktuellesSpielID;
+	}
+	
+	public static String getKarten() {
+		String s = new String();
+		
+		return s;
 	}
 	
 	

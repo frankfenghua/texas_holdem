@@ -80,7 +80,7 @@ public class GegnerEinstellungenActivity extends Activity
 // 				spielers.add(selbst);
 //				HIERMIT GIBT ES PROBLEME!!!!!! KEINE AHNUNG WARUM?!				
 				ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
-				Log.d("beigetreten", App.ProfilName + " has joined the game");
+				Log.d("beigetreten", App.selbst.getProfil().getName() + " has joined the game");
 		
 		spielStarten=(Button) findViewById(R.id.buttonGegnerEinstellungenSpielStarten);
 		spielStarten.setOnClickListener(

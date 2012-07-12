@@ -6,14 +6,15 @@ import android.util.Log;
 
 public class Pokerspiel 
 {
+	private boolean onlineSpiel;
 	private String name;
 	private int startkapital;  // wird vorläufig zur übergabe aus SPielEInstellungenAct. gebraucht
 	private int pot;
-	private Blatt blatt;
-	private final int Runden=1; //??
-	private final int Zeit=2; //??
+	private int Runden=1; //??
+	private int Zeit=2; //??
 	private int blindZeitRundenWert;
 	private String blindModus;
+	private Blatt blatt;
 	private int blindBetrag;
 	private Spieler aktiverSpieler;
 	private ArrayList<Spieler> alleSpieler = new ArrayList<Spieler>();
@@ -22,8 +23,18 @@ public class Pokerspiel
 	private Spieler smallBlindSpieler;
 	private Gemeinschaftskarten gemeinschaftskarten;
 	private int ComputergegnerLevel;
+	private ArrayList<Integer> sidepot = new ArrayList<Integer>();
+	private int Wettrunden;
 
 	
+	public int getWettrunden() {
+		return Wettrunden;
+	}
+
+	public void setWettrunden(int wettrunden) {
+		Wettrunden = wettrunden;
+	}
+
 	public Pokerspiel(){
 		//leere Konstruktor zur Spieleröffnung
 	}
@@ -517,5 +528,13 @@ public class Pokerspiel
 
 	public void setComputergegnerLevel(int computergegnerLevel) {
 		ComputergegnerLevel = computergegnerLevel;
+	}
+
+	public boolean isOnlineSpiel() {
+		return onlineSpiel;
+	}
+
+	public void setOnlineSpiel(boolean onlineSpiel) {
+		this.onlineSpiel = onlineSpiel;
 	}
 }

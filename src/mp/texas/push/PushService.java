@@ -508,8 +508,8 @@ public class PushService extends Service {
 		log("PublishingJoin...");
 		
 		if (mStarted == true && mConnection != null && MQTT_ALREADY_PUBLISHED == false) { //MQTT_ALRE... checkt ob es schon publ. wurde
-			String publishTopic = MQTT_CLIENT_ID + "/game/" + "C7C3787B250B4689";//App.aktuellesSpielID; //"/#";
-			String publishJoinString = "JOIN,"+ App.ProfilName; //Keine Ahnung wie das Bild verschickt werden soll
+			String publishTopic = MQTT_CLIENT_ID + "/game/" + App.aktuellesSpielID;//App.aktuellesSpielID; //"/#";
+			String publishJoinString = "JOIN,"+ App.selbst.getProfil().getName(); //Keine Ahnung wie das Bild verschickt werden soll
 			log("publishing join mit topic" + publishTopic + publishJoinString);
 			try {
 				mConnection.publishToTopic(publishTopic, publishJoinString);

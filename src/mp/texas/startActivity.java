@@ -25,7 +25,7 @@ public class startActivity extends Activity
 	Button statistiken;
 	Button pushButton;
 	TextView target_text; //test
-	private String deviceID; //test
+	String deviceID; //test
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class startActivity extends Activity
 		
 		deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);		//test	
  	  	((TextView) findViewById(R.id.target_text)).setText(deviceID);					//test
-
+ 	  	App.selbst.getProfil().setId(deviceID);
 
  	  	Editor editor = getSharedPreferences(PushService.TAG, MODE_PRIVATE).edit();		//test
 		editor.putString(PushService.PREF_DEVICE_ID, deviceID);							//test

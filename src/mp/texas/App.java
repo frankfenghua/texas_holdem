@@ -29,14 +29,10 @@ public class App extends Application
 	public static ArrayList<Pokerspiel> offeneSpiele = new ArrayList<Pokerspiel>();
 	public static String aktuellesSpielID;
 	
-<<<<<<< HEAD
+
 	public static Pokerspiel pokerspiel = null;
 	public static Spieler selbst = new Spieler();
-=======
-	public static Pokerspiel pokerspiel;
-	public static Pokerspiel pokerspieloffline;
-	public static Spieler selbst;
->>>>>>> michael
+
 
 	public static void addSpieler(String neuerSpielerarg)
 	{
@@ -66,7 +62,7 @@ public class App extends Application
 		App.pokerspiel.setBlindModus(App.BlindsArt);
 		App.pokerspiel.setBlindZeitRundenWert(App.BlindsWert);
 		App.pokerspiel.setName(App.aktuellesSpielID);
-		App.pokerspiel.setOnlineSpiel(true);
+		App.pokerspiel.setSinglePlayer(false);
 		App.pokerspiel.setStartkapital(App.Startkapital);
 		App.pokerspiel.setWettrunden(0);
 		App.pokerspiel.setComputergegnerLevel(App.GegnerLevel);

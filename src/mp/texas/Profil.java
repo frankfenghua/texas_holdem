@@ -6,13 +6,11 @@ public class Profil
 {
 	private String name = "Reiner Zufall II";
 	private Drawable avatar;
-<<<<<<< HEAD
 	private String uri;
 	private String id;
-=======
+
 	private String[] namen = {"Anton","Berta","Cäsar","Dora","Emil","Friedrich","Gustav"};
 
->>>>>>> michael
 	
 	public String getUri() {
 		return uri;

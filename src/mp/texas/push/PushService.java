@@ -907,7 +907,7 @@ public class PushService extends Service {
 				App.pokerspiel.setBlindZeitRundenWert(Integer.parseInt( items.get(9)));
 				App.pokerspiel.setComputergegnerLevel(Integer.parseInt( items.get(13)));
 				App.pokerspiel.setName(items.get(1));
-				App.pokerspiel.setOnlineSpiel(true);
+				App.pokerspiel.setSinglePlayer(false);
 				App.pokerspiel.setStartkapital(Integer.parseInt( items.get(5)));
 				App.pokerspiel.setWettrunden(1);			
 				

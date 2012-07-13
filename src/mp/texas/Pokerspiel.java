@@ -6,20 +6,14 @@ import android.util.Log;
 
 public class Pokerspiel 
 {
-<<<<<<< HEAD
-	private boolean onlineSpiel;
-	private String name;
-	private int startkapital;  // wird vorlŠufig zur Ÿbergabe aus SPielEInstellungenAct. gebraucht
-	private int pot;
-	private int Runden=1; //??
-	private int Zeit=2; //??
-=======
+
 	private String name;
 	private int startkapital;  // wird vorlŠufig zur Ÿbergabe aus SPielEInstellungenAct. gebraucht
 	private int pot;
 	private final int Runden=1; //??
 	private final int Zeit=2; //??
->>>>>>> michael
+
+	private boolean singlePlayer;
 	private int blindZeitRundenWert;
 	private String blindModus;
 	private Blatt blatt;
@@ -42,16 +36,9 @@ public class Pokerspiel
 
 	private int ComputergegnerLevel;
 	private ArrayList<Integer> sidepot = new ArrayList<Integer>();
+	
 	private int Wettrunden;
 
-	
-	public Spieler getAktiverSpieler() {
-		return aktiverSpieler;
-	}
-
-	public void setAktiverSpieler(Spieler aktiverSpieler) {
-		this.aktiverSpieler = aktiverSpieler;
-	}
 
 	public Blatt getBlatt() {
 		return blatt;
@@ -59,6 +46,14 @@ public class Pokerspiel
 
 	public void setBlatt(Blatt blatt) {
 		this.blatt = blatt;
+	}
+
+	public boolean isSinglePlayer() {
+		return singlePlayer;
+	}
+
+	public void setSinglePlayer(boolean singlePlayer) {
+		this.singlePlayer = singlePlayer;
 	}
 
 	public int getWettrunden() {
@@ -623,22 +618,6 @@ public class Pokerspiel
 		ComputergegnerLevel = computergegnerLevel;
 	}
 
-<<<<<<< HEAD
-	public boolean isOnlineSpiel() {
-		return onlineSpiel;
-	}
-
-	public void setOnlineSpiel(boolean onlineSpiel) {
-		this.onlineSpiel = onlineSpiel;
-=======
-	public int getWettrunde() {
-		return wettrunde;
-	}
-
-	public void setWettrunde(int wettrunde) {
-		this.wettrunde = wettrunde;
-	}
-
 	public Spieler getAktiverSpieler() {
 		return aktiverSpieler;
 	}
@@ -686,12 +665,18 @@ public class Pokerspiel
 		{aktiverSpieler=getAlleSpieler().get(verschieben(temp++));}	
 		
 	}
+	
+	public int getWettrunde() {
+		return wettrunde;
+	}
+
+	public void setWettrunde(int wettrunde) {
+		this.wettrunde = wettrunde;
+	}
 
 	public void weiter() {
 		nachsterSpieler();
-		aktiverSpieler.auffordern(getEinsatz());
+		//		aktiverSpieler.auffordern(getEinsatz());
 		//HIER EINEN HANDLER DER DIE DRAW FUNKTION DER ACTIVITY AKTIVIERT
-		
->>>>>>> michael
-	}
+		}
 }

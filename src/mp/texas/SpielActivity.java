@@ -3,6 +3,7 @@ package mp.texas;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -62,7 +63,7 @@ public class SpielActivity extends Activity
 		
 		//HERAUSFINDEN WELCHER SPIELER DER SPIELER AM GERÄT IST PETER
 		for(int i=0; i<App.pokerspiel.getAlleSpieler().size();i++)
-		{if(App.pokerspiel.getAlleSpieler().get(i).profil.getName().equals(App.ProfilName)) //HIER DER VERGLEICH MIT DER ID
+		{if(App.pokerspiel.getAlleSpieler().get(i).profil.getName().equals(App.selbst.getProfil().getName())) //HIER DER VERGLEICH MIT DER ID
 			{mainspielernummer=i;
 			derSpieler=App.pokerspiel.getAlleSpieler().get(mainspielernummer);
 			App.pokerspiel.getAlleSpieler().get(i).mainspieler=true;
@@ -98,7 +99,7 @@ public class SpielActivity extends Activity
 			setImPot(App.pokerspiel.getAlleSpieler().get(i));
 			setZustand(App.pokerspiel.getAlleSpieler().get(i));
 		}
-		App.pokerspiel.getAktiverSpieler().layoutondevice.setBackgroundColor(R.color.red);
+
 		potText.setText(String.valueOf(App.pokerspiel.getPot()));
 		
 		
@@ -249,7 +250,7 @@ public class SpielActivity extends Activity
 public boolean onCreateOptionsMenu(Menu menu)
 {
 	MenuInflater inflater = getMenuInflater();
-	inflater.inflate(R.menu.actionmenu,menu);
+	inflater.inflate(R.layout.actionmenu,menu);
 	return true;
 }
 
@@ -317,7 +318,6 @@ public void draw()
 	if(App.pokerspiel.getWettrunde()>3)
 	{gemeinschaftsKarte5.setImageBitmap(Karte.getKartenBild(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(4), gemeinschaftsKarte5.getWidth(), gemeinschaftsKarte5.getHeight(), getApplicationContext()));
 	}
-	App.pokerspiel.getAktiverSpieler().layoutondevice.setBackgroundColor(R.color.red);
 	
 	for(int i=0;i<App.pokerspiel.getAlleSpieler().size();i++)
 	{

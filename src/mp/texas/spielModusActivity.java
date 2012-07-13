@@ -21,9 +21,6 @@ public class spielModusActivity extends Activity
 	Button einzelspieler;
 	Button mehrspielerNeu;
 	Button mehrspielerBeitreten;
-	App app;
-
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +30,14 @@ public class spielModusActivity extends Activity
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.spielmodus);
-		app=(App)getApplication();
 		einzelspieler=(Button) findViewById(R.id.buttonSpielModusEinzelspieler);
 		einzelspieler.setOnClickListener(
 				new View.OnClickListener() 
 				{             
 					public void onClick(View v) 
 					{                Log.d("Button", "Einzelspielerspiel"); 
-					app.singlegame=true;
+					App.singlegame=true;
 					startActivity(new Intent(getApplicationContext(),SpielEinstellungenActivity.class));
-					
 					}         
 				});
 				
@@ -52,7 +47,7 @@ public class spielModusActivity extends Activity
 				{             
 					public void onClick(View v) 
 					{                Log.d("Button", "Mehrspieler Neu"); // Perform action on click
-					app.singlegame=false;
+					App.singlegame=false;
 					startActivity(new Intent(getApplicationContext(),SpielEinstellungenActivity.class));
 		
 					}         
@@ -65,7 +60,7 @@ public class spielModusActivity extends Activity
 					public void onClick(View v) 
 					{               
 						Log.d("Button", "Mehrspieler Beitreten"); // Perform action on click
-						app.singlegame=false;
+						App.singlegame=false;
 						startActivity(new Intent(getApplicationContext(),BeitretenActivity.class));
 
 					}         

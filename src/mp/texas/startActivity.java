@@ -26,6 +26,7 @@ public class startActivity extends Activity
 	Button pushButton;
 	TextView target_text; //test
 	String deviceID; //test
+	App app;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,8 @@ public class startActivity extends Activity
 		setContentView(R.layout.main);
 		
 		deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);		//test	
- 	  	((TextView) findViewById(R.id.target_text)).setText(deviceID);					//test
+ 	  	((TextView) findViewById(R.id.target_text)).setText(deviceID);
+		app=(App)getApplication();
  	  	App.selbst.getProfil().setId(deviceID);
 
  	  	Editor editor = getSharedPreferences(PushService.TAG, MODE_PRIVATE).edit();		//test

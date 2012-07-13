@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 public class Blatt 
 {
-	private ArrayList<Karte> karten;
+	private ArrayList<Karte> karten = new ArrayList<Karte>();
 	public ArrayList<Karte> getKarten() {
 		return karten;
 	}

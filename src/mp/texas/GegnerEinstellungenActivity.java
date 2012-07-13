@@ -54,6 +54,7 @@ public class GegnerEinstellungenActivity extends Activity
 		mitspieler.add(new Profil());
 		mitspieler.add(new Profil());
 	
+		boolean joinedPlayer = false;
 		text=new TextView(this);
 		text.setText("Hallo");
 		
@@ -61,7 +62,7 @@ public class GegnerEinstellungenActivity extends Activity
 		layoutMain=(LinearLayout)findViewById(R.id.GegnerMainLayout);
 		
 		
-				if(app.singlegame==false)
+				if(App.singlegame==false)
 		{
 		    scroll.addView(produceLayoutGegner(),0);
 		    		   
@@ -71,15 +72,14 @@ public class GegnerEinstellungenActivity extends Activity
 		}
 //				ClientPokerspielService.actionSpielErstellen(getApplicationContext());
 				
-				App.pokerspiel = new Pokerspiel();
-
-				App.selbst = new Spieler();
-
-				ArrayList<Spieler> spielers = App.pokerspiel.getAlleSpieler();
 				Log.d("Button", "Hier3");
-// 				spielers.add(selbst);
-//				HIERMIT GIBT ES PROBLEME!!!!!! KEINE AHNUNG WARUM?!				
-				ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
+				App.pokerspiel = new Pokerspiel(App.Mitspieler, App.Startkapital, App.BlindsArt, App.BigBlind, App.BlindsWert);
+//				App.Mitspieler.add(App.selbst);
+				if(joinedPlayer == false){
+					ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
+					joinedPlayer = true;
+				}
+				
 				Log.d("beigetreten", App.selbst.getProfil().getName() + " has joined the game");
 		
 		spielStarten=(Button) findViewById(R.id.buttonGegnerEinstellungenSpielStarten);
@@ -89,10 +89,9 @@ public class GegnerEinstellungenActivity extends Activity
 					public void onClick(View v) 
 					{   Log.d("Button", "Neues Spiel starten"); // Perform action on click 
 					
-						app.GegnerLevel=gegnerLevel.getProgress();
-						Log.d("Level",String.valueOf(app.GegnerLevel));
-						//app.Mitspieler mit SPielern füllen
-						//app.pokerspiel= new Pokerspiel(app.Mitspieler, app.Startkapital, app.BlindsArt, app.BlindsWert, app.BigBlind);
+						App.GegnerLevel=gegnerLevel.getProgress();
+						Log.d("Level",String.valueOf(App.GegnerLevel));
+
 						ClientPokerspielService.actionSpielErstellen(getApplicationContext());
 						startActivity(new Intent(getApplicationContext(),SpielActivity.class));
 					

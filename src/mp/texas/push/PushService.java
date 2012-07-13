@@ -2,6 +2,7 @@ package mp.texas.push;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
 import mp.texas.App;
 import mp.texas.BeitretenActivity;
 import mp.texas.Pokerspiel;
+import mp.texas.Spieler;
 
 import com.ibm.mqtt.IMqttClient;
 import com.ibm.mqtt.MqttClient;
@@ -87,6 +89,7 @@ public class PushService extends Service {
 	private static final String ACTION_LADEN = MQTT_CLIENT_ID + ".LADEN";
 	private static final String ACTION_UNSUBSCRIBE = MQTT_CLIENT_ID + ".UNSUSCRIBE";
 	private static final String ACTION_SUBSCRIBE = MQTT_CLIENT_ID + ".SUSCRIBE";
+	private static final String ACTION_UPDATE = MQTT_CLIENT_ID + ".UPDATE";
 
 	
 	// Connection log
@@ -204,6 +207,13 @@ public class PushService extends Service {
 		ctx.startService(i);
 	}
 	
+	// static Methode um den Spielstand upzudaten
+	public static void actionUpdate(Context ctx) {
+		Intent i = new Intent(ctx, PushService.class);
+		i.setAction(ACTION_UPDATE);
+		ctx.startService(i);
+	}
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -285,8 +295,8 @@ public class PushService extends Service {
 			subscribe();		
 		} else if (intent.getAction().equals(ACTION_PUBLISHSTART) == true) {
 			publishStart();		
-//		} else if (intent.getAction().equals(ACTION_PUBLISHSTART) == true) {
-//			getDeviceID();			
+		} else if (intent.getAction().equals(ACTION_UPDATE) == true) {
+			update();			
 			//		} else if (intent.getAction().equals(ACTION_UPDATEN) == true) {			//wird ja nicht von hier aufgerufen
 //			updaten();	
 		} else if (intent.getAction().equals(ACTION_RECONNECT) == true) {
@@ -374,6 +384,17 @@ public class PushService extends Service {
 			Log.w(TAG, "Attempt to publishJoin via a active connection");
 		MQTT_ALREADY_PUBLISHED = false;
 		publishingStart();
+	
+		}
+	}	
+	
+	private synchronized void update() {
+		log("PublishingStart via service...");
+
+		if (mStarted == true) {
+			Log.w(TAG, "Attempt to publishJoin via a active connection");
+		MQTT_ALREADY_PUBLISHED = false;
+		publishUpdate();
 	
 		}
 	}	
@@ -522,6 +543,24 @@ public class PushService extends Service {
 		}
 	}	
 	
+	private synchronized void publishUpdate() {
+		log("PublishingUpdate...");
+		
+		if (mStarted == true && mConnection != null && MQTT_ALREADY_PUBLISHED == false) { //MQTT_ALRE... checkt ob es schon publ. wurde
+			String publishTopic = MQTT_CLIENT_ID + "/game/" + App.aktuellesSpielID;//App.aktuellesSpielID; //"/#";
+			String publishJoinString = App.getGamestate();
+			log("publishing Update mit topic" + publishTopic + publishJoinString);
+			try {
+				mConnection.publishToTopic(publishTopic, publishJoinString);
+
+			} catch (MqttException e) {
+				log("publishToTopic throws exception... der Idiot");
+			}
+		} else {
+			log("No connection to publish to :(");
+		}
+	}		
+	
 	
 	private synchronized void publishingStart() {
 		log("PublishingStart...");
@@ -542,12 +581,10 @@ public class PushService extends Service {
 	
 	private synchronized void newPublishing() {
 		log("NewPublishing...");
-
-		String deviceID = mPrefs.getString(PREF_DEVICE_ID, null);
 		
 		if (mStarted == true && mConnection != null && MQTT_ALREADY_PUBLISHED == false) { //MQTT_ALRE... checkt ob es schon publ. wurde
-			String publishTopicNew = MQTT_CLIENT_ID + "/" + "new" + "/" + deviceID; //"/#";
-			String publishTopicGame = MQTT_CLIENT_ID + "/" + "game" + "/" + deviceID;
+			String publishTopicNew = MQTT_CLIENT_ID + "/" + "new" + "/" + App.selbst.getProfil().getId(); //"/#";
+			String publishTopicGame = MQTT_CLIENT_ID + "/" + "game" + "/" + App.selbst.getProfil().getId();
 			try {
 				// Hier müssen alle Daten von app abgefragt und als String gepublished werden
 				String newGameString = App.getNewGame();
@@ -555,7 +592,9 @@ public class PushService extends Service {
 
 			
 				mConnection.publishToTopic(publishTopicNew, newGameString);
-				mConnection.publishToTopic(publishTopicGame, "Starten, Hallo Welt");
+				mConnection.publishToTopic(publishTopicGame, "	Hallo Welt");
+				
+				
 			} catch (MqttException e) {
 				log("publishToTopic throws exception beim newPublishing... der Idiot");
 			}
@@ -819,7 +858,7 @@ public class PushService extends Service {
 			List<String> items = Arrays.asList(s.split("\\s*,\\s*"));
 			log("payload =" + items.toString());
 
-			if(items.get(0).equalsIgnoreCase("OPEN"))
+			if(items.get(0).equalsIgnoreCase("OPEN") && App.spielErstellt == false)
 			{	
 	
 			String message_s = items.get(1);
@@ -841,20 +880,48 @@ public class PushService extends Service {
 
 			
 			}
-			else if (items.get(0).equalsIgnoreCase("JOIN"))
+			else if (items.get(0).equalsIgnoreCase("JOIN") && App.spielErstellt == true)
 			{
 				showNotification(s);
+			
+			if(App.AnzahlSpieler>App.Mitspieler.size()){
 			App.addSpieler(items.get(1));
 			log(items.get(1) + " has joined the game");
-		
 			}
 			
-			else if (items.get(0).equalsIgnoreCase("STARTEN"))
+			else
 			{
-//			log(items.get(1) + "," +items.get(2) + "," +items.get(3) + "," +items.get(4) + "," +items.get(5) + "," +items.get(6) 
-//					+ "," +items.get(7) + "," +items.get(8) + "," +items.get(9) + "," +items.get(10) + "," +items.get(11) + "," +items.get(12) 
-//					+ "," +items.get(13) + "," +items.get(14) );
+			log(items.get(1) + " has not joined the game. Spiel schon voll!");
+			}
 				
+			}
+			
+			else if (items.get(0).equalsIgnoreCase("STARTEN") && App.spielErstellt == false)
+			{
+			log(items.get(1) + "," +items.get(2) + "," +items.get(3) + "," +items.get(4) + "," +items.get(5) + "," +items.get(6) 
+					+ "," +items.get(7) + "," +items.get(8) + "," +items.get(9) + "," +items.get(10) + "," +items.get(11) + "," +items.get(12) 
+					+ "," +items.get(13) + "," +items.get(14) );
+				
+				App.pokerspiel.setBlindModus(items.get(7));
+				App.pokerspiel.setBlindBetrag(Integer.parseInt(items.get(11)));
+				App.pokerspiel.setBlindZeitRundenWert(Integer.parseInt( items.get(9)));
+				App.pokerspiel.setComputergegnerLevel(Integer.parseInt( items.get(13)));
+				App.pokerspiel.setName(items.get(1));
+				App.pokerspiel.setOnlineSpiel(true);
+				App.pokerspiel.setStartkapital(Integer.parseInt( items.get(5)));
+				App.pokerspiel.setWettrunden(1);			
+				
+				int size = Integer.parseInt(items.get(3));
+				ArrayList<Spieler> temp = new ArrayList<Spieler>();
+				
+				for(int j=10; j< (13+3*size); j++){
+					if(items.get(j).equalsIgnoreCase("Spieler")) {
+						Spieler spielerTemp = new Spieler(items.get(j+1), App.pokerspiel.getStartkapital());
+//						spielerTemp.getProfil().setUri(items.get(j+2)); //erst auskommentieren, wenn das Bilderhochladen klappt.
+						temp.add(spielerTemp);
+					}
+				}
+				App.pokerspiel.setAlleSpieler(temp);
 				
 			}
 			else if (items.get(0).equalsIgnoreCase("UPDATEN"))

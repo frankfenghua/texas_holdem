@@ -16,7 +16,7 @@ public class Pokerspiel
 	private String blindModus;
 	private Blatt blatt;
 	private int blindBetrag;
-	private Spieler aktiverSpieler;
+	private Spieler aktiverSpieler; 
 	private ArrayList<Spieler> alleSpieler = new ArrayList<Spieler>();
 	private Spieler lastRaise;
 	private int einsatz;
@@ -27,6 +27,22 @@ public class Pokerspiel
 	private int Wettrunden;
 
 	
+	public Spieler getAktiverSpieler() {
+		return aktiverSpieler;
+	}
+
+	public void setAktiverSpieler(Spieler aktiverSpieler) {
+		this.aktiverSpieler = aktiverSpieler;
+	}
+
+	public Blatt getBlatt() {
+		return blatt;
+	}
+
+	public void setBlatt(Blatt blatt) {
+		this.blatt = blatt;
+	}
+
 	public int getWettrunden() {
 		return Wettrunden;
 	}

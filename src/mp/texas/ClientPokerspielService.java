@@ -178,7 +178,7 @@ public class ClientPokerspielService extends Service {
 		} else if (intent.getAction().equals(ACTION_BEITRETEN) == true) {
 				beitreten();
 		} else if (intent.getAction().equals(ACTION_UPDATEN) == true) {		
-//				updaten();
+				updaten();
 		} else if (intent.getAction().equals(ACTION_LADEN) == true) {		
 			laden();
 		} else if (intent.getAction().equals(ACTION_UNSUBSCRIBE) == true) {		
@@ -188,6 +188,7 @@ public class ClientPokerspielService extends Service {
 
 	private void eroeffnen()
 		{
+		App.spielErstellt = true; 
 		PushService.actionEroeffnen(getApplicationContext());
 		App.aktuellesSpielID = Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
 		}
@@ -204,7 +205,7 @@ public class ClientPokerspielService extends Service {
 	
 	private void beitreten()
 		{
-//		App.aktuellesSpielID = "vorläufig"; //String aus dem gewählten Spiel im Spinner!
+		App.spielErstellt = false; 
 		PushService.actionSubscribe(getApplicationContext());
 		PushService.actionPublishJoin(getApplicationContext()); 
 		// wo (welche Activity) kommen die Leute hier hin?
@@ -213,12 +214,35 @@ public class ClientPokerspielService extends Service {
 	
 	private void erstellen()
 		{
+		App.spielErstellt = true; 
+		
+		// alle angemeldeten Spieler werden initial gesmischt und in App.pokerspiel geschrieben
 		App.pokerspiel.setAlleSpieler(App.pokerspiel.spielerMischen(App.Mitspieler)); 
-		// alle angemeldeten Spieler werden initial gesmischt
+		
+		// Karten müssen erzeugt, gemischt und verschickt werden
+		Blatt blatt = new Blatt();
+		App.pokerspiel.setBlatt(blatt);
+		
+		App.pokerspiel.getBlatt().blattMischen(blatt.getKarten());
+		
+		App.pokerspiel.getBlatt().gemeinschaftskartenGeben();
+		
+		// bin mir nicht sicher
+		
 		PushService.actionPublishStart(getApplicationContext());
-		log("erstellen geht bis hier3:");
+		
+		log("NEUES SPIEL ERSTELLEN (FERTIG)");
 		}
 	
+	private void updaten()
+		{
+		//aktiven Spieler festlegen
+		App.pokerspiel.setAktiverSpieler(App.pokerspiel.getAlleSpieler().get(0 + (int)(Math.random() * ((App.pokerspiel.getAlleSpieler().size()) + 1))));
+		
+		
+		PushService.actionUpdate(getApplicationContext());
+		
+		}
 
 
 }

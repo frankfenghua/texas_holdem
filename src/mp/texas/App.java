@@ -15,6 +15,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 public class App extends Application 
 {
 	
+	public static boolean spielErstellt = false; 
 	public static boolean newOpenedGame = true;
 	public static boolean singlegame;
 	public static int AnzahlSpieler;
@@ -28,8 +29,8 @@ public class App extends Application
 	public static ArrayList<Pokerspiel> offeneSpiele = new ArrayList<Pokerspiel>();
 	public static String aktuellesSpielID;
 	
-	public static Pokerspiel pokerspiel=null;
-	public static Spieler selbst;
+	public static Pokerspiel pokerspiel = null;
+	public static Spieler selbst = new Spieler();
 
 	public static void addSpieler(String neuerSpielerarg)
 	{
@@ -48,25 +49,40 @@ public class App extends Application
 		neues.setBlindZeitRundenWert(blindsWertarg);
 		neues.setStartkapital(startkapitalarg);
 		offeneSpiele.add(neues);
+		
+		Log.d("offeneSpiele", "neues offenes Spiel geaddet");
 	}
 	
 	
 	public static String neuesSpielErstellen(){
-		String s = 		 "STARTEN," + "aktuellesSpielID" + ","
-					+ "anzahlSpieler,"+ Integer.toString(App.AnzahlSpieler) + "," 
-				   + "startkapital," + Integer.toString(App.Startkapital) + ", "
-				   + "blindsArt," + App.BlindsArt + ","
-				   + "blindsWert," + App.BlindsWert + ","
-				   + "bigBlind," + App.BigBlind + ","
-				   + "gegenerLevel," + App.GegnerLevel 
-				   ;
 		
-		int size = Mitspieler.size();
+		App.pokerspiel.setBlindBetrag(App.BigBlind);
+		App.pokerspiel.setBlindModus(App.BlindsArt);
+		App.pokerspiel.setBlindZeitRundenWert(App.BlindsWert);
+		App.pokerspiel.setName(App.aktuellesSpielID);
+		App.pokerspiel.setOnlineSpiel(true);
+		App.pokerspiel.setStartkapital(App.Startkapital);
+		App.pokerspiel.setWettrunden(0);
+		App.pokerspiel.setComputergegnerLevel(App.GegnerLevel);
+		
+		
+		
+		String s = 		 "STARTEN," + aktuellesSpielID + ","
+					+ "anzahlSpieler,"+ Integer.toString(App.pokerspiel.getAlleSpieler().size()) + "," 
+				   + "startkapital," + Integer.toString(App.pokerspiel.getStartkapital()) + ", "
+				   + "blindsArt," + App.pokerspiel.getBlindModus() + ","
+				   + "blindsWert," + App.pokerspiel.getBlindZeitRundenWert() + ","
+				   + "bigBlind," + App.pokerspiel.getBlindBetrag() + ","
+				   + "gegenerLevel," + App.pokerspiel.getComputergegnerLevel();
+				   
+		
+		int size = App.pokerspiel.getAlleSpieler().size();
 	
 		for(int i=0; i<size; i++)
 		{
-				s = s + "," +  Mitspieler.get(i).getProfil().getName();  //sind Element 15, 16, ....
-		}
+				s = s + ", SpielerNr"+ Integer.toString(i+1) + "," +  App.pokerspiel.getAlleSpieler().get(i).getProfil().getName() //sind Element 15, 16, ....
+					+ App.pokerspiel.getAlleSpieler().get(i).getProfil().getUri(); //wird verwendet, sobald das bild an einer Stelle gespeichert wurde
+		}	
 		
 		return s;
 	}
@@ -78,7 +94,7 @@ public class App extends Application
 					   + "startkapital," + Integer.toString(App.Startkapital) + ", "
 					   + "blindsArt," + App.BlindsArt + ","
 					   + "blindsWert," + App.BlindsWert + ","
-					   + "bigBlind," + App.BigBlind;
+					   + "bigBlind," + App.BigBlind + ", ENDE";
 		return s;
 	}
 	
@@ -90,6 +106,7 @@ public class App extends Application
 	public static String getGamestate(){
 		String s = new String();
 		
+		s = "UPDATE," + "";
 		
 		
 		return s;

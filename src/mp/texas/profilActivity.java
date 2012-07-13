@@ -68,10 +68,10 @@ public class profilActivity extends Activity
 				});
 				
 		bild=(ImageButton) findViewById(R.id.imageButtonProfilBild);
-		if(app.selbst.getProfil().getAvatar()!=null)
+		if(App.selbst.getProfil().getAvatar()!=null)
 		{
 			Log.d("Bild","ungleich null");
-			bild.setImageDrawable(app.selbst.getProfil().getAvatar());
+			bild.setImageDrawable(App.selbst.getProfil().getAvatar());
 		    bild.setScaleType(ScaleType.CENTER_INSIDE);
 		}
 		
@@ -90,8 +90,8 @@ public class profilActivity extends Activity
 				});
 		
 		name=(EditText) findViewById(R.id.editTextProfilName);
-		if(app.selbst.getProfil().getName()!=null)
-		{name.setText(app.selbst.getProfil().getName());}
+		if(App.selbst.getProfil().getName()!=null)
+		{name.setText(App.selbst.getProfil().getName());}
 	}
 	
 								
@@ -242,7 +242,7 @@ public class profilActivity extends Activity
 	    bild.setScaleType(ScaleType.CENTER_INSIDE);
 	    
         }
-        app.selbst.getProfil().setAvatar(bild.getDrawable());
+        App.selbst.getProfil().setAvatar(bild.getDrawable());
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 

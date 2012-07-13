@@ -72,7 +72,7 @@ public class BeitretenActivity extends Activity {
 //				Log.d("beitretenActivity", Integer.toString(App.offeneSpiele.size()));
 				App.aktuellesSpielID = App.offeneSpiele.get(arg2-1).getName();
 				Log.d("beitretenActivity2", App.getAktuellesSpielID());
-				draw();
+				draw(arg2);
 			}
 			
 			
@@ -81,7 +81,7 @@ public class BeitretenActivity extends Activity {
 		public void onNothingSelected(AdapterView<?> arg0) {
 			Log.d("Modus", "Nichts gewählt");
 			// TODO Auto-generated method stub
-			draw();
+			//draw();
 		}             
  
 	});
@@ -110,13 +110,13 @@ public class BeitretenActivity extends Activity {
 	 }
 	 
 	
-	 private void draw()
+	 private void draw(int arg)
 	 {
-		 startkapital.setText(String.valueOf(App.pokerspiel.getStartkapital()));
-		 anzahlspieler.setText(String.valueOf(App.pokerspiel.getAlleSpieler().size()));
-		 computergegner.setText(String.valueOf(App.pokerspiel.getComputergegnerLevel()));
-		 bigBlind.setText(String.valueOf(App.pokerspiel.getBlindBetrag()));
-		 blindserhohennach.setText(String.valueOf(App.pokerspiel.getBlindZeitRundenWert()));
+		 startkapital.setText(String.valueOf(App.offeneSpiele.get(arg-1).getStartkapital()));
+		 anzahlspieler.setText(String.valueOf(App.offeneSpiele.get(arg-1).getAlleSpieler().size()));
+		 computergegner.setText(String.valueOf(App.offeneSpiele.get(arg-1).getComputergegnerLevel()));
+		 bigBlind.setText(String.valueOf(App.offeneSpiele.get(arg-1).getBlindBetrag()));
+		 blindserhohennach.setText(String.valueOf(App.offeneSpiele.get(arg-1).getBlindZeitRundenWert()));
 	 }
 	 
 	private Pokerspiel SpieleLaden()

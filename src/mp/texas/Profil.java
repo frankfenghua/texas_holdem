@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable;
 
 public class Profil 
 {
-	private String name;
+	private String name = "Reiner Zufall II";
 	private Drawable avatar;
 	private String uri;
 	private String id;

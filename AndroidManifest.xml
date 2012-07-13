@@ -11,11 +11,14 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
+         
         android:name="App"
         android:icon="@drawable/texas_holdem_icon"
-        android:label="@string/app_name" >
-<!--         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" -->
+        android:label="@string/app_name" 
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        
         <activity
+            android:screenOrientation="landscape"
             android:name=".startActivity"
             android:label="@string/app_name" >
             <intent-filter>
@@ -24,23 +27,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".profilActivity" >
+            android:name=".profilActivity" 
+            android:screenOrientation="landscape"
+            >
         </activity>
         <activity
-            android:name=".spielModusActivity" >
+            android:name=".spielModusActivity"
+            android:screenOrientation="landscape" >
         </activity>
                 <activity
-            android:name=".SpielEinstellungenActivity" >
+            android:name=".SpielEinstellungenActivity"
+            android:screenOrientation="landscape" >
         </activity>
         
                 <activity
-            android:name=".BeitretenActivity" >
+            android:name=".BeitretenActivity" 
+            android:screenOrientation="landscape">
         </activity>
         
                                 <activity
-            android:name=".GegnerEinstellungenActivity" >
+            android:name=".GegnerEinstellungenActivity"
+            android:screenOrientation="landscape" >
         </activity>
                 <activity
+                    android:screenOrientation="landscape"
             android:name=".SpielActivity" 
             android:windowSoftInputMode="stateHidden">
         </activity>

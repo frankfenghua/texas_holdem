@@ -50,9 +50,9 @@ public class GegnerEinstellungenActivity extends Activity
 		app=(App)getApplication();
 		
 		scroll=(ScrollView)findViewById(R.id.scrollViewGegnerEinstellungen);
-		mitspieler.add(new Profil());
-		mitspieler.add(new Profil());
-		mitspieler.add(new Profil());
+		mitspieler.add(new Profil(3));
+		mitspieler.add(new Profil(2));
+		mitspieler.add(new Profil(1));
 	
 		boolean joinedPlayer = false;
 		text=new TextView(this);
@@ -72,6 +72,7 @@ public class GegnerEinstellungenActivity extends Activity
 		}
 //				ClientPokerspielService.actionSpielErstellen(getApplicationContext());
 				
+<<<<<<< HEAD
 				Log.d("Button", "Hier3");
 				App.pokerspiel = new Pokerspiel(App.Mitspieler, App.Startkapital, App.BlindsArt, App.BigBlind, App.BlindsWert);
 //				App.Mitspieler.add(App.selbst);
@@ -81,6 +82,18 @@ public class GegnerEinstellungenActivity extends Activity
 				}
 				
 				Log.d("beigetreten", App.selbst.getProfil().getName() + " has joined the game");
+=======
+				//App.pokerspiel = new Pokerspiel();
+
+				App.selbst = new Spieler();
+
+				//ArrayList<Spieler> spielers = App.pokerspiel.getAlleSpieler();
+				
+// 				spielers.add(selbst);
+//				HIERMIT GIBT ES PROBLEME!!!!!! KEINE AHNUNG WARUM?!				
+				ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
+				Log.d("beigetreten", App.ProfilName + " has joined the game");
+>>>>>>> michael
 		
 		spielStarten=(Button) findViewById(R.id.buttonGegnerEinstellungenSpielStarten);
 		spielStarten.setOnClickListener(
@@ -89,10 +102,25 @@ public class GegnerEinstellungenActivity extends Activity
 					public void onClick(View v) 
 					{   Log.d("Button", "Neues Spiel starten"); // Perform action on click 
 					
+<<<<<<< HEAD
 						App.GegnerLevel=gegnerLevel.getProgress();
 						Log.d("Level",String.valueOf(App.GegnerLevel));
 
 						ClientPokerspielService.actionSpielErstellen(getApplicationContext());
+=======
+						app.GegnerLevel=gegnerLevel.getProgress();
+						Log.d("Level",String.valueOf(app.GegnerLevel));
+						//app.Mitspieler mit SPielern füllen
+						//app.pokerspiel= new Pokerspiel(app.Mitspieler, app.Startkapital, app.BlindsArt, app.BlindsWert, app.BigBlind);
+						if(app.singlegame==false)
+						{ClientPokerspielService.actionSpielErstellen(getApplicationContext());
+						}
+						else
+						{
+						App.pokerspiel=new Pokerspiel(false,App.AnzahlSpieler,App.Startkapital,App.BlindsArt,App.BlindsWert,App.BigBlind,App.GegnerLevel);
+						Log.d("SPieler im App.pokerspiel",String.valueOf(App.pokerspiel.getAlleSpieler().size()));
+						}
+>>>>>>> michael
 						startActivity(new Intent(getApplicationContext(),SpielActivity.class));
 					
 					}         

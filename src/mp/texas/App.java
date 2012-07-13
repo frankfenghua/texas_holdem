@@ -17,7 +17,7 @@ public class App extends Application
 	
 	public static boolean spielErstellt = false; 
 	public static boolean newOpenedGame = true;
-	public static boolean singlegame;
+	public static boolean singlegame=true;
 	public static int AnzahlSpieler;
 	public static int Startkapital;
 	public static String BlindsArt;
@@ -29,8 +29,14 @@ public class App extends Application
 	public static ArrayList<Pokerspiel> offeneSpiele = new ArrayList<Pokerspiel>();
 	public static String aktuellesSpielID;
 	
+<<<<<<< HEAD
 	public static Pokerspiel pokerspiel = null;
 	public static Spieler selbst = new Spieler();
+=======
+	public static Pokerspiel pokerspiel;
+	public static Pokerspiel pokerspieloffline;
+	public static Spieler selbst;
+>>>>>>> michael
 
 	public static void addSpieler(String neuerSpielerarg)
 	{

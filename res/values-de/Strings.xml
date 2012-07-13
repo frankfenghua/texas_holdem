@@ -47,6 +47,7 @@
    	<color name="Grau">#90202020</color>
     <string name="ModusMehrspielerBeitreten">Mehrspielerspiel beitreten</string>
     <color name="Green">#99CC00</color>
+    <color name="red">#AA2222</color>
    
     
 </resources>

@@ -50,9 +50,9 @@ public class GegnerEinstellungenActivity extends Activity
 		app=(App)getApplication();
 		
 		scroll=(ScrollView)findViewById(R.id.scrollViewGegnerEinstellungen);
-		mitspieler.add(new Profil());
-		mitspieler.add(new Profil());
-		mitspieler.add(new Profil());
+		mitspieler.add(new Profil(3));
+		mitspieler.add(new Profil(2));
+		mitspieler.add(new Profil(1));
 	
 		text=new TextView(this);
 		text.setText("Hallo");
@@ -71,12 +71,12 @@ public class GegnerEinstellungenActivity extends Activity
 		}
 //				ClientPokerspielService.actionSpielErstellen(getApplicationContext());
 				
-				App.pokerspiel = new Pokerspiel();
+				//App.pokerspiel = new Pokerspiel();
 
 				App.selbst = new Spieler();
 
-				ArrayList<Spieler> spielers = App.pokerspiel.getAlleSpieler();
-				Log.d("Button", "Hier3");
+				//ArrayList<Spieler> spielers = App.pokerspiel.getAlleSpieler();
+				
 // 				spielers.add(selbst);
 //				HIERMIT GIBT ES PROBLEME!!!!!! KEINE AHNUNG WARUM?!				
 				ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
@@ -93,7 +93,14 @@ public class GegnerEinstellungenActivity extends Activity
 						Log.d("Level",String.valueOf(app.GegnerLevel));
 						//app.Mitspieler mit SPielern füllen
 						//app.pokerspiel= new Pokerspiel(app.Mitspieler, app.Startkapital, app.BlindsArt, app.BlindsWert, app.BigBlind);
-						ClientPokerspielService.actionSpielErstellen(getApplicationContext());
+						if(app.singlegame==false)
+						{ClientPokerspielService.actionSpielErstellen(getApplicationContext());
+						}
+						else
+						{
+						App.pokerspiel=new Pokerspiel(false,App.AnzahlSpieler,App.Startkapital,App.BlindsArt,App.BlindsWert,App.BigBlind,App.GegnerLevel);
+						Log.d("SPieler im App.pokerspiel",String.valueOf(App.pokerspiel.getAlleSpieler().size()));
+						}
 						startActivity(new Intent(getApplicationContext(),SpielActivity.class));
 					
 					}         

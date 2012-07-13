@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.ImageView;
 
 public class Blatt 
@@ -33,10 +34,13 @@ public class Blatt
 	
 	public Blatt()
 	{
-		for(int i=1; i<=4; i++)
+		karten=new ArrayList<Karte>();
+		for(int i=0; i<4; i++)
 		{
 			for(int j=2; j<=14; j++)
+				{	
 				karten.add(new Karte(i,j));
+				}
 		}
 		blattMischen(karten);
 	}

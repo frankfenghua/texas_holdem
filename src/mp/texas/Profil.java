@@ -6,6 +6,8 @@ public class Profil
 {
 	private String name;
 	private Drawable avatar;
+	private String[] namen = {"Anton","Berta","Cäsar","Dora","Emil","Friedrich","Gustav"};
+
 	
 	
 	public String getName() {
@@ -22,4 +24,16 @@ public class Profil
 	}
 	
 
+	public Profil(int id)
+	{
+		name=namen[id-1];
+	}
+	
+	public Profil(String name, Drawable bild)
+	{
+		this.name=name;
+		this.avatar=bild;
+	}
+	
+	
 }

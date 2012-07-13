@@ -40,7 +40,7 @@ public class spielModusActivity extends Activity
 				{             
 					public void onClick(View v) 
 					{                Log.d("Button", "Einzelspielerspiel"); 
-					app.singlegame=true;
+					App.singlegame=true;
 					startActivity(new Intent(getApplicationContext(),SpielEinstellungenActivity.class));
 					
 					}         

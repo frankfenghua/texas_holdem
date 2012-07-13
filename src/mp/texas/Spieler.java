@@ -1,15 +1,23 @@
 package mp.texas;
+import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
 public class Spieler 
 {
-	private Profil profil = new Profil();
+	protected Profil profil = new Profil(1);
 	private Hand hand;
-	private int chips;
+	//ANZEIGEPARAMETER
+	public int numberondevice;
+	public LinearLayout layoutondevice;
+	public boolean mainspieler;
+	//IST DER SPIELER AUF DEM GERÄT;
+	protected int chips;
 	private boolean nochDrin=true;
+	private String zustand=" ";
 	private double anzahlZigaretten=19;
-	private int chipsImPot=0;
+	protected int chipsImPot=0;
 	public int[] ergebnis={0,0,0,0,0,0};
 	
 	public Spieler(Profil profilarg, int chipsarg)
@@ -17,6 +25,7 @@ public class Spieler
 		profil=profilarg;
 		chips=chipsarg;
 		nochDrin=true;
+		chipsImPot=0;
 	}
 	
 	public Spieler(String namearg, int chipsarg)
@@ -24,6 +33,7 @@ public class Spieler
 		profil.setName(namearg);
 		this.setChips(chipsarg);
 		nochDrin=true;
+		chipsImPot=0;
 	}
 	
 	public Spieler() {
@@ -35,6 +45,8 @@ public class Spieler
 		if(chips>chipsarg)
 		{
 			chips-=chipsarg;
+			chipsImPot+=chipsarg;
+			Log.d(profil.getName(),String.valueOf(chipsarg));
 			return chipsarg;
 		}
 		
@@ -79,5 +91,37 @@ public class Spieler
 
 	public void setChipsImPot(int chipsImPot) {
 		this.chipsImPot = chipsImPot;
+	}
+
+	public String getZustand() {
+		return zustand;
+	}
+
+	public void setZustand(String zustand) {
+		this.zustand = zustand;
+	}
+	
+	public void call(int need)
+	{
+		Log.d("App.pokerspieltest",String.valueOf(App.pokerspiel));
+		//App.pokerspiel.einzahlen(setzen(need-getChipsImPot()));
+		App.pokerspiel.weiter();
+	}
+	 
+	public void raise(int wert)
+	{
+		App.pokerspiel.einzahlen(setzen(wert));
+		App.pokerspiel.setEinsatz(wert+chipsImPot);
+		App.pokerspiel.weiter();
+	}
+	
+	public void fold()
+	{
+		
+	}
+	
+	public void auffordern(int need)
+	{
+
 	}
 }

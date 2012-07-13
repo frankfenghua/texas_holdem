@@ -6,11 +6,9 @@ import android.util.Log;
 
 public class Pokerspiel 
 {
-	private int Michael;
 	private String name;
 	private int startkapital;  // wird vorläufig zur übergabe aus SPielEInstellungenAct. gebraucht
 	private int pot;
-	private Blatt blatt;
 	private final int Runden=1; //??
 	private final int Zeit=2; //??
 	private int blindZeitRundenWert;
@@ -19,14 +17,45 @@ public class Pokerspiel
 	private Spieler aktiverSpieler;
 	private ArrayList<Spieler> alleSpieler = new ArrayList<Spieler>();
 	private Spieler lastRaise;
-	private int einsatz;
+	private int einsatz=0;
 	private Spieler smallBlindSpieler;
 	private Gemeinschaftskarten gemeinschaftskarten;
+	private int wettrunde;
+	
+	public Gemeinschaftskarten getGemeinschaftskarten() {
+		return gemeinschaftskarten;
+	}
+
+	public void setGemeinschaftskarten(Gemeinschaftskarten gemeinschaftskarten) {
+		this.gemeinschaftskarten = gemeinschaftskarten;
+	}
+
 	private int ComputergegnerLevel;
 
 	
 	public Pokerspiel(){
 		//leere Konstruktor zur Spieleröffnung
+		//austeilen();
+		Log.d("Leerer Pokerkonstruktor","aufgerufen");
+	}
+	
+	public Pokerspiel(boolean online, int anzahlmitspieler, int startkapital, String blindart, int Blindwert, int bigblind, int computerlevel)
+	{
+		blindBetrag=bigblind;
+		if(online==false)
+		{Log.d("hier","hier");
+			alleSpieler=new ArrayList<Spieler>();
+			alleSpieler.add(new Humanspieler(startkapital));
+			for(int i=1; i<anzahlmitspieler;i++)
+			{
+				alleSpieler.add(new ComputerSpieler(computerlevel, startkapital,i));
+			}
+			Log.d("Spieler im Konstruktor",String.valueOf(alleSpieler.size()));
+		}
+		setEinsatz(0);
+		alleSpieler=spielerMischen(getAlleSpieler());
+		smallBlindSpieler=getAlleSpieler().get(0);
+		austeilen();
 	}
 	
 	public Pokerspiel(int startkapitalarg, int blindZeitRundenWertarg, String blindModusarg, int blindBetragarg){
@@ -34,6 +63,7 @@ public class Pokerspiel
 		this.blindBetrag=blindBetragarg;
 		this.blindZeitRundenWert=blindZeitRundenWertarg;
 		this.blindModus=blindModusarg;
+		Log.d("3 Konstruktor","aufgerufen");
 	}
 
 	
@@ -51,17 +81,25 @@ public class Pokerspiel
 		//alleSpieler=(ArrayList<Spieler>) spielerMischen(alleSpieler);
 		//smallBlindSpieler=alleSpieler.get(0);
 		//aktiverSpieler=alleSpieler.get(0);
+		Log.d("4ter Pokerkonstruktor","aufgerufen");
 	}
 	
 	public void austeilen()
 	{
+		pot=0;
+		setWettrunde(1);
 		blindWeitergeben();
+		Blatt blatt = new Blatt();
 		blatt.blattMischen(blatt.getKarten());
+		gemeinschaftskarten=blatt.gemeinschaftskartenGeben();
+		
 		for(Spieler n:getAlleSpieler())
 		{
 			n.setHand(blatt.handGeben());
 		}
+		Log.d("Austeilen SPieleranzahl", String.valueOf(getAlleSpieler().size()));
 		blindsEinzahlen();
+		aktiverSpieler.auffordern(getEinsatz());
 	}
 	
 	
@@ -70,33 +108,62 @@ public class Pokerspiel
 	////////////////////////////////////////////////////////////////////////////
 	public void blindsEinzahlen()
 	{
-		
+		int temp=getAlleSpieler().indexOf(smallBlindSpieler);
+		pot+=smallBlindSpieler.setzen(blindBetrag/2);
+		pot+=getAlleSpieler().get(verschieben(temp+1)).setzen(blindBetrag);
+		setEinsatz(blindBetrag);
 	}
 	
 	public void blindWeitergeben()
 	{
+	 	int temp=getAlleSpieler().indexOf(smallBlindSpieler);
+	 	getAlleSpieler().get(verschieben(temp-1)).setZustand(" ");
+
+	 	if(temp==0){
+	 		getAlleSpieler().get(getAlleSpieler().size()-1).setZustand(" ");
+	 	}
+	 	else
+	 	{getAlleSpieler().get(temp-1).setZustand(" ");}
+		getAlleSpieler().get(temp).setZustand("Dealer");
+		if(temp+1==getAlleSpieler().size())
+		{getAlleSpieler().get(0).setZustand("Small Blind");
+		smallBlindSpieler=getAlleSpieler().get(0);}
+		else{getAlleSpieler().get(temp+1).setZustand("Small Blind");
+		smallBlindSpieler=getAlleSpieler().get(temp+1);}
 		
+		if(temp+2==getAlleSpieler().size())
+		{getAlleSpieler().get(0).setZustand("Big Blind");}	
+		if(temp+2==getAlleSpieler().size()+1)
+		{getAlleSpieler().get(1).setZustand("Big Blind");}
+		if((temp+2!=getAlleSpieler().size())&&(temp+2!=getAlleSpieler().size()+1))
+		{getAlleSpieler().get(temp+2).setZustand("Big Blind");}
+	 	
+	 	aktiverSpieler=getAlleSpieler().get(verschieben(temp+3));
 	}
 	
 	///////////////////////////////////////////////////////////////////////////
 	/////////////////////////Bietrunden////////////////////////////////////////
 	private void Preflop()
-	{
+	{	setWettrunde(1);
+		
 		//Bietrunde vor den ersten Gemeinschaftskarten
 	}
 	
 	private void Flop()
 	{
+		setWettrunde(2);
 		//Bietrunde nach den ersten 3 Karten
 	}
 	
 	private void TurnCard()
 	{
+		setWettrunde(3);
 		//Bietrunde nach der TurnCard
 	}
 	
 	private void RiverCard()
 	{
+		setWettrunde(4);
 		//Bietrunde nach der RiverCard
 	}
 	
@@ -131,7 +198,7 @@ public class Pokerspiel
 			ergebnismatrix[z][5]=0;
 			int[] Wertesammeln={0,0,0,0,0,0,0,0,0,0,0,0,0};
 			int[] Farbensammeln={0,0,0,0};
-			for(Karte m:blatt.getKarten())
+			for(Karte m:gemeinschaftskarten.getGemeinschaftskarten())
 			{
 				Farbensammeln[m.getFarbe()]++;
 				Wertesammeln[m.getWert()-2]++;
@@ -147,7 +214,7 @@ public class Pokerspiel
 				if(Farbensammeln[m]==5)
 				{
 					int[] nurFarbe={0,0,0,0,0,0,0,0,0,0,0,0};
-					for(Karte o:blatt.getKarten())
+					for(Karte o:gemeinschaftskarten.getGemeinschaftskarten())
 					{
 						if(o.getFarbe()==m)
 						{nurFarbe[o.getWert()]=1;}
@@ -518,5 +585,68 @@ public class Pokerspiel
 
 	public void setComputergegnerLevel(int computergegnerLevel) {
 		ComputergegnerLevel = computergegnerLevel;
+	}
+
+	public int getWettrunde() {
+		return wettrunde;
+	}
+
+	public void setWettrunde(int wettrunde) {
+		this.wettrunde = wettrunde;
+	}
+
+	public Spieler getAktiverSpieler() {
+		return aktiverSpieler;
+	}
+
+	public void setAktiverSpieler(Spieler aktiverSpieler) {
+		this.aktiverSpieler = aktiverSpieler;
+	}
+	
+	public int verschieben(int zahl)
+	{while((zahl<0)||(zahl>=getAlleSpieler().size()))
+		{
+		if(zahl<0){zahl+=getAlleSpieler().size();}
+		if(zahl>=getAlleSpieler().size()){zahl-=getAlleSpieler().size();}
+		}
+	return zahl;
+	}
+
+	public int getPot() {
+		return pot;
+	}
+
+	public void setPot(int pot) {
+		this.pot = pot;
+	}
+
+	public int getEinsatz() {
+		return einsatz;
+	}
+
+	public void setEinsatz(int einsatz) {
+		this.einsatz = einsatz;
+	}
+
+	public void einzahlen(int setzen) {
+		
+		pot+=setzen;
+
+	}
+	
+	public void nachsterSpieler()
+	{
+		int temp= getAlleSpieler().indexOf(aktiverSpieler);
+		aktiverSpieler=getAlleSpieler().get(verschieben(temp++));
+		while(aktiverSpieler.isNochDrin()==false)
+		{aktiverSpieler=getAlleSpieler().get(verschieben(temp++));}	
+		
+	}
+
+	public void weiter() {
+		nachsterSpieler();
+		aktiverSpieler.auffordern(getEinsatz());
+		//HIER EINEN HANDLER DER DIE DRAW FUNKTION DER ACTIVITY AKTIVIERT
+		
 	}
 }

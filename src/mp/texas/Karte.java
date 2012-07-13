@@ -138,6 +138,65 @@ public class Karte
 		return Bitmap.createBitmap(blatt, blatt.getWidth()/13*Wert, blatt.getHeight()/5*Farbe, blatt.getWidth()/13, blatt.getHeight()/5);
 	}
 	
+	
+	public static Bitmap getKartenBild(Karte karte, int reqWidth, int reqHeight , Context context)
+	{
+		int wert=karte.getWert();
+		int farbe=karte.getFarbe();
+		
+		if(reqWidth==0)
+		{
+			reqWidth=60;
+		}
+		if(reqHeight==0)
+		{
+		reqHeight=100;
+		}
+	
+		if(blatt==null)
+		{
+			blatt=decodeSampledBitmapFromResource(context.getResources(),R.drawable.playingcards, reqWidth*13, reqHeight*5);
+		}
+
+		if(wert!=0)	
+		{		
+		
+			if(wert==Karte.Ass)
+			{
+				wert=0;
+			}
+		
+			else
+			{
+				wert-=1;
+			}
+		}
+		else
+		{	
+			wert=2;
+			farbe=4;
+		}
+		
+		/*//--
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeResource(context.getResources(), R.drawable.playingcards, options);
+		int imageHeight = options.outHeight;
+		int imageWidth = options.outWidth;
+		String imageType = options.outMimeType;
+		
+		
+		//--
+		//ImageView temp = new ImageView(context);
+		Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), 
+                R.drawable.playingcards); 
+		bitmap=Bitmap.createBitmap(bitmap, bitmap.getWidth()/13*Wert, bitmap.getHeight()/5*Farbe, bitmap.getWidth()/13, bitmap.getHeight()/5);
+		//temp.setImageBitmap(bitmap);
+		*/
+		return Bitmap.createBitmap(blatt, blatt.getWidth()/13*wert, blatt.getHeight()/5*farbe, blatt.getWidth()/13, blatt.getHeight()/5);
+	}
+	
+	
 
 	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) 
 	{    // Raw height and width of image    

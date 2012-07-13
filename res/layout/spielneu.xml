@@ -9,8 +9,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
-
+
         <LinearLayout
+            android:id="@+id/LinearLayoutGegner1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
@@ -52,8 +53,9 @@
 
             </LinearLayout>
         </LinearLayout>
-
+
         <LinearLayout
+            android:id="@+id/LinearLayoutGegner2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
@@ -94,8 +96,9 @@
                     android:text="TextView" />
             </LinearLayout>
         </LinearLayout>
-
+
         <LinearLayout
+            android:id="@+id/LinearLayoutGegner3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
@@ -136,11 +139,13 @@
                     android:text="TextView" />
             </LinearLayout>
         </LinearLayout>
-
+
         <LinearLayout
+            android:id="@+id/LinearLayoutGegner4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+             >
 
             <ImageView
                 android:id="@+id/ImageView01"
@@ -237,9 +242,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical" >
-
+
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/textViewSpielPot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Im Pot"
@@ -253,8 +258,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
-
+
         <LinearLayout
+            android:id="@+id/LinearLayoutGegner7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
@@ -295,8 +301,9 @@
                     android:text="TextView" />
             </LinearLayout>
         </LinearLayout>
-
+
         <LinearLayout
+            android:id="@+id/LinearLayoutGegner6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
@@ -337,8 +344,9 @@
                     android:text="TextView" />
             </LinearLayout>
         </LinearLayout>
-
+
         <LinearLayout
+            android:id="@+id/LinearLayoutGegner5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
@@ -379,14 +387,21 @@
                     android:text="TextView" />
             </LinearLayout>
         </LinearLayout>
-
+
         <LinearLayout
+            android:id="@+id/LinearLayoutMainSpieler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
-
+
             <ImageView
-                android:id="@+id/ImageView04"
+                android:id="@+id/ImageViewSpielMeineKarte1"
+                android:layout_width="54dp"
+                android:layout_height="80dp"
+                android:src="@drawable/as" />
+
+            <ImageView
+                android:id="@+id/ImageViewSpielMeineKarte2"
                 android:layout_width="54dp"
                 android:layout_height="80dp"
                 android:src="@drawable/as" />

@@ -5,6 +5,7 @@
 package mp.texas;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.util.Log;
 
@@ -22,6 +23,7 @@ public class Pokerspiel
 	private int wettrunde;							//Aktuelle Bietrunde, Preflop, Flop, River...
 	private Spieler lastRaise=null;
 	private int Rundenzahler=0;
+	private long startzeit;
 	
 	//Variablen um zu initialisieren, wichtig für Vorschau offen Spiele
 	private int ComputergegnerLevel = 0;
@@ -31,54 +33,66 @@ public class Pokerspiel
 	
 	
 	//Variablen für die Blind Erhöhungen
-	private final int Runden=1; //??
-	private final int Zeit=2; //??
 	private int blindZeitRundenWert;
-	private String blindModus;
+	private int blindModus;
 	
 
 	
 	public Pokerspiel(){
+		blindModus=1;
 		//leere Konstruktor zur Spieleršffnung
 		//austeilen();
 		Log.d("Leerer Pokerkonstruktor","aufgerufen");
 	}
 	
 	//DER KONSTRUKTOR DER VON MICHAEL VERWENDET WIRD
-	public Pokerspiel(boolean online, int anzahlmitspieler, int startkapital, String blindart, int Blindwert, int bigblind, int computerlevel)
+	public Pokerspiel(boolean online, int anzahlmitspieler, int startkapital, int blindart, int Blindwert, int bigblind, int computerlevel)
 	{
+		blindModus=blindart;
+		startzeit=System.currentTimeMillis();
 		if(online)
 		{singlePlayer=false;}
 		else{singlePlayer=true;}
 		blindBetrag=bigblind;
 		if(online==false)
-		{Log.d("hier","hier");
+		{
 			alleSpieler=new ArrayList<Spieler>();
 			alleSpieler.add(new Humanspieler(startkapital));
 			for(int i=1; i<anzahlmitspieler;i++)
 			{
 				alleSpieler.add(new ComputerSpieler(computerlevel, startkapital,i));
 			}
-			Log.d("Spieler im Konstruktor",String.valueOf(alleSpieler.size()));
+			setEinsatz(0);
+			alleSpieler=spielerMischen(getAlleSpieler());
+			smallBlindSpieler=getAlleSpieler().get(0);
+			setWettrunde(0);
+			setPot(0);
+			receive();	//Weiterleitung
 		}
+<<<<<<< HEAD
 		setEinsatz(0);
 		alleSpieler=spielerMischen(getAlleSpieler());
 		setSmallBlindSpieler(getAlleSpieler().get(0));
 		austeilen();
+=======
+		 
+>>>>>>> origin/michael2
 	}
 	
 	
-	public Pokerspiel(int startkapitalarg, int blindZeitRundenWertarg, String blindModusarg, int blindBetragarg){
+	public Pokerspiel(int startkapitalarg, int blindZeitRundenWertarg, int blindModusarg, int blindBetragarg){
+		startzeit=System.currentTimeMillis();
 		this.startkapital=startkapitalarg;
 		this.blindBetrag=blindBetragarg;
 		this.blindZeitRundenWert=blindZeitRundenWertarg;
 		this.blindModus=blindModusarg;
-		Log.d("3 Konstruktor","aufgerufen");
+		
 	}
 
 	
-	public Pokerspiel(ArrayList<Spieler> alleSpieler, int Startkapital, String blindModus, int blindZeitRundenWert, int blindBetrag)
+	public Pokerspiel(ArrayList<Spieler> alleSpieler, int Startkapital, int blindModus, int blindZeitRundenWert, int blindBetrag)
 	{
+		startzeit=System.currentTimeMillis();
 		this.startkapital=Startkapital;
 		this.setAlleSpieler(alleSpieler);
 		this.blindModus=blindModus;
@@ -89,7 +103,7 @@ public class Pokerspiel
 		{
 			n.setChips(Startkapital);
 		}
-		Log.d("4ter Pokerkonstruktor","aufgerufen");
+		
 	}
 	
 	
@@ -99,17 +113,21 @@ public class Pokerspiel
 	{
 		//Spiel reset
 		pot=0;
-		einsatz=getBlindBetrag();
-		setWettrunde(1);
+		einsatz=blindBestimmer();
 		
 		//Spieler reset
 		for(Spieler n:getAlleSpieler())
 		{
 			n.setNochDrin(true);
 			n.setChipsImPot(0);
+			n.setZustand(" ");
+			Log.d(n.getProfil().getName(),String.valueOf(n.getChips()));
 		}
 		
-		Rundenzahler++;
+		
+		Log.d("Austeilen zur Runde",String.valueOf(Rundenzahler));
+
+		setWettrunde(1);
 		blindWeitergeben();
 		
 		//Karten verteilen
@@ -123,7 +141,9 @@ public class Pokerspiel
 		}
 		
 		blindsEinzahlen();
+		Rundenzahler++;
 		update();
+
 	}
 	
 	
@@ -131,6 +151,11 @@ public class Pokerspiel
 	{
 		//nachsterSpieler();
 	//Aktueller Spieler wird aufgerufen und setzt temp
+		
+		if(getWettrunde()==0)
+		{austeilen();
+		Log.d("Blind", String.valueOf(blindBestimmer()));}
+		else{
 		int spielerinderRunde=0;
 		for(Spieler n:getAlleSpieler())
 		{
@@ -139,69 +164,80 @@ public class Pokerspiel
 				spielerinderRunde++;
 			}
 		}
-		Log.d("Spieler in der Runde",String.valueOf(spielerinderRunde));
 		
 		if(spielerinderRunde==1)	//NUR NOCH EIN SPIELER IN DER RUNDE
 		{
-			ausbezahlen();
+			ausbezahlenAllOut();
 		}
+		
 		
 		else
 		{
-		
-		if(aktiverSpieler.equals(lastRaise))
+			if((aktiverSpieler.equals(lastRaise))&&(aktiverSpieler.schongesetzt==true))
 		{
-			if(getWettrunde()==1)
-			{Flop();}
-			if(getWettrunde()==2)
-			{TurnCard();}
-			if(getWettrunde()==3)
-			{RiverCard();}
-			if(getWettrunde()==4)
-			{ShowDown();}
+				
+				for(Spieler n:getAlleSpieler())
+				{
+					n.schongesetzt=false;
+				}
+					if(getWettrunde()==4)
+					{ShowDown();}
+					if(getWettrunde()==3)
+					{RiverCard();}
+					if(getWettrunde()==2)
+					{TurnCard();}
+					if(getWettrunde()==1)
+					{Flop();}
+				
+
 		}
 			
 		else{
 		int temp= aktiverSpieler.setzen(this);  //HIER WIRD DER SPIELER ZUM SETZEN AUFGERUFEN
-		
+		temp-=aktiverSpieler.getChipsImPot();	//Wieviel muss der Spieler noch einbezahlen
 		if(aktiverSpieler.getSidepot()==0)	//Er ist nicht ALL in
 		{
 			if(temp>=aktiverSpieler.getChips()) //ALL IN
-			{ 	Log.d("Zug","ALL IN");
+			{ 	Log.d(aktiverSpieler.getProfil().getName(),"ALL IN");
 				aktiverSpieler.setChipsImPot(aktiverSpieler.getChipsImPot()+aktiverSpieler.getChips()); // Chips im Pot beim Spieler aktualisieren
 				einzahlen(aktiverSpieler.getChips());	//Die restlichen Chips noch einzahlen
 				aktiverSpieler.setSidepot(getPot());	//Den Sidepot füllen
-				aktiverSpieler.setChips(0);				//Die Chips des Spielers auf 0 setzen
 				aktiverSpieler.setZustand("ALL IN");
-				if(temp>getEinsatz())
+				if(aktiverSpieler.getChips()>getEinsatz())
 				{
-					setEinsatz(temp);
+					setEinsatz(aktiverSpieler.getChips());
+					setLastRaise(aktiverSpieler);
 				}
+				aktiverSpieler.setChips(0);				//Die Chips des Spielers auf 0 setzen
+
 			}
 			else
 			{
-				if(temp>=getEinsatz())
+				if(temp+aktiverSpieler.getChipsImPot()>=getEinsatz())
 				//RAISE ODER CALL
 				{
-					Log.d("Zug","CALL/RAISE");
+					Log.d(aktiverSpieler.getProfil().getName(),"CALL/RAISE");
 					einzahlen(temp);
 					aktiverSpieler.setChips(aktiverSpieler.getChips()-temp);
-					aktiverSpieler.setChipsImPot(aktiverSpieler.getChipsImPot()+temp);
-					if(temp>getEinsatz())
+					if(temp+aktiverSpieler.getChipsImPot()>getEinsatz())
 					{
-					einsatz=temp;
+					setEinsatz(temp+aktiverSpieler.getChipsImPot());
 					setLastRaise(getAktiverSpieler());
 					}
+					aktiverSpieler.setChipsImPot(aktiverSpieler.getChipsImPot()+temp);
+
 				}
 		
 		
-				if(temp<getEinsatz())
+				if(temp+aktiverSpieler.getChipsImPot()<getEinsatz())
 				//Fold
 				{
-					Log.d("Zug","FOLD");
+		
+					Log.d(aktiverSpieler.getProfil().getName(),"FOLD");
 					aktiverSpieler.setChipsImPot(0);
 					aktiverSpieler.setNochDrin(false);
 					aktiverSpieler.setZustand("Fold");
+	
 				}
 				
 			}
@@ -215,7 +251,7 @@ public class Pokerspiel
 		update();
 		}		//Ende der else für Beenden der Wettrunde
 		}		//Ende der else für nur noch ein Spieler
-		
+		}		//Ende der else für neue Runde
 		//HIER EINEN HANDLER DER DIE DRAW FUNKTION DER ACTIVITY AKTIVIERT
 	}
 	
@@ -232,11 +268,15 @@ public class Pokerspiel
 	
 	public void vorherigerSpieler()
 	{
+<<<<<<< HEAD
 		int temp= getAlleSpieler().indexOf(getSmallBlindSpieler())+2;
 		lastRaise=getAlleSpieler().get(verschieben(--temp));
+=======
+		int temp= getAlleSpieler().indexOf(smallBlindSpieler)+2;
+		setLastRaise(getAlleSpieler().get(verschieben(--temp)));
+>>>>>>> origin/michael2
 		while(lastRaise.isNochDrin()==false)
-		{lastRaise=getAlleSpieler().get(verschieben(--temp));}	
-		
+		{setLastRaise(getAlleSpieler().get(verschieben(--temp)));}	
 	}
 	
 	
@@ -244,16 +284,39 @@ public class Pokerspiel
 	////////////////////////////////////////////////////////////////////////////
 	///////////////////////////BLINDS VERWALTEN/////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////
+	
+	public int blindBestimmer()
+	{
+		if(blindModus==1)
+		{
+			int temp=(int)(Rundenzahler/blindZeitRundenWert)+1;
+			return getBlindBetrag()*temp;
+		}
+		else
+		{
+			int temp=(int)((System.currentTimeMillis()-startzeit)/1000/60)+1;
+			return getBlindBetrag()*temp;
+		}
+	}
+	
 	public void blindsEinzahlen()
 	{
+<<<<<<< HEAD
 		int temp=getAlleSpieler().indexOf(getSmallBlindSpieler());
 		pot+=getSmallBlindSpieler().zwangssetzen(blindBetrag/2);
 		pot+=getAlleSpieler().get(verschieben(temp+1)).zwangssetzen(blindBetrag);
 		setEinsatz(blindBetrag);
+=======
+		int temp=getAlleSpieler().indexOf(smallBlindSpieler);
+		pot+=smallBlindSpieler.zwangssetzen(this, blindBestimmer()/2);
+		pot+=getAlleSpieler().get(verschieben(temp+1)).zwangssetzen(this, blindBestimmer());
+		setEinsatz(blindBestimmer());
+>>>>>>> origin/michael2
 	}
 	
 	public void blindWeitergeben()
 	{
+<<<<<<< HEAD
 	 	int temp=getAlleSpieler().indexOf(getSmallBlindSpieler());
 	 	getAlleSpieler().get(verschieben(temp-1)).setZustand(" ");
 
@@ -275,7 +338,17 @@ public class Pokerspiel
 		{getAlleSpieler().get(1).setZustand("Big Blind");}
 		if((temp+2!=getAlleSpieler().size())&&(temp+2!=getAlleSpieler().size()+1))
 		{getAlleSpieler().get(temp+2).setZustand("Big Blind");}
+=======
+	 	int temp=getAlleSpieler().indexOf(smallBlindSpieler);
+>>>>>>> origin/michael2
 	 	
+		smallBlindSpieler.setZustand("Dealer");
+		
+		getAlleSpieler().get(verschieben(temp+1)).setZustand("Small Blind");
+		smallBlindSpieler=getAlleSpieler().get(verschieben(temp+1));
+		
+		getAlleSpieler().get(verschieben(temp+2)).setZustand("Big Blind");
+		
 		setLastRaise(getAlleSpieler().get(verschieben(temp+2)));
 	 	aktiverSpieler=getAlleSpieler().get(verschieben(temp+3));
 	}
@@ -287,11 +360,11 @@ public class Pokerspiel
 	}
 
 	
-	public void ausbezahlen()
+	public void ausbezahlenAllOut()
 	{
-		
+		aktiverSpieler.setChips(aktiverSpieler.getChips()+getPot());
 		Log.d("Ausbezahlen","läuft");
-		austeilen();
+		setWettrunde(0);
 		
 	}
 
@@ -302,9 +375,13 @@ public class Pokerspiel
 	private void Flop()
 	{
 		setWettrunde(2);
+		for(Spieler n:getAlleSpieler())
+		{
+			n.setChipsImPot(0);
+		}
+		setEinsatz(0);
 		Log.d("Wettrunde","Flop");
 		vorherigerSpieler();
-		Log.d("LastRaise",lastRaise.getProfil().getName());
 		//Spieler in FirstPosition bestimmen
 		int temp=getAlleSpieler().indexOf(getSmallBlindSpieler());
 		setAktiverSpieler(getAlleSpieler().get(verschieben(temp+2)));
@@ -321,6 +398,11 @@ public class Pokerspiel
 	{
 		Log.d("Wettrunde","TurnCard");
 		setWettrunde(3);
+		for(Spieler n:getAlleSpieler())
+		{
+			n.setChipsImPot(0);
+		}
+		setEinsatz(0);
 		vorherigerSpieler();
 		
 		//Spieler in FirstPosition bestimmen
@@ -339,6 +421,11 @@ public class Pokerspiel
 	{
 		Log.d("Wettrunde","RiverCard");
 		setWettrunde(4);
+		for(Spieler n:getAlleSpieler())
+		{
+			n.setChipsImPot(0);
+		}
+		setEinsatz(0);
 		vorherigerSpieler();
 		//Spieler in FirstPosition bestimmen
 		int temp=getAlleSpieler().indexOf(getSmallBlindSpieler());
@@ -356,7 +443,7 @@ public class Pokerspiel
 
 	
 	
-	public ArrayList<ArrayList<Spieler>> ShowDown()
+	public void ShowDown()
 	{
 		Log.d("SHOWDOWN","OH yeah");
 		 // gibt die Siegerreihenfolge zurück
@@ -372,7 +459,6 @@ public class Pokerspiel
 			
 		}
 		int[][] ergebnismatrix= new int[aktive.size()][6];
-		ArrayList<ArrayList<Spieler>> sieger=new ArrayList<ArrayList<Spieler>>();
 		
 		for(int z=0; z<aktive.size();z++)
 		{	Spieler n=aktive.get(z);
@@ -415,18 +501,45 @@ public class Pokerspiel
 						nurFarbe[n.getHand().getKarte2().getWert()-2]=1;
 					}
 					
-					int[] temp =bestCards(nurFarbe, 5);
-	
-					if(
-						(temp[0]-1==temp[1])&&
-						(temp[1]-1==temp[2])&&
-						(temp[2]-1==temp[3])&&
-						(temp[3]-1==temp[4])
-					  )
+					for(int n1=12;n1>=3;n1--)
 					{
-						ergebnismatrix[z][0]=9;
-						ergebnismatrix[z][1]=temp[0];
+						if(nurFarbe[n1]>=1)
+						{
+							if(nurFarbe[n1-1]>=1)
+							{
+								if(nurFarbe[n1-2]>=1)
+								{
+									if(nurFarbe[n1-3]>=1)
+									{
+										if(n1==3)
+										{
+											if(nurFarbe[12]>=1)
+											{
+												ergebnismatrix[z][0]=9;
+												ergebnismatrix[z][1]=n1;
+											}
+										}
+										if(n1!=3)
+										{
+											if(nurFarbe[n1-4]>=1)
+											{
+												ergebnismatrix[z][0]=9;
+												ergebnismatrix[z][1]=n1;
+											}
+										}
+										else{n1=n1-5;}
+									}
+									else{n1=n1-4;}
+								}
+								else{n1=n1-3;}
+							}
+							else{n1=n1-2;}
+						}
+						else{n1=n1-1;}
+						
 					}
+							
+					
 				}
 			}
 			if(ergebnismatrix[z][0]==0)
@@ -502,7 +615,7 @@ public class Pokerspiel
 			if(ergebnismatrix[z][0]==0)
 			{
 			//5 Straight
-			for(int m=12;m>=4;m--)
+			for(int m=12;m>=3;m--)
 			{
 				if(Wertesammeln[m]>=1)
 				{
@@ -512,10 +625,21 @@ public class Pokerspiel
 						{
 							if(Wertesammeln[m-3]>=1)
 							{
-								if(Wertesammeln[m-4]>=1)
+								if(m==3)
 								{
-									ergebnismatrix[z][0]=5;
-									ergebnismatrix[z][1]=m;
+									if(Wertesammeln[12]>=1)
+									{
+										ergebnismatrix[z][0]=5;
+										ergebnismatrix[z][1]=m;
+									}
+								}
+								if(m!=3)
+								{
+									if(Wertesammeln[m-4]>=1)
+									{
+										ergebnismatrix[z][0]=5;
+										ergebnismatrix[z][1]=m;
+									}
 								}
 								else{m=m-5;}
 							}
@@ -528,6 +652,8 @@ public class Pokerspiel
 				else{m=m-1;}
 				
 			}
+			
+			
 			
 			if(ergebnismatrix[z][0]==0)
 			{
@@ -603,45 +729,117 @@ public class Pokerspiel
 			}}}}}}}}	//Die einzelnen verpassten Gewinnchancen wieder zu machen
 			Log.d(n.getProfil().getName(),String.valueOf(n.getHand().getKarte1().getWert())+" "+String.valueOf(n.getHand().getKarte1().getFarbe())+" "+String.valueOf(n.getHand().getKarte2().getWert())+" "+String.valueOf(n.getHand().getKarte2().getFarbe()));
 			Log.d(n.getProfil().getName(),String.valueOf(ergebnismatrix[z][0])+" "+String.valueOf(ergebnismatrix[z][1])+" "+String.valueOf(ergebnismatrix[z][2])+" "+String.valueOf(ergebnismatrix[z][3])+" "+String.valueOf(ergebnismatrix[z][4])+" "+String.valueOf(ergebnismatrix[z][5]));
-
-			
-		}//ENDE SPIELER AUSWERTUNG
-		setWettrunde(0);
-		//austeilen();
-		int[] permutation=new int[aktive.size()];
-		for(int n=0;n<aktive.size();n++)
-			{permutation[n]=n;}
-		for(int n=0; n<aktive.size();n++)
-		{
-			for(int m=n+1; m<aktive.size();m++)
-				{
-				if(compare(n,m,0,ergebnismatrix)==1);
-					{
-						int temp=permutation[m];
-						permutation[m]=permutation[n];
-						permutation[n]=temp;
-					}
-				}
-		}
-		// hier kommt eine "sortierte" permutation heraus
-		/******
-		int[] ergebnis=new int[aktive.size()];
-		for(int n=0;n<aktive.size();n++)
-		{
-			for(int z=0;z<6;z++)
+			for(int y=0;y<6;y++)
 			{
-				ergebnis[n]+=Math.pow(2,5-z)*ergebnismatrix[n][z];
+				n.ergebnis[y]=ergebnismatrix[z][y];
+			}
+		}//ENDE SPIELER AUSWERTUNG
+		
+		//TASK WIEDER ANSCHALTEN
+		setWettrunde(0);
+		
+		for(int n=0;n<aktive.size()-1;n++)
+		{
+			for( int m=1;m<aktive.size()-n;m++)
+			{
+				if(compare(aktive.get(n),aktive.get(n+m))==2)
+				{
+					Collections.swap(aktive,n,n+m);
+				}
+			}
+		}
+		//die aktiven Spieler sollten jetzt sortiert sein
+		
+		int platztemp=0;
+		int platzierungen[]={0,0,0,0,0,0,0,0};
+		for(int n=0;n<aktive.size();n++)
+		{
+			if(platztemp==0)
+			{
+				platztemp=1;
+				aktive.get(n).setPlatz(platztemp);
+				platzierungen[platztemp-1]++;
+			}
+			else{
+			if(compare(aktive.get(n),aktive.get(n-1))==0)
+			{
+				aktive.get(n).setPlatz(platztemp);
+				platzierungen[platztemp-1]++;
+			}
+			else
+			{
+				platztemp++;
+				aktive.get(n).setPlatz(platztemp);
+				platzierungen[platztemp-1]++;
+			}
 			}
 		}
 		
-		sieger.add(new ArrayList<Spieler>());
-		sieger.get(0).set(0, aktive.get(1));
-	for(int n=0;n<aktive.size();n++)
-	{compare(aktive,n+1,0,ergebnismatrix);}
-		*******/////
+		Log.d("Platzierungen",String.valueOf(platzierungen[0])+String.valueOf(platzierungen[1])+String.valueOf(platzierungen[2])+String.valueOf(platzierungen[3])+String.valueOf(platzierungen[4]));
+		int spielertemp=0;
+		for(int i=0;i<8;i++)	//Die verschiedenen Platzierungen durchgehen
+		{	
+			if(platzierungen[i]!=0)
+			{	int davonallin=0;
+				int furjeden=getPot()/platzierungen[i];
+				for(int n=0;n<platzierungen[i];n++)	//Die Spieler einer Platzierung durchgehen
+				{	//Erst die ALL IN Spieler
+					if(aktive.get(spielertemp+n).getSidepot()!=0)
+					{
+						aktive.get(spielertemp+n).einzahlen(Math.min(furjeden,aktive.get(spielertemp+n).getSidepot()));
+						setPot(getPot()-Math.min(furjeden,aktive.get(spielertemp+n).getSidepot()));
+						davonallin++;
+					}
+				}
+				if(platzierungen[i]-davonallin!=0)
+				{
+					furjeden=getPot()/(platzierungen[i]-davonallin);
+				}
+				for(int n=0;n<platzierungen[i];n++)	//Die Spieler einer Platzierung durchgehen
+				{	//Dann die Nicht-ALL-IN-Spieler
+					if(aktive.get(spielertemp+n).getSidepot()==0)
+					{
+						aktive.get(spielertemp+n).einzahlen(furjeden);
+						setPot(getPot()-furjeden);
+					}
+				}
+				
+				if(getPot()<platzierungen[i])	//TASK TJA WAS PASSIERT MIT DEM REST
+				{
+					setPot(0);
+				}
+			}
+			spielertemp+=platzierungen[i];
+		}
 		
-		 
-		return sieger;
+		
+		//TASK IST JEMAND PLEITE GEGANGEN
+		boolean[] loschliste={false,false,false,false,false,false, false, false};
+		for(int n=0; n<getAlleSpieler().size();n++)
+		{
+			Log.d("Löschen"+getAlleSpieler().get(n).getProfil().getName(),String.valueOf(getAlleSpieler().get(n).getChips()));
+			if(getAlleSpieler().get(n).getChips()==0)
+			{
+				loschliste[n]=true;
+			}
+		}
+	
+	
+		//DEN SMALL BLIND SPIELER NICHT VERLIEREN
+		int temp= getAlleSpieler().indexOf(smallBlindSpieler);
+		smallBlindSpieler=getAlleSpieler().get(verschieben(--temp));
+		while(smallBlindSpieler.getChips()==0)
+		{smallBlindSpieler=getAlleSpieler().get(verschieben(--temp));}	
+		
+
+		for(int n=7; n>=0;n--)
+		{
+			if(loschliste[n]==true)
+			{getAlleSpieler().get(n).gameover();
+			getAlleSpieler().remove(n);
+			}
+		}
+		
 	}
 	
 	public int[] bestCards(int[] werte,int anzahl)
@@ -661,22 +859,24 @@ public class Pokerspiel
 			}
 				
 		}
-				
 		return ausgabe;
 	}
 	
 	
-	public int compare(int erster, int zweiter,int koeffizient, int[][] matrix)
+	public int compare(Spieler spieler1, Spieler spieler2)
 	{
-		if(koeffizient>=6)		//wenn beide komplett gleich
-		{return 0;}	
-		if(matrix[erster][koeffizient]<matrix[zweiter][koeffizient])
-		{return 1;}		// wenn zweiter größer
-		if(matrix[erster][koeffizient]>matrix[zweiter][koeffizient])
-		{return -1;}	// wenn erster größer
-		if(matrix[erster][koeffizient]==matrix[zweiter][koeffizient])
-		{return compare(erster,zweiter,koeffizient+1,matrix);}		//wenn bis daher gleich
-		return -5; //sollte nicht eintreten können
+		for(int n=0;n<6;n++)
+		{
+			if(spieler1.ergebnis[n]>spieler2.ergebnis[n])
+			{
+				return 1;
+			}
+			if(spieler1.ergebnis[n]<spieler2.ergebnis[n])
+			{
+				return 2;
+			}
+		}
+		return 0;
 	}
 	
 	
@@ -715,19 +915,24 @@ public class Pokerspiel
 	
 	public void update()
 	{
-		;
 		//Kurzgeschlossen für Singleplayer
-		if(singlePlayer==true)
-		{
-			receive();
-		}
+		//if(singlePlayer==true)
+		//{
+		//	receive();
+		//}
 	}
+	
+	
 	
 	public void receive()
 	{
 		if(singlePlayer==true)
-		{spielablauf();}
+		{while(getAlleSpieler().size()>1)
+			{spielablauf();}
+		}
 	}
+	
+	
 	
 	public Gemeinschaftskarten getGemeinschaftskarten() {
 		return gemeinschaftskarten;
@@ -757,11 +962,11 @@ public class Pokerspiel
 		this.blindZeitRundenWert = blindZeitRundenWert;
 	}
 
-	public String getBlindModus() {
+	public int getBlindModus() {
 		return blindModus;
 	}
 
-	public void setBlindModus(String blindModus) {
+	public void setBlindModus(int blindModus) {
 		this.blindModus = blindModus;
 	}
 

@@ -853,7 +853,7 @@ public class PushService extends Service {
 			{	
 			
 			String message_s = items.get(1);
-			App.addOpenGame(items.get(1),Integer.parseInt(items.get(3)), Integer.parseInt(items.get(5)), items.get(7), Integer.parseInt(items.get(9)), Integer.parseInt(items.get(11)));
+			App.addOpenGame(items.get(1),Integer.parseInt(items.get(3)), Integer.parseInt(items.get(5)), Integer.parseInt(items.get(7)), Integer.parseInt(items.get(9)), Integer.parseInt(items.get(11)));
 
 			final Message msg = Message.obtain();
 			msg.obj = message_s;
@@ -911,7 +911,7 @@ public class PushService extends Service {
 					+ "," +items.get(7) + "," +items.get(8) + "," +items.get(9) + "," +items.get(10) + "," +items.get(11) + "," +items.get(12) 
 					+ "," +items.get(13) + "," +items.get(14) );
 				
-				App.pokerspiel.setBlindModus(items.get(7));
+				App.pokerspiel.setBlindModus(Integer.parseInt(items.get(7)));
 				App.pokerspiel.setBlindBetrag(Integer.parseInt(items.get(11)));
 				App.pokerspiel.setBlindZeitRundenWert(Integer.parseInt( items.get(9)));
 				App.pokerspiel.setComputergegnerLevel(Integer.parseInt( items.get(13)));

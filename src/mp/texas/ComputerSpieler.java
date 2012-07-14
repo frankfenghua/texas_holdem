@@ -34,8 +34,11 @@ public class ComputerSpieler extends Spieler
 	
 	public int setzen(Pokerspiel pokerspiel)
 	{
-		Log.d(profil.getName(),"dran");
-		return 150;
+		int rand=(int) (Math.random()*300);
+		schongesetzt=true;
+		//Log.d(profil.getName(),String.valueOf(rand));
+		//return rand;
+		return 200;
 	}
 
 	

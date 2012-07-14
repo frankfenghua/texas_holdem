@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/itemcall" android:title="Call"></item>
+    <item android:id="@+id/itemraise" android:titleCondensed="Raise" android:title="Raise"></item>
+    <item android:id="@+id/itemfold" android:titleCondensed="Fold" android:title="Fold"></item>
+    
+
+</menu>

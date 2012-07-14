@@ -909,7 +909,7 @@ public class PushService extends Service {
 				App.pokerspiel.setName(items.get(1));
 				App.pokerspiel.setSinglePlayer(false);
 				App.pokerspiel.setStartkapital(Integer.parseInt( items.get(5)));
-				App.pokerspiel.setWettrunden(1);			
+				App.pokerspiel.setWettrunde(1);			
 				
 				int size = Integer.parseInt(items.get(3));
 				ArrayList<Spieler> temp = new ArrayList<Spieler>();

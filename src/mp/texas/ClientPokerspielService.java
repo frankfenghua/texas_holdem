@@ -219,14 +219,17 @@ public class ClientPokerspielService extends Service {
 		// alle angemeldeten Spieler werden initial gesmischt und in App.pokerspiel geschrieben
 		App.pokerspiel.setAlleSpieler(App.pokerspiel.spielerMischen(App.Mitspieler)); 
 		
+		
+		//TASK PETER Habe ich auskommentiert, Pokerspiel hat sein Blatt verloren, bitte nutze die Funktion analog zum Einzelspielermodus
 		// Karten müssen erzeugt, gemischt und verschickt werden
+		/*
 		Blatt blatt = new Blatt();
 		App.pokerspiel.setBlatt(blatt);
 		
 		App.pokerspiel.getBlatt().blattMischen(blatt.getKarten());
 		
 		App.pokerspiel.getBlatt().gemeinschaftskartenGeben();
-		
+		*/
 		// bin mir nicht sicher
 		
 		PushService.actionPublishStart(getApplicationContext());

@@ -1,3 +1,9 @@
+/*
+ * Profil Klasse
+ * Hier werden Namen und Avatar eines Spielers verwaltet
+ * Zusätzlich erhält jeder Human Spieler noch eine ID
+ * URI???
+ */
 package mp.texas;
 
 import android.graphics.drawable.Drawable;
@@ -9,6 +15,7 @@ public class Profil
 	private String uri;
 	private String id;
 
+	//Namensliste für Computergegner
 	private String[] namen = {"Anton","Berta","Cäsar","Dora","Emil","Friedrich","Gustav"};
 
 	
@@ -38,12 +45,19 @@ public class Profil
 		this.avatar = avatar;
 	}
 	
-
+	//Erstellt Profil mit vorgefertigtem Namen
+	//TASK auch gleich noch Bild einfügen
 	public Profil(int id)
 	{
 		name=namen[id-1];
 	}
 	
+	public Profil()
+	{
+		name="MICHAEL";
+	}
+	
+	//Erstellt komplettes Profil 
 	public Profil(String name, Drawable bild)
 	{
 		this.name=name;

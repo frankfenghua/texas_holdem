@@ -1,3 +1,7 @@
+/*
+ * Speicherklasse für die Hand eines Spielers
+ * Enthält lediglich die set und get Funktionen für die beiden Karten
+ */
 package mp.texas;
 
 public class Hand 

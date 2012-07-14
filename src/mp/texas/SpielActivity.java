@@ -29,9 +29,10 @@ public class SpielActivity extends Activity
 {
 
 	int pot;
-	int need;
-	int blind;
-	Spieler derSpieler;
+	TextView potText;
+	//int need;
+	//int blind;
+	Spieler derSpieler; //DIES IST DER SPIELER AM GERÄT
 	ImageView meineKarte1;
 	ImageView meineKarte2;
 	ImageView gemeinschaftsKarte1;
@@ -39,10 +40,13 @@ public class SpielActivity extends Activity
 	ImageView gemeinschaftsKarte3;
 	ImageView gemeinschaftsKarte4;
 	ImageView gemeinschaftsKarte5;
-	LinearLayout mainspieler;
-	LinearLayout[] gegnerlayout;
-	TextView potText;
+	
 	int mainspielernummer; 
+	
+	
+	LinearLayout[] gegnerLayout;
+
+
 
 	
 	
@@ -51,47 +55,47 @@ public class SpielActivity extends Activity
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.spielneu);
+		
 		potText=(TextView)findViewById(R.id.textViewSpielPot);
-		gegnerlayout=new LinearLayout[7];
-		gegnerlayout[0]=(LinearLayout)findViewById(R.id.LinearLayoutGegner1);
-		gegnerlayout[1]=(LinearLayout)findViewById(R.id.LinearLayoutGegner2);
-		gegnerlayout[2]=(LinearLayout)findViewById(R.id.LinearLayoutGegner3);
-		gegnerlayout[3]=(LinearLayout)findViewById(R.id.LinearLayoutGegner4);
-		gegnerlayout[4]=(LinearLayout)findViewById(R.id.LinearLayoutGegner5);
-		gegnerlayout[5]=(LinearLayout)findViewById(R.id.LinearLayoutGegner6);
-		gegnerlayout[6]=(LinearLayout)findViewById(R.id.LinearLayoutGegner7);
+		gegnerLayout=new LinearLayout[7];
+		gegnerLayout[0]=(LinearLayout)findViewById(R.id.LinearLayoutGegner1);
+		gegnerLayout[1]=(LinearLayout)findViewById(R.id.LinearLayoutGegner2);
+		gegnerLayout[2]=(LinearLayout)findViewById(R.id.LinearLayoutGegner3);
+		gegnerLayout[3]=(LinearLayout)findViewById(R.id.LinearLayoutGegner4);
+		gegnerLayout[4]=(LinearLayout)findViewById(R.id.LinearLayoutGegner5);
+		gegnerLayout[5]=(LinearLayout)findViewById(R.id.LinearLayoutGegner6);
+		gegnerLayout[6]=(LinearLayout)findViewById(R.id.LinearLayoutGegner7);
 		
 		//HERAUSFINDEN WELCHER SPIELER DER SPIELER AM GERÄT IST PETER
 		for(int i=0; i<App.pokerspiel.getAlleSpieler().size();i++)
-		{if(App.pokerspiel.getAlleSpieler().get(i).profil.getName().equals(App.selbst.getProfil().getName())) //HIER DER VERGLEICH MIT DER ID
-			{mainspielernummer=i;
-			derSpieler=App.pokerspiel.getAlleSpieler().get(mainspielernummer);
-			App.pokerspiel.getAlleSpieler().get(i).mainspieler=true;
-			App.pokerspiel.getAlleSpieler().get(i).layoutondevice=(LinearLayout) findViewById(R.id.LinearLayoutMainSpieler);
-			Toast.makeText(getApplicationContext(), String.valueOf(i), Toast.LENGTH_LONG).show();}
+		{
+			if(App.pokerspiel.getAlleSpieler().get(i).profil.getName().equals(App.selbst.getProfil().getName())) //HIER DER VERGLEICH MIT DER ID
+			{
+				mainspielernummer=i;
+				derSpieler=App.pokerspiel.getAlleSpieler().get(mainspielernummer);
+				App.pokerspiel.getAlleSpieler().get(i).mainspieler=true;
+				App.pokerspiel.getAlleSpieler().get(i).layoutondevice=(LinearLayout) findViewById(R.id.LinearLayoutMainSpieler);
+				Toast.makeText(getApplicationContext(), String.valueOf(i), Toast.LENGTH_LONG).show();
+			}
 		}
 		
-		
+			
 		for(int i=App.pokerspiel.getAlleSpieler().size()-1;i<7;i++)
 		{
-			gegnerlayout[i].setVisibility(View.INVISIBLE);
+			gegnerLayout[i].setVisibility(View.INVISIBLE);
 		}
 		
 		
 		//ORDNE JEDEM GEGNER EIN LAYOUT ZU
 		for(int i=0; i<App.pokerspiel.getAlleSpieler().size()-1;i++)
-		{int tempint=mainspielernummer+i+1;
-		if(tempint>=App.pokerspiel.getAlleSpieler().size())
-		{tempint-=App.pokerspiel.getAlleSpieler().size();}
-			App.pokerspiel.getAlleSpieler().get(tempint).layoutondevice=gegnerlayout[i];
-			//LinearLayout temp=(LinearLayout)gegnerlayout[i-1].getChildAt(1);
-		//((TextView)temp.getChildAt(0)).setText(App.pokerspiel.getAlleSpieler().get(tempint).getProfil().getName());
-		}
-		mainspieler=(LinearLayout) findViewById(R.id.LinearLayoutMainSpieler);
+		{
+			int tempint=mainspielernummer+i+1;
+			if(tempint>=App.pokerspiel.getAlleSpieler().size())
+			{
+				tempint-=App.pokerspiel.getAlleSpieler().size();}
+				App.pokerspiel.getAlleSpieler().get(tempint).layoutondevice=gegnerLayout[i];
+			}
 	
-		LinearLayout maintemp=(LinearLayout)mainspieler.getChildAt(2);
-		((TextView)maintemp.getChildAt(0)).setText(App.pokerspiel.getAlleSpieler().get(mainspielernummer).getProfil().getName());
-
 		for(int i=0;i<App.pokerspiel.getAlleSpieler().size();i++)
 		{
 			setName(App.pokerspiel.getAlleSpieler().get(i));
@@ -182,10 +186,8 @@ public class SpielActivity extends Activity
 			
 			meineKarte1=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte1);
 			meineKarte2=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte2);
-			Log.d("alleSpieler",String.valueOf(App.pokerspiel.getAlleSpieler().size()));
-			meineKarte1.setImageBitmap(Karte.getKartenBild(App.pokerspiel.getAlleSpieler().get(0).getHand().getKarte1(), meineKarte1.getWidth(), meineKarte1.getHeight(),getApplicationContext()));
-			meineKarte2.setImageBitmap(Karte.getKartenBild(App.pokerspiel.getAlleSpieler().get(1).getHand().getKarte1(),meineKarte2.getWidth(), meineKarte2.getHeight(), getApplicationContext()));
-			Log.d("Karte",String.valueOf(meineKarte1.getHeight()));
+			meineKarte1.setImageBitmap(Karte.getKartenBild(App.pokerspiel.getAlleSpieler().get(mainspielernummer).getHand().getKarte1(), meineKarte1.getWidth(), meineKarte1.getHeight(),getApplicationContext()));
+			meineKarte2.setImageBitmap(Karte.getKartenBild(App.pokerspiel.getAlleSpieler().get(mainspielernummer).getHand().getKarte2(),meineKarte2.getWidth(), meineKarte2.getHeight(), getApplicationContext()));
 			gemeinschaftsKarte1=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte1);
 			gemeinschaftsKarte2=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte2);			
 			gemeinschaftsKarte3=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte3);
@@ -196,6 +198,7 @@ public class SpielActivity extends Activity
 			gemeinschaftsKarte3.setImageBitmap(Karte.getKartenBild(0,0, gemeinschaftsKarte3.getWidth(), gemeinschaftsKarte3.getHeight(), getApplicationContext()));
 			gemeinschaftsKarte4.setImageBitmap(Karte.getKartenBild(0,0, gemeinschaftsKarte4.getWidth(), gemeinschaftsKarte4.getHeight(), getApplicationContext()));
 			gemeinschaftsKarte5.setImageBitmap(Karte.getKartenBild(0,0, gemeinschaftsKarte5.getWidth(), gemeinschaftsKarte5.getHeight(), getApplicationContext()));
+			
 			
 			if(App.pokerspiel.getWettrunde()>1)
 			{gemeinschaftsKarte1.setImageBitmap(Karte.getKartenBild(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(0), gemeinschaftsKarte1.getWidth(), gemeinschaftsKarte1.getHeight(), getApplicationContext()));
@@ -209,6 +212,8 @@ public class SpielActivity extends Activity
 			if(App.pokerspiel.getWettrunde()>3)
 			{gemeinschaftsKarte5.setImageBitmap(Karte.getKartenBild(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(4), gemeinschaftsKarte5.getWidth(), gemeinschaftsKarte5.getHeight(), getApplicationContext()));
 			}
+			
+			
 	}
 	
 								
@@ -245,7 +250,7 @@ public class SpielActivity extends Activity
 	}
 	
 
-	
+//SETZMENÜ EINSTELLUNGEN
 @Override
 public boolean onCreateOptionsMenu(Menu menu)
 {
@@ -261,13 +266,11 @@ public boolean onOptionsItemSelected(MenuItem item)
 	{
 	case R.id.itemcall:
 		Log.d("Item","Call");
-		derSpieler.call(App.pokerspiel.getEinsatz());
 		App.pokerspiel.setWettrunde(App.pokerspiel.getWettrunde()+1);
 		draw();
 		break;
 	case R.id.itemraise:
 		Log.d("Item","Raise");
-		derSpieler.raise(200);
 		draw();
 		break;
 		
@@ -304,6 +307,8 @@ public boolean onOptionsItemSelected(MenuItem item)
 */
 	
 
+
+//Funktion um den Aktuellen SPielstand zu zeichnen
 public void draw()
 {
 	if(App.pokerspiel.getWettrunde()>1)
@@ -326,16 +331,21 @@ public void draw()
 		setImPot(App.pokerspiel.getAlleSpieler().get(i));
 		setZustand(App.pokerspiel.getAlleSpieler().get(i));
 	}
+	
 	potText.setText(String.valueOf(App.pokerspiel.getPot()));
 	
 }
 
+
+
+//FUNKTIONEN UM DIE TEXTE UPZUDATEN
 
 public void setName(Spieler spieler)
 {
 	if(spieler.mainspieler==true)
 	{
 		LinearLayout temp=((LinearLayout)spieler.layoutondevice.getChildAt(2));
+		//temp.setBackgroundColor(Color.BLUE);
 		((TextView)temp.getChildAt(0)).setText(spieler.getProfil().getName());
 	}
 	else{

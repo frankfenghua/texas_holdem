@@ -55,31 +55,29 @@ public class GegnerEinstellungenActivity extends Activity
 		mitspieler.add(new Profil(1));
 	
 		boolean joinedPlayer = false;
-		text=new TextView(this);
-		text.setText("Hallo");
 		
 		menschlicheGegner=(TextView)findViewById(R.id.textViewGegnerMenschlich);
 		layoutMain=(LinearLayout)findViewById(R.id.GegnerMainLayout);
 		
 		
 				if(App.singlegame==false)
-		{
-		    scroll.addView(produceLayoutGegner(),0);
-		    		   
-		}
-				else{
-			menschlicheGegner.setVisibility(View.INVISIBLE);
-		}
+				{
+					scroll.addView(produceLayoutGegner(),0);	   
+				}
+				else
+				{
+					menschlicheGegner.setVisibility(View.INVISIBLE);
+				}
 //				ClientPokerspielService.actionSpielErstellen(getApplicationContext());
-				
-				Log.d("Button", "Hier3");
-				App.pokerspiel = new Pokerspiel(App.Mitspieler, App.Startkapital, App.BlindsArt, App.BigBlind, App.BlindsWert);
+				if(app.singlegame==false)		//TASK PETER schau mal hier ich hab daran herumgepfuscht
+				{
+					App.pokerspiel = new Pokerspiel(App.Mitspieler, App.Startkapital, App.BlindsArt, App.BigBlind, App.BlindsWert);
 //				App.Mitspieler.add(App.selbst);
-				if(joinedPlayer == false){
+					if(joinedPlayer == false){
 					ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
 					joinedPlayer = true;
+					}
 				}
-				
 				Log.d("beigetreten", App.selbst.getProfil().getName() + " has joined the game");
 //=======
 				//App.pokerspiel = new Pokerspiel();
@@ -111,7 +109,7 @@ public class GegnerEinstellungenActivity extends Activity
 //						Log.d("Level",String.valueOf(app.GegnerLevel));
 						//app.Mitspieler mit SPielern füllen
 						//app.pokerspiel= new Pokerspiel(app.Mitspieler, app.Startkapital, app.BlindsArt, app.BlindsWert, app.BigBlind);
-						if(app.singlegame==false)
+						if(App.singlegame==false)
 						{ClientPokerspielService.actionSpielErstellen(getApplicationContext());
 						}
 						else

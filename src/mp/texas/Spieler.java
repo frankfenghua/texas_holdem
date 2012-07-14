@@ -6,19 +6,27 @@ import android.widget.Toast;
 
 public class Spieler 
 {
-	protected Profil profil = new Profil(1);
+	//Dies sind die Daten die online gespeichert werden müssen
+	protected Profil profil = new Profil();
 	private Hand hand;
-	//ANZEIGEPARAMETER
-	public int numberondevice;
-	public LinearLayout layoutondevice;
-	public boolean mainspieler;
-	//IST DER SPIELER AUF DEM GERÄT;
 	protected int chips;
 	private boolean nochDrin=true;
 	private String zustand=" ";
 	private double anzahlZigaretten=19;
 	protected int chipsImPot=0;
+	private int sidepot;
 	public int[] ergebnis={0,0,0,0,0,0};
+	//Hier enden die online gespeicherten Daten
+	
+	
+	//ANZEIGEPARAMETER
+	public int numberondevice;
+	public LinearLayout layoutondevice;
+	public boolean mainspieler;
+	//IST DER SPIELER AUF DEM GERÄT;
+	
+	
+	
 	
 	public Spieler(Profil profilarg, int chipsarg)
 	{
@@ -36,25 +44,37 @@ public class Spieler
 		chipsImPot=0;
 	}
 	
-	public Spieler() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public int setzen(int chipsarg)
+	//DAS IST DIE FUNKTION DIE AUFGERUFEN WIRD UM DEN SPIELER AM DEVICE ZU KREIEREN
+	public Spieler() 
 	{
-		if(chips>chipsarg)
+		profil=new Profil();
+	}
+	
+
+	
+	public int zwangssetzen(int blind)
+	{
+		setChips(getChips()-blind);
+		setChipsImPot(blind);
+		return blind;
+	}
+	
+	//Funktion die angibt wieviel gesetzt wird
+	public int setzen(Pokerspiel pokerspiel)
+	{
+		/*if(chips>chipsarg)
 		{
 			chips-=chipsarg;
 			chipsImPot+=chipsarg;
-			Log.d(profil.getName(),String.valueOf(chipsarg));
 			return chipsarg;
 		}
 		
 		else
 		{
 			return -1;
-		}
-			
+		}*/
+		pokerspiel.einzahlen(300);
+		return 0;
 	}
 
 	public Profil getProfil() {
@@ -100,7 +120,22 @@ public class Spieler
 	public void setZustand(String zustand) {
 		this.zustand = zustand;
 	}
+
+	/**
+	 * @return the sidepot
+	 */
+	public int getSidepot() {
+		return sidepot;
+	}
+
+	/**
+	 * @param sidepot the sidepot to set
+	 */
+	public void setSidepot(int sidepot) {
+		this.sidepot = sidepot;
+	}
 	
+	/*
 	public void call(int need)
 	{
 		Log.d("App.pokerspieltest",String.valueOf(App.pokerspiel));
@@ -124,4 +159,5 @@ public class Spieler
 	{
 
 	}
+	*/
 }

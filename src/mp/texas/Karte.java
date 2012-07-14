@@ -1,3 +1,8 @@
+/*
+ * Stellt eine Karte dar, besitzt Wert und Farbe
+ * Beinhaltet die Funktionen
+ * Bitmap für Karte erstellen
+ */
 package mp.texas;
 
 import android.content.Context;
@@ -48,41 +53,10 @@ public class Karte
 	public void setWert(int wert) {
 		this.wert = wert;
 	}
-	/*
-	public static ImageView getKartenImageView(int Wert, int Farbe, Context context)
-	{
-		if(blatt==null)
-		{
-			
-		}
-		if(Wert!=0)	
-		{		
-		
-			if(Wert==Karte.Ass)
-			{
-				Wert=0;
-			}
-		
-			else
-			{
-				Wert-=1;
-			}
-		}
-		else
-		{	
-			Wert=2;
-			Farbe=4;
-		}
-		
-		ImageView temp = new ImageView(context);
-		Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), 
-                R.drawable.playingcards); 
-		bitmap=Bitmap.createBitmap(bitmap, bitmap.getWidth()/13*Wert, bitmap.getHeight()/5*Farbe, bitmap.getWidth()/13, bitmap.getHeight()/5);
-		temp.setImageBitmap(bitmap);
-		return temp;
-	}
-	*/
 	
+	
+	
+	//Erstellung einer Bitmap mit Farbe und Wert
 	public static Bitmap getKartenBild(int Wert, int Farbe, int reqWidth, int reqHeight , Context context)
 	{
 		
@@ -119,26 +93,10 @@ public class Karte
 			Farbe=4;
 		}
 		
-		/*//--
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeResource(context.getResources(), R.drawable.playingcards, options);
-		int imageHeight = options.outHeight;
-		int imageWidth = options.outWidth;
-		String imageType = options.outMimeType;
-		
-		
-		//--
-		//ImageView temp = new ImageView(context);
-		Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), 
-                R.drawable.playingcards); 
-		bitmap=Bitmap.createBitmap(bitmap, bitmap.getWidth()/13*Wert, bitmap.getHeight()/5*Farbe, bitmap.getWidth()/13, bitmap.getHeight()/5);
-		//temp.setImageBitmap(bitmap);
-		*/
 		return Bitmap.createBitmap(blatt, blatt.getWidth()/13*Wert, blatt.getHeight()/5*Farbe, blatt.getWidth()/13, blatt.getHeight()/5);
 	}
 	
-	
+	//Erstellung der Bitmap mit einer Karte
 	public static Bitmap getKartenBild(Karte karte, int reqWidth, int reqHeight , Context context)
 	{
 		int wert=karte.getWert();
@@ -176,29 +134,13 @@ public class Karte
 			wert=2;
 			farbe=4;
 		}
-		
-		/*//--
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeResource(context.getResources(), R.drawable.playingcards, options);
-		int imageHeight = options.outHeight;
-		int imageWidth = options.outWidth;
-		String imageType = options.outMimeType;
-		
-		
-		//--
-		//ImageView temp = new ImageView(context);
-		Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), 
-                R.drawable.playingcards); 
-		bitmap=Bitmap.createBitmap(bitmap, bitmap.getWidth()/13*Wert, bitmap.getHeight()/5*Farbe, bitmap.getWidth()/13, bitmap.getHeight()/5);
-		//temp.setImageBitmap(bitmap);
-		*/
+	
 		return Bitmap.createBitmap(blatt, blatt.getWidth()/13*wert, blatt.getHeight()/5*farbe, blatt.getWidth()/13, blatt.getHeight()/5);
 	}
 	
 	
-
-	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) 
+	//Internes um Bildgröße abzuschätzen
+	private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) 
 	{    // Raw height and width of image    
 		final int height = options.outHeight;    
 		final int width = options.outWidth;    
@@ -217,7 +159,9 @@ public class Karte
 		return inSampleSize;
 	}
 	
-	public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,int reqWidth, int reqHeight) 
+	
+	//Internes um Bild nicht zu groß zu laden
+	private static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,int reqWidth, int reqHeight) 
 	{    // First decode with inJustDecodeBounds=true to check dimensions    
 		final BitmapFactory.Options options = new BitmapFactory.Options();    
 		options.inJustDecodeBounds = true;    

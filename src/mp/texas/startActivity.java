@@ -42,11 +42,11 @@ public class startActivity extends Activity
  	  	((TextView) findViewById(R.id.target_text)).setText(deviceID);
 		app=(App)getApplication();
  	  	App.selbst.getProfil().setId(deviceID);
-
- 	  	Editor editor = getSharedPreferences(PushService.TAG, MODE_PRIVATE).edit();		//test
-		editor.putString(PushService.PREF_DEVICE_ID, deviceID);							//test
-		editor.commit();																//test
-		PushService.actionStart(getApplicationContext());		        				//test
+//TASK PETER Ich musste das hier deaktivieren, das hat mir dauernd ins Handwerk gepfuscht, bitte mach das irgendwohin, wo es sich nicht in Singlegame einmischt
+ 	  	//Editor editor = getSharedPreferences(PushService.TAG, MODE_PRIVATE).edit();		//test
+		//editor.putString(PushService.PREF_DEVICE_ID, deviceID);							//test
+		//editor.commit();																//test
+		//PushService.actionStart(getApplicationContext());		        				//test
 
 		pushButton = (Button) findViewById(R.id.push_button);		        			//test
 		pushButton.setOnClickListener(new OnClickListener() {		    				//test	

@@ -18,18 +18,21 @@ public class App extends Application
 	public static boolean spielErstellt = false; 
 	public static boolean newOpenedGame = true;
 	public static boolean singlegame=true;
+	
+	//Menüvariablen um später das Spiel zu erstellen
 	public static int AnzahlSpieler;
 	public static int Startkapital;
 	public static String BlindsArt;
 	public static int BlindsWert;
 	public static int BigBlind;
-	public static ArrayList<Spieler> Mitspieler= new ArrayList<Spieler>();
 	public static int GegnerLevel;
 	
+	//Menüvariable für Multiplayer
+	public static ArrayList<Spieler> Mitspieler= new ArrayList<Spieler>();
 	public static ArrayList<Pokerspiel> offeneSpiele = new ArrayList<Pokerspiel>();
-	public static String aktuellesSpielID;
 	
-
+	//Daten des aktuellen Spiels
+	public static String aktuellesSpielID;
 	public static Pokerspiel pokerspiel = null;
 	public static Spieler selbst = new Spieler();
 
@@ -56,7 +59,9 @@ public class App extends Application
 	}
 	
 	
-	public static String neuesSpielErstellen(){
+	//FUNKTION UM EIN NEUES MULTIPLAYER SPIEL ZU ERSTELLEN
+	public static String neuesSpielErstellen()
+	{
 		
 		App.pokerspiel.setBlindBetrag(App.BigBlind);
 		App.pokerspiel.setBlindModus(App.BlindsArt);
@@ -64,7 +69,7 @@ public class App extends Application
 		App.pokerspiel.setName(App.aktuellesSpielID);
 		App.pokerspiel.setSinglePlayer(false);
 		App.pokerspiel.setStartkapital(App.Startkapital);
-		App.pokerspiel.setWettrunden(0);
+		App.pokerspiel.setWettrunde(0);
 		App.pokerspiel.setComputergegnerLevel(App.GegnerLevel);
 		
 		
@@ -88,6 +93,7 @@ public class App extends Application
 		
 		return s;
 	}
+	
 	
 	
 	public static String getNewGame(){

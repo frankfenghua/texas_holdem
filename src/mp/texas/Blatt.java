@@ -1,3 +1,10 @@
+/*Klasse enthält ein Spielblatt, wesentliche Funktionen sind:
+ * Erzeugung aller Karten
+ * Mischeln der Karteb
+ * Gemeinschaftskarten erzeugen
+ * Hände austeilen
+ */
+
 package mp.texas;
 
 import java.util.ArrayList;
@@ -22,19 +29,11 @@ public class Blatt
 		this.karten = karten;
 	}
 
-	public ArrayList<Karte> getKartenOffen() {
-		return kartenOffen;
-	}
-
-	public void setKartenOffen(ArrayList<Karte> kartenOffen) {
-		this.kartenOffen = kartenOffen;
-	}
-
-	private ArrayList<Karte> kartenOffen;
 	
 	public Blatt()
 	{
 		karten=new ArrayList<Karte>();
+		//Hier werden alle Karten erzeugt
 		for(int i=0; i<4; i++)
 		{
 			for(int j=2; j<=14; j++)
@@ -46,7 +45,12 @@ public class Blatt
 	}
 	
 	public ArrayList<Karte> blattMischen(ArrayList<Karte> liste)
-	{
+	{ 
+		/*Karten werden gemischt die Zahl in der For-Schleife gibt misch qualität an, sollte >52 sein
+		 * Mischel verfahren, basiert in dem herausziehen einer Karte und dem Wiedereinfügen an zufälliger Stelle 
+		 */
+	
+		
 		for(int i=0;i<1000;i++)
 		{
 			int rand1=(int)(Math.random()*52);
@@ -61,22 +65,37 @@ public class Blatt
 	
 	public Hand handGeben()
 	{
+		if(karten.size()>=2)
+		{
 		Hand temp=new Hand(karten.get(0),karten.get(1));
 		karten.remove(0);
 		karten.remove(0);
 		return temp;
+		}
+		else
+		{	Log.d("Blatt.handgeben()","Nicht genügend Karten mehr vorhanden");
+			return null;}
 	}
 	
 	public Gemeinschaftskarten gemeinschaftskartenGeben()
 	{
+		if(karten.size()>=5)
+		{
 		Gemeinschaftskarten temp=new Gemeinschaftskarten(karten.get(0),karten.get(1),karten.get(2),karten.get(3),karten.get(4));
 		karten.remove(0);
 		karten.remove(0);
 		karten.remove(0);
 		karten.remove(0);
 		karten.remove(0);
-		
 		return temp;
+		}
+		
+		else
+		{	Log.d("Blatt.gemeinschaftskarten()","Nicht genügend Karten mehr vorhanden");
+			return null;
+		}
+		
+		
 	}
 	
 

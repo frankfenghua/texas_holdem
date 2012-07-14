@@ -34,6 +34,8 @@ public class SpielEinstellungenActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.spieleinstellungen);
 		app=(App)getApplication();
+		
+		
 		spielStarten=(Button) findViewById(R.id.buttonSpielEinstellungenSpielStarten);
 		spielStarten.setOnClickListener(
 				new View.OnClickListener() 
@@ -51,7 +53,7 @@ public class SpielEinstellungenActivity extends Activity
 						app.Startkapital=5000;
 					}
 					
-					app.BlindsArt=blindsArt.getSelectedItem().toString();
+					app.BlindsArt=blindsArt.getSelectedItemPosition();
 					
 					if(editTextBlindsWert.getText().length()>0)
 					{
@@ -70,8 +72,11 @@ public class SpielEinstellungenActivity extends Activity
 					{
 						app.BigBlind=100;
 					}
+					if(App.singlegame==false)
+					{
 					PushService.actionSubscribe(getApplicationContext());
 					ClientPokerspielService.actionSpielEroeffnen(getApplicationContext());
+					}
 					startActivity(new Intent(getApplicationContext(),GegnerEinstellungenActivity.class));
 					}         
 					

@@ -16,7 +16,16 @@ public class Humanspieler extends Spieler {
 	public int setzen(Pokerspiel pokerspiel)
 	{
 		Log.d(profil.getName(),"dran");
-		return 150;
+		schongesetzt=true;
+		return 200;
 	}
+
+	@Override
+	public void gameover() {
+		Log.d("GameOver","Human Player");
+		super.gameover();
+	}
+	
+	
 
 }

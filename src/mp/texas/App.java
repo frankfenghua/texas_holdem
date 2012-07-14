@@ -22,7 +22,7 @@ public class App extends Application
 	//Menüvariablen um später das Spiel zu erstellen
 	public static int AnzahlSpieler;
 	public static int Startkapital;
-	public static String BlindsArt;
+	public static int BlindsArt;
 	public static int BlindsWert;
 	public static int BigBlind;
 	public static int GegnerLevel;
@@ -46,7 +46,7 @@ public class App extends Application
 
 	}
 	
-	public static void addOpenGame(String namearg, int anzahlSpielerarg, int startkapitalarg, String blindArtarg, int blindsWertarg, int bigBlindarg){
+	public static void addOpenGame(String namearg, int anzahlSpielerarg, int startkapitalarg, int blindArtarg, int blindsWertarg, int bigBlindarg){
 		Pokerspiel neues = new Pokerspiel();
 		neues.setName(namearg);
 		neues.setBlindBetrag(bigBlindarg);

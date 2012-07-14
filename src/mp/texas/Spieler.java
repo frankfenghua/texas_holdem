@@ -16,6 +16,7 @@ public class Spieler
 	protected int chipsImPot=0;
 	private int sidepot;
 	public int[] ergebnis={0,0,0,0,0,0};
+	private int PlatzShowdown=0;
 	//Hier enden die online gespeicherten Daten
 	
 	
@@ -24,6 +25,7 @@ public class Spieler
 	public LinearLayout layoutondevice;
 	public boolean mainspieler;
 	//IST DER SPIELER AUF DEM GERÄT;
+	public boolean schongesetzt=false;
 	
 	
 	
@@ -52,28 +54,29 @@ public class Spieler
 	
 
 	
-	public int zwangssetzen(int blind)
+	public int zwangssetzen(Pokerspiel pokerspiel, int blind)
 	{
+		if(blind<getChips())
+		{
 		setChips(getChips()-blind);
 		setChipsImPot(blind);
 		return blind;
+		}
+		else
+		{
+			schongesetzt=true;
+			Log.d("Zwangssetzen",String.valueOf(getChips()));
+			setChipsImPot(getChips());
+			setChips(0);
+			setZustand("All In");
+			setSidepot(pokerspiel.getPot()+getChipsImPot());//da pot erst anschließend aufgefüllt
+			return getChipsImPot();
+		}
 	}
 	
 	//Funktion die angibt wieviel gesetzt wird
 	public int setzen(Pokerspiel pokerspiel)
 	{
-		/*if(chips>chipsarg)
-		{
-			chips-=chipsarg;
-			chipsImPot+=chipsarg;
-			return chipsarg;
-		}
-		
-		else
-		{
-			return -1;
-		}*/
-		pokerspiel.einzahlen(300);
 		return 0;
 	}
 
@@ -134,30 +137,30 @@ public class Spieler
 	public void setSidepot(int sidepot) {
 		this.sidepot = sidepot;
 	}
-	
-	/*
-	public void call(int need)
-	{
-		Log.d("App.pokerspieltest",String.valueOf(App.pokerspiel));
-		//App.pokerspiel.einzahlen(setzen(need-getChipsImPot()));
-		App.pokerspiel.weiter();
+
+	/**
+	 * @return the platz
+	 */
+	public int getPlatz() {
+		return PlatzShowdown;
 	}
-	 
-	public void raise(int wert)
-	{
-		App.pokerspiel.einzahlen(setzen(wert));
-		App.pokerspiel.setEinsatz(wert+chipsImPot);
-		App.pokerspiel.weiter();
+
+	/**
+	 * @param platz the platz to set
+	 */
+	public void setPlatz(int platz) {
+		this.PlatzShowdown = platz;
 	}
 	
-	public void fold()
+	public void einzahlen(int betrag)
 	{
+		Log.d(getProfil().getName(),"gewinnt:" + String.valueOf(betrag));
+		setChips(getChips()+betrag);
+	}
+
+	public void gameover() 
+	{
+		// TODO Auto-generated method stub
 		
 	}
-	
-	public void auffordern(int need)
-	{
-
-	}
-	*/
 }

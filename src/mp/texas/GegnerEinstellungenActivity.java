@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -36,8 +38,21 @@ public class GegnerEinstellungenActivity extends Activity
 	LinearLayout layoutGegner;
 	LinearLayout layoutMain;
 	ScrollView scroll;
-	ArrayList<Profil> mitspieler=new ArrayList<Profil>();
+	static ArrayList<Profil> mitspieler=new ArrayList<Profil>();
 	App app;
+	
+	public static Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+        	super.handleMessage(msg);
+        	String text = (String)msg.obj;
+//        	mitspieler.add(new Profil(text));
+        	
+//        	scroll.addView(produceLayoutGegner(), 0); // wie zeichne ich die scrollview neu? 
+        }
+       
+	};
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +65,9 @@ public class GegnerEinstellungenActivity extends Activity
 		app=(App)getApplication();
 		
 		scroll=(ScrollView)findViewById(R.id.scrollViewGegnerEinstellungen);
-		mitspieler.add(new Profil(3));
-		mitspieler.add(new Profil(2));
-		mitspieler.add(new Profil(1));
+//		mitspieler.add(new Profil(3));
+//		mitspieler.add(new Profil(2));
+//		mitspieler.add(new Profil(1));
 	
 		boolean joinedPlayer = false;
 		
@@ -62,34 +77,27 @@ public class GegnerEinstellungenActivity extends Activity
 		
 				if(App.singlegame==false)
 				{
-					scroll.addView(produceLayoutGegner(),0);	   
+					scroll.addView(produceLayoutGegner(),0);
 				}
 				else
 				{
 					menschlicheGegner.setVisibility(View.INVISIBLE);
 				}
-//				ClientPokerspielService.actionSpielErstellen(getApplicationContext());
+
 				if(app.singlegame==false)		//TASK PETER schau mal hier ich hab daran herumgepfuscht
 				{
 					App.pokerspiel = new Pokerspiel(App.Mitspieler, App.Startkapital, App.BlindsArt, App.BigBlind, App.BlindsWert);
-//				App.Mitspieler.add(App.selbst);
+
 					if(joinedPlayer == false){
 					ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
 					joinedPlayer = true;
 					}
 				}
 				Log.d("beigetreten", App.selbst.getProfil().getName() + " has joined the game");
-//=======
-				//App.pokerspiel = new Pokerspiel();
+
 
 				App.selbst = new Spieler();
 
-				//ArrayList<Spieler> spielers = App.pokerspiel.getAlleSpieler();
-				
-// 				spielers.add(selbst);
-//				HIERMIT GIBT ES PROBLEME!!!!!! KEINE AHNUNG WARUM?!				
-//				ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
-//				Log.d("beigetreten", App.ProfilName + " has joined the game");
 
 		
 		spielStarten=(Button) findViewById(R.id.buttonGegnerEinstellungenSpielStarten);

@@ -13,12 +13,12 @@ public class Pokerspiel
 	private String name;	//Name des Pokerspiels
 	private int pot;		//Wieviel ist im Pot
 	private int einsatz=0;  //nötiger Gesamteinsatz eines Spielers um in der Runde zu bleiben 
-	private Spieler aktiverSpieler; 
-	private Spieler smallBlindSpieler;
+	private Spieler aktiverSpieler =null; 
+	private Spieler smallBlindSpieler =null;
 	private ArrayList<Spieler> alleSpieler = new ArrayList<Spieler>();
 	private boolean singlePlayer;	//Ist dieses Spiel ein Offline oder Online-Spiel
 	private int blindBetrag;		//Gibt den aktuellen BigBlind Betrag an
-	private Gemeinschaftskarten gemeinschaftskarten; //Gemeinschaftskarten der Runde
+	private Gemeinschaftskarten gemeinschaftskarten=null;; //Gemeinschaftskarten der Runde
 	private int wettrunde;							//Aktuelle Bietrunde, Preflop, Flop, River...
 	private Spieler lastRaise=null;
 	private int Rundenzahler=0;
@@ -63,7 +63,7 @@ public class Pokerspiel
 		}
 		setEinsatz(0);
 		alleSpieler=spielerMischen(getAlleSpieler());
-		smallBlindSpieler=getAlleSpieler().get(0);
+		setSmallBlindSpieler(getAlleSpieler().get(0));
 		austeilen();
 	}
 	
@@ -232,7 +232,7 @@ public class Pokerspiel
 	
 	public void vorherigerSpieler()
 	{
-		int temp= getAlleSpieler().indexOf(smallBlindSpieler)+2;
+		int temp= getAlleSpieler().indexOf(getSmallBlindSpieler())+2;
 		lastRaise=getAlleSpieler().get(verschieben(--temp));
 		while(lastRaise.isNochDrin()==false)
 		{lastRaise=getAlleSpieler().get(verschieben(--temp));}	
@@ -246,15 +246,15 @@ public class Pokerspiel
 	////////////////////////////////////////////////////////////////////////////
 	public void blindsEinzahlen()
 	{
-		int temp=getAlleSpieler().indexOf(smallBlindSpieler);
-		pot+=smallBlindSpieler.zwangssetzen(blindBetrag/2);
+		int temp=getAlleSpieler().indexOf(getSmallBlindSpieler());
+		pot+=getSmallBlindSpieler().zwangssetzen(blindBetrag/2);
 		pot+=getAlleSpieler().get(verschieben(temp+1)).zwangssetzen(blindBetrag);
 		setEinsatz(blindBetrag);
 	}
 	
 	public void blindWeitergeben()
 	{
-	 	int temp=getAlleSpieler().indexOf(smallBlindSpieler);
+	 	int temp=getAlleSpieler().indexOf(getSmallBlindSpieler());
 	 	getAlleSpieler().get(verschieben(temp-1)).setZustand(" ");
 
 	 	if(temp==0){
@@ -265,9 +265,9 @@ public class Pokerspiel
 		getAlleSpieler().get(temp).setZustand("Dealer");
 		if(temp+1==getAlleSpieler().size())
 		{getAlleSpieler().get(0).setZustand("Small Blind");
-		smallBlindSpieler=getAlleSpieler().get(0);}
+		setSmallBlindSpieler(getAlleSpieler().get(0));}
 		else{getAlleSpieler().get(temp+1).setZustand("Small Blind");
-		smallBlindSpieler=getAlleSpieler().get(temp+1);}
+		setSmallBlindSpieler(getAlleSpieler().get(temp+1));}
 		
 		if(temp+2==getAlleSpieler().size())
 		{getAlleSpieler().get(0).setZustand("Big Blind");}	
@@ -306,7 +306,7 @@ public class Pokerspiel
 		vorherigerSpieler();
 		Log.d("LastRaise",lastRaise.getProfil().getName());
 		//Spieler in FirstPosition bestimmen
-		int temp=getAlleSpieler().indexOf(smallBlindSpieler);
+		int temp=getAlleSpieler().indexOf(getSmallBlindSpieler());
 		setAktiverSpieler(getAlleSpieler().get(verschieben(temp+2)));
 		//Falls der schon raus ist den neuen
 		while(getAktiverSpieler().isNochDrin()==false)
@@ -324,7 +324,7 @@ public class Pokerspiel
 		vorherigerSpieler();
 		
 		//Spieler in FirstPosition bestimmen
-		int temp=getAlleSpieler().indexOf(smallBlindSpieler);
+		int temp=getAlleSpieler().indexOf(getSmallBlindSpieler());
 		setAktiverSpieler(getAlleSpieler().get(verschieben(temp+2)));
 		//Falls der schon raus ist den neuen
 		while(getAktiverSpieler().isNochDrin()==false)
@@ -341,7 +341,7 @@ public class Pokerspiel
 		setWettrunde(4);
 		vorherigerSpieler();
 		//Spieler in FirstPosition bestimmen
-		int temp=getAlleSpieler().indexOf(smallBlindSpieler);
+		int temp=getAlleSpieler().indexOf(getSmallBlindSpieler());
 		setAktiverSpieler(getAlleSpieler().get(verschieben(temp+2)));
 		//Falls der schon raus ist den neuen
 		while(getAktiverSpieler().isNochDrin()==false)
@@ -854,6 +854,22 @@ public class Pokerspiel
 	 */
 	public void setLastRaise(Spieler lastRaise) {
 		this.lastRaise = lastRaise;
+	}
+
+	public Spieler getSmallBlindSpieler() {
+		return smallBlindSpieler;
+	}
+
+	public void setSmallBlindSpieler(Spieler smallBlindSpieler) {
+		this.smallBlindSpieler = smallBlindSpieler;
+	}
+
+	public int getRundenzahler() {
+		return Rundenzahler;
+	}
+
+	public void setRundenzahler(int rundenzahler) {
+		Rundenzahler = rundenzahler;
 	}
 
 

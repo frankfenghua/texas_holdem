@@ -41,8 +41,12 @@ public class startActivity extends Activity
 		deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);		//test	
  	  	((TextView) findViewById(R.id.target_text)).setText(deviceID);
 		app=(App)getApplication();
+		
+		//Setzt die selbst profilID auf die deciveID
  	  	App.selbst.getProfil().setId(deviceID);
-//TASK PETER Ich musste das hier deaktivieren, das hat mir dauernd ins Handwerk gepfuscht, bitte mach das irgendwohin, wo es sich nicht in Singlegame einmischt
+ 
+ 	  
+ 	  	//TASK PETER Ich musste das hier deaktivieren, das hat mir dauernd ins Handwerk gepfuscht, bitte mach das irgendwohin, wo es sich nicht in Singlegame einmischt
  	  	//Editor editor = getSharedPreferences(PushService.TAG, MODE_PRIVATE).edit();		//test
 		//editor.putString(PushService.PREF_DEVICE_ID, deviceID);							//test
 		//editor.commit();																//test

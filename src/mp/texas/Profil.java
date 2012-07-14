@@ -13,7 +13,7 @@ public class Profil
 	private String name = "Reiner Zufall II";
 	private Drawable avatar;
 	private String uri;
-	private String id;
+	private String id = "null";
 
 	//Namensliste für Computergegner
 	private String[] namen = {"Anton","Berta","Cäsar","Dora","Emil","Friedrich","Gustav"};
@@ -63,6 +63,11 @@ public class Profil
 		this.name=name;
 		this.avatar=bild;
 	}
-	
+
+	public Profil(String name)
+	{
+		this.name=name;
+
+	}
 	
 }

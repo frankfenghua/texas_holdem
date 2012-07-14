@@ -66,10 +66,11 @@ public class SpielActivity extends Activity
 		gegnerLayout[5]=(LinearLayout)findViewById(R.id.LinearLayoutGegner6);
 		gegnerLayout[6]=(LinearLayout)findViewById(R.id.LinearLayoutGegner7);
 		
-		//HERAUSFINDEN WELCHER SPIELER DER SPIELER AM GERÄT IST PETER
+		//HERAUSFINDEN WELCHER SPIELER DER SPIELER AM GERÄT IST
 		for(int i=0; i<App.pokerspiel.getAlleSpieler().size();i++)
 		{
-			if(App.pokerspiel.getAlleSpieler().get(i).profil.getName().equals(App.selbst.getProfil().getName())) //HIER DER VERGLEICH MIT DER ID
+			Log.d(App.pokerspiel.getAlleSpieler().get(i).getProfil().getId() +"soll gleich sein", App.selbst.getProfil().getId());
+			if(App.pokerspiel.getAlleSpieler().get(i).getProfil().getId().equals(App.selbst.getProfil().getId())) 
 			{
 				mainspielernummer=i;
 				derSpieler=App.pokerspiel.getAlleSpieler().get(mainspielernummer);
@@ -98,10 +99,12 @@ public class SpielActivity extends Activity
 	
 		for(int i=0;i<App.pokerspiel.getAlleSpieler().size();i++)
 		{
-			setName(App.pokerspiel.getAlleSpieler().get(i));
-			setChips(App.pokerspiel.getAlleSpieler().get(i));
-			setImPot(App.pokerspiel.getAlleSpieler().get(i));
-			setZustand(App.pokerspiel.getAlleSpieler().get(i));
+			Log.d("KUCKE HIER PETER", App.pokerspiel.getAlleSpieler().get(i).getProfil().getName());
+		
+		//	setName(App.pokerspiel.getAlleSpieler().get(i));
+		//	setChips(App.pokerspiel.getAlleSpieler().get(i));
+		//	setImPot(App.pokerspiel.getAlleSpieler().get(i));
+		//	setZustand(App.pokerspiel.getAlleSpieler().get(i));
 		}
 
 		potText.setText(String.valueOf(App.pokerspiel.getPot()));
@@ -250,7 +253,7 @@ public class SpielActivity extends Activity
 	}
 	
 
-//SETZMENÜ EINSTELLUNGEN
+//SETZENÜ EINSTELLUNGEN
 @Override
 public boolean onCreateOptionsMenu(Menu menu)
 {
@@ -349,6 +352,7 @@ public void setName(Spieler spieler)
 		((TextView)temp.getChildAt(0)).setText(spieler.getProfil().getName());
 	}
 	else{
+		Log.d("KUCKE HIER PETER!", "geht immer noch");
 		LinearLayout temp=((LinearLayout)spieler.layoutondevice.getChildAt(1));
 		((TextView)temp.getChildAt(0)).setText(spieler.getProfil().getName());
 	}

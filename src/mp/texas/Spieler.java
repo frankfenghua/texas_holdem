@@ -23,7 +23,7 @@ public class Spieler
 	public int numberondevice;
 	public LinearLayout layoutondevice;
 	public boolean mainspieler;
-	//IST DER SPIELER AUF DEM GERÄT;
+	//IST DER SPIELER AUF DEM GER€T;
 	
 	
 	
@@ -35,14 +35,31 @@ public class Spieler
 		nochDrin=true;
 		chipsImPot=0;
 	}
+
 	
-	public Spieler(String namearg, int chipsarg)
+	public Spieler(String namearg, String idarg, int chipsarg, int karte1farbe, int karte1wert, int karte2farbe, int karte2wert)
 	{
+		profil.setId(idarg);
+		Karte karte1 = new Karte(karte1farbe, karte1wert);
+		getHand().setKarte1(karte1);
+		Karte karte2 = new Karte(karte2farbe, karte2wert);
+		getHand().setKarte1(karte2);
+			
 		profil.setName(namearg);
 		this.setChips(chipsarg);
 		nochDrin=true;
 		chipsImPot=0;
 	}
+	
+
+	
+	public Spieler(String namearg, String idarg, int chipsarg) {
+		profil.setId(idarg);
+		profil.setName(namearg);
+		this.setChips(chipsarg);
+		nochDrin=true;
+		chipsImPot=0;	}
+
 	
 	//DAS IST DIE FUNKTION DIE AUFGERUFEN WIRD UM DEN SPIELER AM DEVICE ZU KREIEREN
 	public Spieler() 
@@ -51,7 +68,7 @@ public class Spieler
 	}
 	
 
-	
+
 	public int zwangssetzen(int blind)
 	{
 		setChips(getChips()-blind);

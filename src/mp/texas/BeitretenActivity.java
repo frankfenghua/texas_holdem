@@ -103,8 +103,9 @@ public class BeitretenActivity extends Activity {
 				// ClientPokerspielService.actionBeitreten(getApplicationContext())
 				// an das dazugehšrige SPiel (ID) geschickt werden;  //test		
 				
-				PushService.actionUnsubscribe(getApplicationContext()); //um sich wieder von den Themen abzumelden
 				ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
+				PushService.actionUnsubscribe(getApplicationContext()); //um sich wieder von den Themen abzumelden
+
 			}		        															
 		}); 		
 	 }

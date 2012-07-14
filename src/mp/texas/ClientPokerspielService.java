@@ -205,7 +205,7 @@ public class ClientPokerspielService extends Service {
 	
 	private void beitreten()
 		{
-		App.spielErstellt = false; 
+		
 		PushService.actionSubscribe(getApplicationContext());
 		PushService.actionPublishJoin(getApplicationContext()); 
 		// wo (welche Activity) kommen die Leute hier hin?
@@ -215,22 +215,14 @@ public class ClientPokerspielService extends Service {
 	private void erstellen()
 		{
 		App.spielErstellt = true; 
-		
 		// alle angemeldeten Spieler werden initial gesmischt und in App.pokerspiel geschrieben
 		App.pokerspiel.setAlleSpieler(App.pokerspiel.spielerMischen(App.Mitspieler)); 
 		
+		App.pokerspiel.setEinsatz(0);
 		
-		//TASK PETER Habe ich auskommentiert, Pokerspiel hat sein Blatt verloren, bitte nutze die Funktion analog zum Einzelspielermodus
-		// Karten müssen erzeugt, gemischt und verschickt werden
-		/*
-		Blatt blatt = new Blatt();
-		App.pokerspiel.setBlatt(blatt);
+		App.pokerspiel.setSmallBlindSpieler(App.pokerspiel.getAlleSpieler().get(0));
+		App.pokerspiel.austeilen();
 		
-		App.pokerspiel.getBlatt().blattMischen(blatt.getKarten());
-		
-		App.pokerspiel.getBlatt().gemeinschaftskartenGeben();
-		*/
-		// bin mir nicht sicher
 		
 		PushService.actionPublishStart(getApplicationContext());
 		
@@ -239,9 +231,6 @@ public class ClientPokerspielService extends Service {
 	
 	private void updaten()
 		{
-		//aktiven Spieler festlegen
-		App.pokerspiel.setAktiverSpieler(App.pokerspiel.getAlleSpieler().get(0 + (int)(Math.random() * ((App.pokerspiel.getAlleSpieler().size()) + 1))));
-		
 		
 		PushService.actionUpdate(getApplicationContext());
 		

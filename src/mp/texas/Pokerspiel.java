@@ -53,25 +53,28 @@ public class Pokerspiel
 	{
 		blindZeitRundenWert=blindzeitrundenwert;
 		blindModus=blindart;
-		startzeit=System.currentTimeMillis();
-		if(online)
-		{singlePlayer=false;}
-		else{singlePlayer=true;}
 		blindBetrag=bigblind;
+		startzeit=System.currentTimeMillis();
+		
+		if(online)			//BISSCHEN VERWIRREND ABER WENN MAN MAL FALSCH ANFANGT
+		{singlePlayer=false;}	//DIE VARIABLE DREHEN
+		else{singlePlayer=true;}
+		
+		
 		if(online==false)
 		{
 			alleSpieler=new ArrayList<Spieler>();
-			alleSpieler.add(new Humanspieler(startkapital));
+			alleSpieler.add(new Humanspieler(App.selbst,startkapital));
+			
 			for(int i=1; i<anzahlmitspieler;i++)
 			{
-				alleSpieler.add(new ComputerSpieler(computerlevel, startkapital,i));
+				alleSpieler.add(new ComputerSpieler(computerlevel, startkapital,i)); //DER LETZTE PARAMETER IST NICHT DIE ID, SONDERN LEDIGLICH EINE ZAHL DIE DIE NAMEN VERGIBT
 			}
 			setEinsatz(0);
 			alleSpieler=spielerMischen(getAlleSpieler());
 			smallBlindSpieler=getAlleSpieler().get(0);
 			setWettrunde(0);
 			setPot(0);
-			
 		}
 	}
 	
@@ -764,7 +767,7 @@ public class Pokerspiel
 					if(aktive.get(spielertemp+n).getSidepot()!=0)
 					{
 						aktive.get(spielertemp+n).einzahlen(Math.min(furjeden,aktive.get(spielertemp+n).getSidepot()));
-						info=info+ aktive.get(spielertemp+n).getProfil().getName()+ " gewinnt " +String.valueOf(Math.min(furjeden,aktive.get(spielertemp+n).getSidepot()))+"\n";
+						info=info+ aktive.get(spielertemp+n).getProfil().getName()+" "+  Washatder(aktive.get(spielertemp+n))+ " gewinnt " +String.valueOf(Math.min(furjeden,aktive.get(spielertemp+n).getSidepot()))+"\n";
 						setPot(getPot()-Math.min(furjeden,aktive.get(spielertemp+n).getSidepot()));
 						davonallin++;
 					}
@@ -778,7 +781,7 @@ public class Pokerspiel
 					if(aktive.get(spielertemp+n).getSidepot()==0)
 					{
 						aktive.get(spielertemp+n).einzahlen(furjeden);
-						info=info+aktive.get(spielertemp+n).getProfil().getName()+ " gewinnt " +String.valueOf(furjeden)+"\n";
+						info=info+aktive.get(spielertemp+n).getProfil().getName()+" "+  Washatder(aktive.get(spielertemp+n))+" gewinnt " +String.valueOf(furjeden)+"\n";
 						setPot(getPot()-furjeden);
 					}
 				}
@@ -843,6 +846,32 @@ public class Pokerspiel
 		return ausgabe;
 	}
 	
+	
+	public String Washatder(Spieler spieler)
+	{
+		String info="";
+		if(spieler.ergebnis[0]==1)
+		{info="(High Card)";}
+		if(spieler.ergebnis[0]==2)
+		{info="(One pair)";}
+		if(spieler.ergebnis[0]==3)
+		{info="(Two pairs)";}
+		if(spieler.ergebnis[0]==4)
+		{info="(Three of a kind)";}
+		if(spieler.ergebnis[0]==5)
+		{info="(Straight)";}
+		if(spieler.ergebnis[0]==6)
+		{info="(Flush)";}
+		if(spieler.ergebnis[0]==7)
+		{info="(Full House)";}
+		if(spieler.ergebnis[0]==8)
+		{info="(Four of a kind)";}
+		if(spieler.ergebnis[0]==9)
+		{info="(Straight Flush)";}
+		if((spieler.ergebnis[0]==9)&&(spieler.ergebnis[1]==12))
+		{info="(Royal Flush)";}
+		return info;
+	}
 	
 	public int compare(Spieler spieler1, Spieler spieler2)
 	{

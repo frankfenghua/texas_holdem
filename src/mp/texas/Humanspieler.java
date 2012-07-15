@@ -6,18 +6,29 @@ package mp.texas;
 
 import android.util.Log;
 
-public class Humanspieler extends Spieler {
-	public Humanspieler(int startkapital)
+public class Humanspieler extends Spieler 
+{
+
+	
+	public Humanspieler(Spieler selbst, int chips)
 	{
-		profil=new Profil(App.selbst.getProfil().getName(),App.selbst.getProfil().getAvatar());
-		chips=startkapital;
+		profil=App.selbst.getProfil();
+		this.chips=chips;
 	}
+	
+	
+	public Humanspieler() 
+	{
+		profil=new Profil();
+	}
+	
 	
 	public int setzen(Pokerspiel pokerspiel)
 	{
-	
+		Log.d("Human","setzen");
+		App.setInteracted(false);
+		return App.setzwert;
 		
-		return 200;
 	}
 
 	@Override
@@ -25,6 +36,9 @@ public class Humanspieler extends Spieler {
 		Log.d("GameOver","Human Player");
 		super.gameover();
 	}
+
+
+	
 	
 	
 

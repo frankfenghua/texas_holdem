@@ -38,11 +38,10 @@ public class startActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
-		deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);		//test	
 		app=(App)getApplication();
-		
-		//Setzt die selbst profilID auf die deciveID
+		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);		//test	
  	  	App.selbst.getProfil().setId(deviceID);
+ 	  	Log.d("ProfilID","gesetzt");
  
 
 		neuesSpiel=(Button) findViewById(R.id.button1);

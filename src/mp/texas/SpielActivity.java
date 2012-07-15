@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings.Secure;
 import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -25,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -97,12 +99,66 @@ public class SpielActivity extends Activity
 	        
 	        private Runnable Timer_Tick = new Runnable() 
 	        {
-	        public void run() 
-	        {
- 
-	        	Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show();          
-	        	draw();
-	        }
+	        	public void run() 
+	        	{
+	        	
+	        		if(App.pokerspiel.isSinglePlayer()==true)
+	        		{
+	        			if((App.pokerspiel.getAktiverSpieler().getProfil().getId()!=App.selbst.getProfil().getId())||(App.interacted==true))
+	        			{
+	        				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show();          
+	        				draw();
+	        			}
+	        			else
+	        			{
+	        				if(App.pokerspiel.getEinsatz()==App.pokerspiel.getAktiverSpieler().getChipsImPot())
+	        				{
+	            				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show();          
+		        				draw();
+	        				}
+	        				else
+	        				{
+	        					Toast.makeText(getApplicationContext(), "Sie sind an der Reihe", Toast.LENGTH_SHORT).show();          
+	        				}
+	        			}
+	        		}
+	        		
+	        		
+	        		
+	        		
+	        		
+	        		
+	        		
+	        		
+	        		if(App.pokerspiel.isSinglePlayer()==false)
+	        		{
+	        			
+	        			
+	        			//ICH BIN DRAN UND HABE NICHT GESETZT
+	        			if((App.pokerspiel.getAktiverSpieler().getProfil().getId()==App.selbst.getProfil().getId())&&(App.interacted==false))
+	        			{
+        					Toast.makeText(getApplicationContext(), "Sie sind an der Reihe", Toast.LENGTH_SHORT).show();          
+	        			}
+
+	        			//ICH BIN DRAN UND HABE GESETZT
+	        			if((App.pokerspiel.getAktiverSpieler().getProfil().getId()==App.selbst.getProfil().getId())&&(App.interacted==true))
+	        			{	
+	        				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show(); 
+	        				ClientPokerspielService.actionUpdate(getApplicationContext());
+	        			}
+	        			
+	        			
+	        			if((App.pokerspiel.getAktiverSpieler().getProfil().getId()=="COMPUTERGEGNER")&&(App.pokerspiel.getName()==App.selbst.getProfil().getId()))
+	        			{	
+	        				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show();          
+	        				ClientPokerspielService.actionUpdate(getApplicationContext());
+	        			}
+	        			
+	        			
+
+	        		draw();
+	        		}
+	        	}
 	        };
 		
 	    
@@ -126,6 +182,10 @@ public class SpielActivity extends Activity
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);		//test	
+ 	  	App.selbst.getProfil().setId(deviceID);
+ 	  	Log.d("ProfilID","gesetzt");
+		draw();
 		myTimer=new Timer();
 	    myTimer.schedule(new TimerTask() 
 	        								{
@@ -173,23 +233,46 @@ public boolean onOptionsItemSelected(MenuItem item)
 	switch(item.getItemId())
 	{
 	case R.id.itemcall:
+		call();
 		Log.d("Item","Call");
-		//App.pokerspiel.setWettrunde(App.pokerspiel.getWettrunde()+1);
-		draw();
 		break;
 	case R.id.itemraise:
 		Log.d("Item","Raise");
-		draw();
+		raise();
 		break;
 		
 	case R.id.itemfold:
+		fold();
 		Log.d("Item","Fold");
-		draw();
 	}
 	return true;
 }
 
 	
+
+
+private void fold() {
+	// TODO Auto-generated method stub
+	//App.setInteracted(true);
+	App.setzwert=0;
+	App.setInteracted(true);
+}
+
+
+
+private void raise() {
+	// TASK HIER NOCH WAS UM RICHTIG ZU RAISEN
+	showDialog(2);
+}
+
+
+
+private void call() {
+	// TODO Auto-generated method stub
+	App.setInteracted(true);
+	App.setzwert=App.pokerspiel.getEinsatz();
+}
+
 
 
 //Funktion um den Aktuellen SPielstand zu zeichnen
@@ -358,8 +441,32 @@ public void onBackPressed() {
 
 
 
+
+
 protected Dialog onCreateDialog(int id) {
     
+	final Dialog dialogRaise = new Dialog(this);
+	dialogRaise.setContentView(R.layout.raisedialog);
+	dialogRaise.setTitle("Raise");
+	
+	final EditText text = (EditText) dialogRaise.findViewById(R.id.editTextRaise);
+	text.setText(String.valueOf(App.pokerspiel.getEinsatz()));
+	Button button=(Button) dialogRaise.findViewById(R.id.buttonDialogRaise);
+	button.setOnClickListener(new OnClickListener() {
+		
+		public void onClick(View v) {
+			dialogRaise.dismiss();
+			Log.d("Was kommt da raus",text.getText().toString());
+			if(text.getText().toString().length()>0)
+			{
+				App.setzwert=Integer.parseInt(text.getText().toString());
+				App.setInteracted(true);
+			}
+		}
+	});
+	
+
+	
 	AlertDialog.Builder builder = new AlertDialog.Builder(this);
 	builder.setMessage("Are you sure you want to exit?")
 	       .setCancelable(false)
@@ -375,8 +482,17 @@ protected Dialog onCreateDialog(int id) {
 	       });
 	AlertDialog alert = builder.create();
 
+if(id==1)
+{
+	return alert;
+}
 
-    return alert;
+if(id==2)
+{
+	return dialogRaise;
+}
+
+return null;
 }
 
 

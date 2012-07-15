@@ -5,7 +5,7 @@
     android:background="@drawable/texas_holdem_icon"
     android:gravity="bottom"
     android:orientation="vertical" >
-
+
     <Button
         android:id="@+id/buttonSpielModusEinzelspieler"
         style="@android:style/Widget.Button"

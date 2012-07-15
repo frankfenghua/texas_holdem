@@ -16,7 +16,7 @@ public class Humanspieler extends Spieler {
 	public int setzen(Pokerspiel pokerspiel)
 	{
 		Log.d(profil.getName(),"dran");
-		schongesetzt=true;
+		//schongesetzt=true;
 		return 200;
 	}
 

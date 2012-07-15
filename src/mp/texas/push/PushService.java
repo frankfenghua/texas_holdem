@@ -13,6 +13,7 @@ import mp.texas.BeitretenActivity;
 import mp.texas.GegnerEinstellungenActivity;
 import mp.texas.Pokerspiel;
 import mp.texas.Spieler;
+import mp.texas.push.ConnectionLog;
 
 import com.ibm.mqtt.IMqttClient;
 import com.ibm.mqtt.MqttClient;

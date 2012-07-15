@@ -122,6 +122,7 @@ public class Pokerspiel
 			n.setNochDrin(true);
 			n.setChipsImPot(0);
 			n.setZustand(" ");
+			n.setSidepot(0);
 			Log.d(n.getProfil().getName(),String.valueOf(n.getChips()));
 		}
 		
@@ -174,7 +175,7 @@ public class Pokerspiel
 		
 		else
 		{
-			if((aktiverSpieler.equals(lastRaise))&&(aktiverSpieler.schongesetzt==true))
+			if(aktiverSpieler.schongesetzt==true)
 		{
 				
 				for(Spieler n:getAlleSpieler())
@@ -194,6 +195,7 @@ public class Pokerspiel
 		}
 			
 		else{
+			aktiverSpieler.schongesetzt=true;
 		int temp= aktiverSpieler.setzen(this);  //HIER WIRD DER SPIELER ZUM SETZEN AUFGERUFEN
 		temp-=aktiverSpieler.getChipsImPot();	//Wieviel muss der Spieler noch einbezahlen
 		if(aktiverSpieler.getSidepot()==0)	//Er ist nicht ALL in

@@ -82,7 +82,7 @@ public class Spieler
 		}
 		else
 		{
-			schongesetzt=true;
+			//schongesetzt=true;
 			Log.d("Zwangssetzen",String.valueOf(getChips()));
 			setChipsImPot(getChips());
 			setChips(0);

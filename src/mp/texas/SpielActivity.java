@@ -111,8 +111,7 @@ public class SpielActivity extends Activity
 	        			}
 	        			else
 	        			{
-	        				if(App.pokerspiel.getEinsatz()==App.pokerspiel.getAktiverSpieler().getChipsImPot())
-	        				{
+	        				if((App.pokerspiel.getEinsatz()==App.pokerspiel.getAktiverSpieler().getChipsImPot())&&(App.pokerspiel.getEinsatz()!=0))	        				{
 	            				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show();          
 		        				draw();
 	        				}

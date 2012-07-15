@@ -126,16 +126,10 @@ public class GegnerEinstellungenActivity extends Activity
 						}
 						else
 						{
-<<<<<<< HEAD
-						App.pokerspiel=new Pokerspiel(false,App.AnzahlSpieler,App.Startkapital,App.BlindsArt,App.BlindsWert,App.BigBlind,App.GegnerLevel);
-						Log.d("Spieler im App.pokerspiel",String.valueOf(App.pokerspiel.getAlleSpieler().size()));
-						}
 
-=======
 						App.pokerspiel=new Pokerspiel(false,App.AnzahlSpieler,App.Startkapital,App.BlindsArt,App.BlindsWert,App.BigBlind,App.GegnerLevel,App.BlindsWert);
 						App.pokerspiel.spielablauf();
 						Log.d("SPieler im App.pokerspiel",String.valueOf(App.pokerspiel.getAlleSpieler().size()));
->>>>>>> origin/michael5
 						startActivity(new Intent(getApplicationContext(),SpielActivity.class));
 						}
 

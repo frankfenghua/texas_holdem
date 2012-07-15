@@ -36,16 +36,12 @@ public class ComputerSpieler extends Spieler
 	public int setzen(Pokerspiel pokerspiel)
 	{
 		int rand=(int) (Math.random()*300);
-<<<<<<< HEAD
+
 		schongesetzt=true;
 		
-		
-		return 200;
-=======
-		//schongesetzt=true;
 	
 		return 100;
->>>>>>> origin/michael5
+
 	}
 
 	

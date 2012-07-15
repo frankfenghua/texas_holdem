@@ -137,12 +137,8 @@ public class App extends Application
 				App.pokerspiel.getSmallBlindSpieler().getProfil().getId() + "," +
 				Integer.toString(App.pokerspiel.getBlindBetrag()) + "," + //10
 				Integer.toString(App.pokerspiel.getWettrunde()) + "," + 
-<<<<<<< HEAD
 			//	App.pokerspiel.getLastRaise().getProfil().getId() + "," +//12
 				"lastRaiseStandHier" + ","+
-=======
-		//		App.pokerspiel.getLastRaise().getProfil().getId() + "," +//12
->>>>>>> origin/michael5
 				Integer.toString(App.pokerspiel.getRundenzahler()) + "," +
 				Integer.toString(App.pokerspiel.getComputergegnerLevel()) + "," + //14
 				Integer.toString(App.pokerspiel.getAlleSpieler().size()) + "," +

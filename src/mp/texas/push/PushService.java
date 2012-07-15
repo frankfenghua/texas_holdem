@@ -998,17 +998,11 @@ public class PushService extends Service {
 					App.pokerspiel.setSmallBlindSpieler(App.pokerspiel.getAlleSpieler().get(i));
 				}
 				
-<<<<<<< HEAD
 //				for(int i=0; i<App.pokerspiel.getAlleSpieler().size(); i++){
 //					if(App.pokerspiel.getAlleSpieler().get(i).getProfil().getId().equalsIgnoreCase(items.get(12)))
 //					App.pokerspiel.setLastRaise(App.pokerspiel.getAlleSpieler().get(i));
 //				}
-=======
-				for(int i=0; i<App.pokerspiel.getAlleSpieler().size(); i++){
-					if(App.pokerspiel.getAlleSpieler().get(i).getProfil().getId().equalsIgnoreCase(items.get(12)))
-		;//			App.pokerspiel.setLastRaise(App.pokerspiel.getAlleSpieler().get(i));
-				}
->>>>>>> origin/michael5
+			
 						
 				log("Gamestate Ÿbermittelt");			
 			

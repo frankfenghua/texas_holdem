@@ -39,34 +39,11 @@ public class startActivity extends Activity
 		setContentView(R.layout.main);
 		
 		deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);		//test	
- 	  	((TextView) findViewById(R.id.target_text)).setText(deviceID);
 		app=(App)getApplication();
 		
 		//Setzt die selbst profilID auf die deciveID
  	  	App.selbst.getProfil().setId(deviceID);
  
- 	  
- 	  	//TASK PETER Ich musste das hier deaktivieren, das hat mir dauernd ins Handwerk gepfuscht, bitte mach das irgendwohin, wo es sich nicht in Singlegame einmischt
- 	  	//Editor editor = getSharedPreferences(PushService.TAG, MODE_PRIVATE).edit();		//test
-		//editor.putString(PushService.PREF_DEVICE_ID, deviceID);							//test
-		//editor.commit();																//test
-		//PushService.actionStart(getApplicationContext());		        				//test
-
-		pushButton = (Button) findViewById(R.id.push_button);		        			//test
-		pushButton.setOnClickListener(new OnClickListener() {		    				//test	
-			public void onClick(View v) 		        								//test
-			{		        															//test
-				PushService.actionPublish(getApplicationContext());		        		//test
-			}		        															//test
-		}); 																			//test
-  		
-		pushButton = (Button) findViewById(R.id.pokerspiel_button);		        		//test
-		pushButton.setOnClickListener(new OnClickListener() {		    				//test	
-			public void onClick(View v) 		        								//test
-			{		        															//test
-				ClientPokerspielService.actionServiceStarten(getApplicationContext());  //test																		//test
-			}		        															//test
-		});  					        												//test
 
 		neuesSpiel=(Button) findViewById(R.id.button1);
 		neuesSpiel.setOnClickListener(
@@ -89,8 +66,6 @@ public class startActivity extends Activity
 				});
 	
 	}
-	
-								
 							
 
 	@Override

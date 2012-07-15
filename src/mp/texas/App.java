@@ -154,7 +154,7 @@ public class App extends Application
 							Integer.toString(App.pokerspiel.getAlleSpieler().get(i).getChipsImPot()) + "," +	
 							Boolean.toString(App.pokerspiel.getAlleSpieler().get(i).isNochDrin()) + "," +	//24
 							Integer.toString(App.pokerspiel.getAlleSpieler().get(i).getSidepot()) + "," +
-							Long.toString(123)	//26
+							Long.toString(App.pokerspiel.getStartzeit())	//26
 							;
 				}	
 		

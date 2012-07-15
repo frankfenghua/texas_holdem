@@ -65,10 +65,9 @@ public class GegnerEinstellungenActivity extends Activity
 		app=(App)getApplication();
 		
 		scroll=(ScrollView)findViewById(R.id.scrollViewGegnerEinstellungen);
-//		mitspieler.add(new Profil(3));
-//		mitspieler.add(new Profil(2));
-//		mitspieler.add(new Profil(1));
+
 	
+		
 		boolean joinedPlayer = false;
 		
 		menschlicheGegner=(TextView)findViewById(R.id.textViewGegnerMenschlich);
@@ -167,6 +166,11 @@ public class GegnerEinstellungenActivity extends Activity
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		
+		if(App.singlegame==false){
+	    	PushService.actionUnsubscribe(getApplicationContext());
+		    	App.pokerspiel = null;
+		}
 	}
 
 	@Override

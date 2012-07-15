@@ -1,5 +1,6 @@
 package mp.texas;
 
+import mp.texas.push.PushService;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.DataSetObserver;
@@ -88,6 +89,10 @@ public class spielModusActivity extends Activity
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		
+		if(App.singlegame==false){
+	    	PushService.actionUnsubscribe(getApplicationContext());
+		    	App.pokerspiel = null;}
 	}
 
 	@Override

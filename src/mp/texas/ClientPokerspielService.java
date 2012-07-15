@@ -49,6 +49,8 @@ public class ClientPokerspielService extends Service {
 	private static final String ACTION_LADEN = ACTION_ID + ".LADEN";
 	private static final String ACTION_UPDATEN = ACTION_ID + ".UPDATEN";
 	private static final String ACTION_UNSUBSCRIBE = ACTION_ID + ".UNSUBSCRIBE";
+	private static final String ACTION_RECEIVE = ACTION_ID + ".RECEIVE";
+
 
 	public void getDeviceID(Activity aufrufendeActivity) // soll von der aufrufendenActivity die ID als Spiel-kennung lesen
 	{
@@ -117,6 +119,13 @@ public class ClientPokerspielService extends Service {
 			ctx.startService(i);
 	}
 		
+		// Methode um receive aufzurufen
+		public static void actionReceive(Context ctx) {
+			Intent i = new Intent(ctx, ClientPokerspielService.class);
+			i.setAction(ACTION_RECEIVE);
+			ctx.startService(i);
+	}	
+		
 					
 	// Log-methoden des Service
 	private void log(String message) {
@@ -181,6 +190,8 @@ public class ClientPokerspielService extends Service {
 				updaten();
 		} else if (intent.getAction().equals(ACTION_LADEN) == true) {		
 			laden();
+		} else if (intent.getAction().equals(ACTION_RECEIVE) == true) {		
+			receive();
 		} else if (intent.getAction().equals(ACTION_UNSUBSCRIBE) == true) {		
 			unsubscribe();
 		};
@@ -231,10 +242,12 @@ public class ClientPokerspielService extends Service {
 	
 	private void updaten()
 		{
-		
 		PushService.actionUpdate(getApplicationContext());
-		
 		}
-
-
+	
+	private void receive()
+		{	
+//		SpielActivity.draw();
+		}
+	
 }

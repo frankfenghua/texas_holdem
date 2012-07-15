@@ -6,6 +6,7 @@ package mp.texas;
 
 import java.security.PublicKey;
 
+import android.os.Message;
 import android.util.Log;
 
 
@@ -36,8 +37,7 @@ public class ComputerSpieler extends Spieler
 	{
 		int rand=(int) (Math.random()*300);
 		schongesetzt=true;
-		//Log.d(profil.getName(),String.valueOf(rand));
-		//return rand;
+		
 		return 200;
 	}
 

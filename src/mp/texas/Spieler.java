@@ -24,12 +24,9 @@ public class Spieler
 	public int numberondevice;
 	public LinearLayout layoutondevice;
 	public boolean mainspieler;
-<<<<<<< HEAD
-	//IST DER SPIELER AUF DEM GER€T;
-=======
+
 	//IST DER SPIELER AUF DEM GERÄT;
 	public boolean schongesetzt=false;
->>>>>>> origin/michael2
 	
 	
 	
@@ -73,14 +70,9 @@ public class Spieler
 		profil=new Profil();
 	}
 	
-
-<<<<<<< HEAD
-
-	public int zwangssetzen(int blind)
-=======
 	
 	public int zwangssetzen(Pokerspiel pokerspiel, int blind)
->>>>>>> origin/michael2
+
 	{
 		if(blind<getChips())
 		{

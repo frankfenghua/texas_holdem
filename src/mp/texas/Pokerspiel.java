@@ -6,7 +6,10 @@ package mp.texas;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Timer;
 
+import android.content.Intent;
+import android.os.Message;
 import android.util.Log;
 
 public class Pokerspiel 
@@ -24,6 +27,7 @@ public class Pokerspiel
 	private Spieler lastRaise=null;
 	private int Rundenzahler=0;
 	private long startzeit;
+
 	
 	//Variablen um zu initialisieren, wichtig für Vorschau offen Spiele
 	private int ComputergegnerLevel = 0;
@@ -67,16 +71,13 @@ public class Pokerspiel
 			smallBlindSpieler=getAlleSpieler().get(0);
 			setWettrunde(0);
 			setPot(0);
-			receive();	//Weiterleitung
+			try {
+				receive();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	//Weiterleitung
 		}
-<<<<<<< HEAD
-		setEinsatz(0);
-		alleSpieler=spielerMischen(getAlleSpieler());
-		setSmallBlindSpieler(getAlleSpieler().get(0));
-		austeilen();
-=======
-		 
->>>>>>> origin/michael2
 	}
 	
 	
@@ -268,13 +269,9 @@ public class Pokerspiel
 	
 	public void vorherigerSpieler()
 	{
-<<<<<<< HEAD
-		int temp= getAlleSpieler().indexOf(getSmallBlindSpieler())+2;
-		lastRaise=getAlleSpieler().get(verschieben(--temp));
-=======
 		int temp= getAlleSpieler().indexOf(smallBlindSpieler)+2;
 		setLastRaise(getAlleSpieler().get(verschieben(--temp)));
->>>>>>> origin/michael2
+
 		while(lastRaise.isNochDrin()==false)
 		{setLastRaise(getAlleSpieler().get(verschieben(--temp)));}	
 	}
@@ -301,46 +298,18 @@ public class Pokerspiel
 	
 	public void blindsEinzahlen()
 	{
-<<<<<<< HEAD
-		int temp=getAlleSpieler().indexOf(getSmallBlindSpieler());
-		pot+=getSmallBlindSpieler().zwangssetzen(blindBetrag/2);
-		pot+=getAlleSpieler().get(verschieben(temp+1)).zwangssetzen(blindBetrag);
-		setEinsatz(blindBetrag);
-=======
+
 		int temp=getAlleSpieler().indexOf(smallBlindSpieler);
 		pot+=smallBlindSpieler.zwangssetzen(this, blindBestimmer()/2);
 		pot+=getAlleSpieler().get(verschieben(temp+1)).zwangssetzen(this, blindBestimmer());
 		setEinsatz(blindBestimmer());
->>>>>>> origin/michael2
+
 	}
 	
 	public void blindWeitergeben()
 	{
-<<<<<<< HEAD
-	 	int temp=getAlleSpieler().indexOf(getSmallBlindSpieler());
-	 	getAlleSpieler().get(verschieben(temp-1)).setZustand(" ");
 
-	 	if(temp==0){
-	 		getAlleSpieler().get(getAlleSpieler().size()-1).setZustand(" ");
-	 	}
-	 	else
-	 	{getAlleSpieler().get(temp-1).setZustand(" ");}
-		getAlleSpieler().get(temp).setZustand("Dealer");
-		if(temp+1==getAlleSpieler().size())
-		{getAlleSpieler().get(0).setZustand("Small Blind");
-		setSmallBlindSpieler(getAlleSpieler().get(0));}
-		else{getAlleSpieler().get(temp+1).setZustand("Small Blind");
-		setSmallBlindSpieler(getAlleSpieler().get(temp+1));}
-		
-		if(temp+2==getAlleSpieler().size())
-		{getAlleSpieler().get(0).setZustand("Big Blind");}	
-		if(temp+2==getAlleSpieler().size()+1)
-		{getAlleSpieler().get(1).setZustand("Big Blind");}
-		if((temp+2!=getAlleSpieler().size())&&(temp+2!=getAlleSpieler().size()+1))
-		{getAlleSpieler().get(temp+2).setZustand("Big Blind");}
-=======
 	 	int temp=getAlleSpieler().indexOf(smallBlindSpieler);
->>>>>>> origin/michael2
 	 	
 		smallBlindSpieler.setZustand("Dealer");
 		
@@ -915,20 +884,29 @@ public class Pokerspiel
 	
 	public void update()
 	{
-		//Kurzgeschlossen für Singleplayer
-		//if(singlePlayer==true)
-		//{
-		//	receive();
-		//}
+		// wird aufgerufen, wenn ein update versendet werden soll
+		//ClientPokerService.actionUpdate(getApplicationContex);
+		
 	}
 	
 	
 	
-	public void receive()
-	{
+	public synchronized void receive() throws InterruptedException
+	{	
+
+		notify();
+		// ->Spielactivity.draw()
+		
 		if(singlePlayer==true)
 		{while(getAlleSpieler().size()>1)
 			{spielablauf();}
+		
+// 			if(ich == aktiver Spieler)
+//				{
+//				 SPielablauf starten
+//				}
+//			
+		
 		}
 	}
 	
@@ -1075,6 +1053,14 @@ public class Pokerspiel
 
 	public void setRundenzahler(int rundenzahler) {
 		Rundenzahler = rundenzahler;
+	}
+
+	public long getStartzeit() {
+		return startzeit;
+	}
+
+	public void setStartzeit(long startzeit) {
+		this.startzeit = startzeit;
 	}
 
 

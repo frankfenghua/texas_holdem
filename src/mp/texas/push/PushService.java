@@ -945,7 +945,7 @@ public class PushService extends Service {
 				//Hier kann noch ein Test eingebaut werden, ob die Poker App gerade offen ist, und falls nicht eine notification Ÿber den
 				
 				App.pokerspiel.setPot(Integer.parseInt(items.get(3)));
-				App.pokerspiel.setBlindModus(items.get(4));
+				App.pokerspiel.setBlindModus(Integer.parseInt(items.get(4)));
 				App.pokerspiel.setBlindBetrag(Integer.parseInt(items.get(9)));
 				App.pokerspiel.setBlindZeitRundenWert(Integer.parseInt(items.get(5)));
 				App.pokerspiel.setComputergegnerLevel(Integer.parseInt(items.get(14)));

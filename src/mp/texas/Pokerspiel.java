@@ -32,8 +32,6 @@ public class Pokerspiel
 	//Variablen um zu initialisieren, wichtig für Vorschau offen Spiele
 	private int ComputergegnerLevel = 0;
 	private int startkapital;
-
-	
 	
 	
 	//Variablen für die Blind Erhöhungen

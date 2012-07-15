@@ -1,5 +1,7 @@
 package mp.texas;
 
+import java.util.ArrayList;
+
 import com.ibm.mqtt.MqttConnect;
 
 import mp.texas.push.*;
@@ -19,7 +21,6 @@ import android.widget.TextView;
 
 public class startActivity extends Activity 
 {
-
 	Button neuesSpiel;
 	Button profil;
 	Button statistiken;
@@ -51,6 +52,9 @@ public class startActivity extends Activity
 				{             
 					public void onClick(View v) 
 					{                Log.d("Button", "Neues Spiel"); // Perform action on click 
+					PushService.actionUnsubscribe(getApplicationContext());
+					App.Mitspieler.clear();
+					App.Mitspieler = new ArrayList<Spieler>();
 					startActivity(new Intent(getApplicationContext(),spielModusActivity.class));
 					}         
 				});

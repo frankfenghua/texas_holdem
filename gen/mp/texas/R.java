@@ -26,6 +26,7 @@ public final class R {
         public static final int playingcards=0x7f020002;
         public static final int table=0x7f020003;
         public static final int texas_holdem_icon=0x7f020004;
+        public static final int texas_holdem_icon_2=0x7f020005;
     }
     public static final class id {
         public static final int BeitretenAnzahlSpieler=0x7f09000b;
@@ -117,8 +118,8 @@ public final class R {
         public static final int itemcall=0x7f090000;
         public static final int itemfold=0x7f090002;
         public static final int itemraise=0x7f090001;
+        public static final int listViewGegnerEinstellungen=0x7f090014;
         public static final int scrollView1=0x7f090010;
-        public static final int scrollViewGegnerEinstellungen=0x7f090014;
         public static final int seekBarGegnerEinstellungenLevel=0x7f090015;
         public static final int seekBarSpielEinsatz=0x7f09004d;
         public static final int spinnerBeitretenSpiele=0x7f090004;

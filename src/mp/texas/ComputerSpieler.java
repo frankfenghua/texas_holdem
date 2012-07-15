@@ -38,6 +38,7 @@ public class ComputerSpieler extends Spieler
 		int rand=(int) (Math.random()*300);
 		schongesetzt=true;
 		
+		
 		return 200;
 	}
 

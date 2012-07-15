@@ -1,5 +1,7 @@
 package mp.texas;
 
+import java.util.ArrayList;
+
 import mp.texas.push.PushService;
 import android.app.Activity;
 import android.content.Intent;
@@ -35,6 +37,9 @@ public class SpielEinstellungenActivity extends Activity
 		setContentView(R.layout.spieleinstellungen);
 		app=(App)getApplication();
 		
+		if(App.singlegame==false){
+			PushService.actionStart(getApplicationContext());
+		}
 		
 		spielStarten=(Button) findViewById(R.id.buttonSpielEinstellungenSpielStarten);
 		spielStarten.setOnClickListener(
@@ -79,8 +84,6 @@ public class SpielEinstellungenActivity extends Activity
 					}
 					startActivity(new Intent(getApplicationContext(),GegnerEinstellungenActivity.class));
 					}         
-					
-					// hier Push Service eroeffnen ...
 				});
 				
 		anzahlGegner=(Spinner) findViewById(R.id.spinnerSpielEinstellungenANzahlGegner);
@@ -147,7 +150,7 @@ public class SpielEinstellungenActivity extends Activity
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
+	
 		super.onResume();
 	}
 

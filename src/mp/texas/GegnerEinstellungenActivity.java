@@ -15,12 +15,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.ScrollView;
@@ -37,7 +39,12 @@ public class GegnerEinstellungenActivity extends Activity
 	TextView menschlicheGegner;
 	LinearLayout layoutGegner;
 	LinearLayout layoutMain;
-	ScrollView scroll;
+	ListView listView;
+	public static ArrayAdapter<String> listAdapter;
+	static ArrayList<String> listItems = new ArrayList<String>();
+	static boolean joinedPlayer = false;
+
+	
 	static ArrayList<Profil> mitspieler=new ArrayList<Profil>();
 	App app;
 	
@@ -46,10 +53,9 @@ public class GegnerEinstellungenActivity extends Activity
         public void handleMessage(Message msg) {
         	super.handleMessage(msg);
         	String text = (String)msg.obj;
-//        	mitspieler.add(new Profil(text));
-        	
-//        	scroll.addView(produceLayoutGegner(), 0); // wie zeichne ich die scrollview neu? 
-        }
+        	listItems.add(text);
+        	listAdapter.notifyDataSetChanged();
+           }
        
 	};
 	
@@ -58,32 +64,29 @@ public class GegnerEinstellungenActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 
-		
-		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gegnereinstellungen);
 		app=(App)getApplication();
-		
-		scroll=(ScrollView)findViewById(R.id.scrollViewGegnerEinstellungen);
 
-	
-		
-		boolean joinedPlayer = false;
-		
+		listView=(ListView)findViewById(R.id.listViewGegnerEinstellungen);
 		menschlicheGegner=(TextView)findViewById(R.id.textViewGegnerMenschlich);
 		layoutMain=(LinearLayout)findViewById(R.id.GegnerMainLayout);
 		
+		listAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, listItems); 
+		listView.setAdapter(listAdapter); 
+		App.spielErstellt = true;
+			
 		
 				if(App.singlegame==false)
 				{
-					scroll.addView(produceLayoutGegner(),0);
+					//listAdapter.addView(produceLayoutGegner(),0);
 				}
 				else
 				{
 					menschlicheGegner.setVisibility(View.INVISIBLE);
 				}
 
-				if(app.singlegame==false)		//TASK PETER schau mal hier ich hab daran herumgepfuscht
+				if(App.singlegame==false)	
 				{
 					App.pokerspiel = new Pokerspiel(App.Mitspieler, App.Startkapital, App.BlindsArt, App.BigBlind, App.BlindsWert);
 
@@ -117,12 +120,14 @@ public class GegnerEinstellungenActivity extends Activity
 						//app.Mitspieler mit SPielern füllen
 						//app.pokerspiel= new Pokerspiel(app.Mitspieler, app.Startkapital, app.BlindsArt, app.BlindsWert, app.BigBlind);
 						if(App.singlegame==false)
-						{ClientPokerspielService.actionSpielErstellen(getApplicationContext());
+						{
+							ClientPokerspielService.actionSpielErstellen(getApplicationContext());
+							ClientPokerspielService.actionUpdate(getApplicationContext());
 						}
 						else
 						{
 						App.pokerspiel=new Pokerspiel(false,App.AnzahlSpieler,App.Startkapital,App.BlindsArt,App.BlindsWert,App.BigBlind,App.GegnerLevel);
-						Log.d("SPieler im App.pokerspiel",String.valueOf(App.pokerspiel.getAlleSpieler().size()));
+						Log.d("Spieler im App.pokerspiel",String.valueOf(App.pokerspiel.getAlleSpieler().size()));
 						}
 
 						startActivity(new Intent(getApplicationContext(),SpielActivity.class));
@@ -167,10 +172,6 @@ public class GegnerEinstellungenActivity extends Activity
 		// TODO Auto-generated method stub
 		super.onResume();
 		
-		if(App.singlegame==false){
-	    	PushService.actionUnsubscribe(getApplicationContext());
-		    	App.pokerspiel = null;
-		}
 	}
 
 	@Override

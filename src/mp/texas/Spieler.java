@@ -78,16 +78,19 @@ public class Spieler
 		{
 		setChips(getChips()-blind);
 		setChipsImPot(blind);
+		
+		App.pokerspiel.setEinsatz(Math.max(blind, App.pokerspiel.getEinsatz()));
 		return blind;
 		}
 		else
 		{
-			schongesetzt=true;
+			//schongesetzt=true;
 			Log.d("Zwangssetzen",String.valueOf(getChips()));
 			setChipsImPot(getChips());
 			setChips(0);
 			setZustand("All In");
 			setSidepot(pokerspiel.getPot()+getChipsImPot());//da pot erst anschließend aufgefüllt
+			App.pokerspiel.setEinsatz(Math.max(getChipsImPot(), App.pokerspiel.getEinsatz()));
 			return getChipsImPot();
 		}
 	}

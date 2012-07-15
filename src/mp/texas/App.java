@@ -8,6 +8,7 @@ import java.util.Iterator;
 import android.app.Application;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.Settings.Secure;
 import android.util.Log;
 
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -34,8 +35,12 @@ public class App extends Application
 	//Daten des aktuellen Spiels
 	public static String aktuellesSpielID;
 	public static Pokerspiel pokerspiel = null;
-	public static Spieler selbst = new Spieler();
+	public static Humanspieler selbst = new Humanspieler();
 
+	public static boolean interacted=false;
+	public static int setzwert=0;
+
+	
 
 	public static void addSpieler(String neuerSpielerarg, String idarg)
 	{
@@ -132,8 +137,12 @@ public class App extends Application
 				App.pokerspiel.getSmallBlindSpieler().getProfil().getId() + "," +
 				Integer.toString(App.pokerspiel.getBlindBetrag()) + "," + //10
 				Integer.toString(App.pokerspiel.getWettrunde()) + "," + 
+<<<<<<< HEAD
 			//	App.pokerspiel.getLastRaise().getProfil().getId() + "," +//12
 				"lastRaiseStandHier" + ","+
+=======
+		//		App.pokerspiel.getLastRaise().getProfil().getId() + "," +//12
+>>>>>>> origin/michael5
 				Integer.toString(App.pokerspiel.getRundenzahler()) + "," +
 				Integer.toString(App.pokerspiel.getComputergegnerLevel()) + "," + //14
 				Integer.toString(App.pokerspiel.getAlleSpieler().size()) + "," +
@@ -188,6 +197,34 @@ public class App extends Application
 		String s = new String();
 		
 		return s;
+	}
+
+	/**
+	 * @return the interacted
+	 */
+	public boolean isInteracted() {
+		return interacted;
+	}
+
+	/**
+	 * @param interacted the interacted to set
+	 */
+	public static void setInteracted(boolean interactedarg) {
+		interacted = interactedarg;
+	}
+
+	/**
+	 * @return the setzwert
+	 */
+	public int getSetzwert() {
+		return setzwert;
+	}
+
+	/**
+	 * @param setzwert the setzwert to set
+	 */
+	public void setSetzwert(int setzwert) {
+		this.setzwert = setzwert;
 	}
 	
 	

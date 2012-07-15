@@ -2,11 +2,18 @@ package mp.texas;
 
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 import mp.texas.push.PushService;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,6 +54,7 @@ public class SpielActivity extends Activity
 	ImageView gemeinschaftsKarte3;
 	ImageView gemeinschaftsKarte4;
 	ImageView gemeinschaftsKarte5;
+	Timer myTimer = new Timer();
 	
 	int mainspielernummer=-1; 
 		
@@ -76,14 +84,36 @@ public class SpielActivity extends Activity
 		gemeinschaftsKarte5=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte5);
 		meineKarte1=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte1);
 		meineKarte2=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte2);
-
-		draw();
 	}
+
+
+
+	        private void TimerMethod()
+	        {
+	        this.runOnUiThread(Timer_Tick);
+	        }
+	        
+	        
+	        
+	        private Runnable Timer_Tick = new Runnable() 
+	        {
+	        public void run() 
+	        {
+ 
+	        	Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show();          
+	        	draw();
+	        }
+	        };
+		
+	    
+
+	
 	
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
+		myTimer.cancel();
 	}
 
 	@Override
@@ -96,7 +126,19 @@ public class SpielActivity extends Activity
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-	}
+		myTimer=new Timer();
+	    myTimer.schedule(new TimerTask() 
+	        								{
+	        									@Override
+	        									public void run() 
+	        									{
+	        										TimerMethod();
+	        									}
+
+	        								}, 0, 3000);
+	        
+	        }
+
 
 	@Override
 	protected void onStart() {
@@ -110,15 +152,20 @@ public class SpielActivity extends Activity
 		super.onStop();
 	}
 	
+	
 
-//SETZENÜ EINSTELLUNGEN
+		//SETZENÜ EINSTELLUNGEN
+		
 @Override
 public boolean onCreateOptionsMenu(Menu menu)
-{
-	MenuInflater inflater = getMenuInflater();
-	inflater.inflate(R.layout.actionmenu,menu);
-	return true;
-}
+		{
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.layout.actionmenu,menu);
+			return true;
+		}
+		
+	
+	
 
 @Override
 public boolean onOptionsItemSelected(MenuItem item)
@@ -158,12 +205,12 @@ public void draw()
 					derSpieler=App.pokerspiel.getAlleSpieler().get(mainspielernummer);
 					App.pokerspiel.getAlleSpieler().get(i).mainspieler=true;
 					App.pokerspiel.getAlleSpieler().get(i).layoutondevice=(LinearLayout) findViewById(R.id.LinearLayoutMainSpieler);
-					Toast.makeText(getApplicationContext(), String.valueOf(i), Toast.LENGTH_LONG).show();
+			//		Toast.makeText(getApplicationContext(), String.valueOf(i), Toast.LENGTH_LONG).show();
 				}
 			}
 			if(mainspielernummer==-1)
 			{//TASK HIER DER ÜBERGANG ZUR PLAZIERUNGSANZEIGE UND DANN ZUM MENU
-				Toast.makeText(getApplicationContext(), "Du wurdest "+String.valueOf(App.pokerspiel.getAlleSpieler().size()+1)+".", Toast.LENGTH_LONG).show();
+			//	Toast.makeText(getApplicationContext(), "Du wurdest "+String.valueOf(App.pokerspiel.getAlleSpieler().size()+1)+".", Toast.LENGTH_LONG).show();
 				App.pokerspiel=null;
 				startActivity(new Intent(getApplicationContext(),startActivity.class));
 			}
@@ -219,7 +266,9 @@ public void draw()
 		setChips(App.pokerspiel.getAlleSpieler().get(i));
 		setImPot(App.pokerspiel.getAlleSpieler().get(i));
 		setZustand(App.pokerspiel.getAlleSpieler().get(i));
-	}
+		setBackground(App.pokerspiel.getAlleSpieler().get(i));
+
+	}	
 	
 	potText.setText(String.valueOf(App.pokerspiel.getPot()));
 	}
@@ -285,14 +334,56 @@ public void setZustand(Spieler spieler)
 }
 
 
+public void setBackground(Spieler spieler)
+{
+	
+		if(spieler.equals(App.pokerspiel.getAktiverSpieler()))
+		{Log.d("Farbe","grau");
+			spieler.layoutondevice.setBackgroundColor(Color.DKGRAY);}
+
+	else{
+		spieler.layoutondevice.setBackgroundColor(Color.TRANSPARENT);
+		Log.d("Farbe","transparent");
+	}
+}
 
 
-//	public static final Handler mHandler = new Handler() {
-//	    @Override
-//	    public void handleMessage(Message msg) {
-//	    	super.handleMessage(msg);
-//	        	draw();
-//	    	}
-//	    }; 
+
+
+@Override
+public void onBackPressed() {
+	// TODO Auto-generated method stub
+	showDialog(1);
+}
+
+
+
+protected Dialog onCreateDialog(int id) {
+    
+	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	builder.setMessage("Are you sure you want to exit?")
+	       .setCancelable(false)
+	       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+	           public void onClick(DialogInterface dialog, int id) {
+	                SpielActivity.this.finish();
+	           }
+	       })
+	       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+	           public void onClick(DialogInterface dialog, int id) {
+	                dialog.cancel();
+	           }
+	       });
+	AlertDialog alert = builder.create();
+
+
+    return alert;
+}
+
+
+
+
+
+
+
 	
 }

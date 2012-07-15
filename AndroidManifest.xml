@@ -57,6 +57,8 @@
         
         <service android:name="mp.texas.push.PushService" android:label="Push Notifications Service"></service>
         <service android:name=".ClientPokerspielService" android:label="Client Poker Service" ></service>        
+              <service android:name=".AblaufService" android:label="Ablauf Service" ></service>        
+        
         
     </application>
 

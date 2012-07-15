@@ -121,11 +121,12 @@ public class GegnerEinstellungenActivity extends Activity
 						}
 						else
 						{
-						App.pokerspiel=new Pokerspiel(false,App.AnzahlSpieler,App.Startkapital,App.BlindsArt,App.BlindsWert,App.BigBlind,App.GegnerLevel);
+						App.pokerspiel=new Pokerspiel(false,App.AnzahlSpieler,App.Startkapital,App.BlindsArt,App.BlindsWert,App.BigBlind,App.GegnerLevel,App.BlindsWert);
+						App.pokerspiel.spielablauf();
 						Log.d("SPieler im App.pokerspiel",String.valueOf(App.pokerspiel.getAlleSpieler().size()));
+						startActivity(new Intent(getApplicationContext(),SpielActivity.class));
 						}
 
-						startActivity(new Intent(getApplicationContext(),SpielActivity.class));
 					
 					}         
 				});

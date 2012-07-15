@@ -989,7 +989,7 @@ public class PushService extends Service {
 				
 				for(int i=0; i<App.pokerspiel.getAlleSpieler().size(); i++){
 					if(App.pokerspiel.getAlleSpieler().get(i).getProfil().getId().equalsIgnoreCase(items.get(12)))
-					App.pokerspiel.setLastRaise(App.pokerspiel.getAlleSpieler().get(i));
+		;//			App.pokerspiel.setLastRaise(App.pokerspiel.getAlleSpieler().get(i));
 				}
 						
 				log("Gamestate Ÿbermittelt");			

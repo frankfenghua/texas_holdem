@@ -44,7 +44,8 @@ public class SpielActivity extends Activity
 {
 
 	int pot;
-	static boolean redraw = false;
+	boolean noupdate=true;
+	static boolean redraw = true;
 	TextView potText;
 	//int need;
 	//int blind;
@@ -101,7 +102,7 @@ public class SpielActivity extends Activity
 	        {
 	        	public void run() 
 	        	{
-	        	
+					App.pokerspiel.setSinglePlayer(false);
 	        		if(App.pokerspiel.isSinglePlayer()==true)
 	        		{
 	        			if((App.pokerspiel.getAktiverSpieler().getProfil().getId()!=App.selbst.getProfil().getId())||(App.interacted==true))
@@ -134,6 +135,9 @@ public class SpielActivity extends Activity
 	        			
 	        			
 	        			//ICH BIN DRAN UND HABE NICHT GESETZT
+	        			Log.d("adsadsasd",App.pokerspiel.getAktiverSpieler().getProfil().getId());
+	        			Log.d("adsadsasd",App.selbst.getProfil().getId());
+
 	        			if((App.pokerspiel.getAktiverSpieler().getProfil().getId()==App.selbst.getProfil().getId())&&(App.interacted==false))
 	        			{
         					Toast.makeText(getApplicationContext(), "Sie sind an der Reihe", Toast.LENGTH_SHORT).show();          
@@ -154,8 +158,9 @@ public class SpielActivity extends Activity
 	        			}
 	        			
 	        			
-
-	        		draw();
+	        		if(noupdate==false){
+		        		draw();
+	        		}
 	        		}
 	        	}
 	        };
@@ -293,7 +298,7 @@ public void draw()
 			if(mainspielernummer==-1)
 			{//TASK HIER DER ÜBERGANG ZUR PLAZIERUNGSANZEIGE UND DANN ZUM MENU
 			//	Toast.makeText(getApplicationContext(), "Du wurdest "+String.valueOf(App.pokerspiel.getAlleSpieler().size()+1)+".", Toast.LENGTH_LONG).show();
-				App.pokerspiel=null;
+			//	App.pokerspiel=null;
 				startActivity(new Intent(getApplicationContext(),startActivity.class));
 			}
 			else{

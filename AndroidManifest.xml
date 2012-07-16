@@ -45,6 +45,11 @@
             android:screenOrientation="landscape">
         </activity>
         
+                 <activity
+            android:name=".WartenActivity" 
+            android:screenOrientation="landscape">
+        </activity>
+        
                                 <activity
             android:name=".GegnerEinstellungenActivity"
             android:screenOrientation="landscape" >

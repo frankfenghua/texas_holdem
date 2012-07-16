@@ -24,6 +24,16 @@ public class Gemeinschaftskarten
 		this.karte5=karte4;
 	}
 
+	public Gemeinschaftskarten() {
+			
+		this.karte1= new Karte(0,0);
+		this.karte2= new Karte(0,0);
+		this.karte3= new Karte(0,0);
+		this.karte4= new Karte(0,0);
+		this.karte5= new Karte(0,0);
+
+	}
+
 	public ArrayList<Karte> getGemeinschaftskarten()
 	{
 		ArrayList<Karte> temp=new ArrayList<Karte>();

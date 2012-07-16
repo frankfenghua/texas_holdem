@@ -127,31 +127,31 @@ public class App extends Application
 		String s = new String();
 		int size = App.pokerspiel.getAlleSpieler().size();
 		
-		s = "UPDATE," + aktuellesSpielID + ","+ //2
-				App.pokerspiel.getName() + "," + //3
-				Integer.toString(App.pokerspiel.getPot()) + "," + //4
+		s = "UPDATE," + aktuellesSpielID + ","+ //1
+				App.pokerspiel.getName() + "," + //2
+				Integer.toString(App.pokerspiel.getPot()) + "," + //3
 				App.pokerspiel.getBlindModus() + "," + //wird eine Integer
-				Integer.toString(App.pokerspiel.getBlindZeitRundenWert()) + "," + //6
+				Integer.toString(App.pokerspiel.getBlindZeitRundenWert()) + "," + //5
 				Integer.toString(App.pokerspiel.getEinsatz()) + "," +
-				App.pokerspiel.getAktiverSpieler().getProfil().getId() + "," + //8
+				App.pokerspiel.getAktiverSpieler().getProfil().getId() + "," + //7
 				App.pokerspiel.getSmallBlindSpieler().getProfil().getId() + "," +
-				Integer.toString(App.pokerspiel.getBlindBetrag()) + "," + //10
+				Integer.toString(App.pokerspiel.getBlindBetrag()) + "," + //9
 				Integer.toString(App.pokerspiel.getWettrunde()) + "," + 
-			//	App.pokerspiel.getLastRaise().getProfil().getId() + "," +//12
+			//	App.pokerspiel.getLastRaise().getProfil().getId() + "," +//11
 				"lastRaiseStandHier" + ","+
-				Integer.toString(App.pokerspiel.getRundenzahler()) + "," +
-				Integer.toString(App.pokerspiel.getComputergegnerLevel()) + "," + //14
+				Integer.toString(App.pokerspiel.getRundenzahler()) + "," + //12
+				Integer.toString(App.pokerspiel.getComputergegnerLevel()) + "," + //13
 				Integer.toString(App.pokerspiel.getAlleSpieler().size()) + "," +
-				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(0).getFarbe()) + "," +//16
+				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(0).getFarbe()) + "," +//15
 				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(0).getWert()) + "," +//
-				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(1).getFarbe()) + "," +//18
+				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(1).getFarbe()) + "," +//17
 				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(1).getWert()) + "," +//
-				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(2).getFarbe()) + "," +//20
+				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(2).getFarbe()) + "," +//19
 				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(2).getWert()) + "," +//
-				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(3).getFarbe()) + "," +//22
+				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(3).getFarbe()) + "," +//21
 				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(3).getWert()) + "," +//
-				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(4).getFarbe()) + "," +//24
-				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(4).getWert());//25
+				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(4).getFarbe()) + "," +//23
+				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(4).getWert());//24
 				;
 				
 				//Spieler

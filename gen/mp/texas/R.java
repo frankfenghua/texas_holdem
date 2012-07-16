@@ -122,6 +122,7 @@ public final class R {
         public static final int itemraise=0x7f090001;
         public static final int layout_root=0x7f090020;
         public static final int listViewGegnerEinstellungen=0x7f090014;
+        public static final int progressBar1=0x7f09006f;
         public static final int scrollView1=0x7f090010;
         public static final int seekBarGegnerEinstellungenLevel=0x7f090015;
         public static final int seekBarSpielEinsatz=0x7f090050;
@@ -153,6 +154,7 @@ public final class R {
         public static final int spieleinstellungen=0x7f030008;
         public static final int spielmodus=0x7f030009;
         public static final int spielneu=0x7f03000a;
+        public static final int warten=0x7f03000b;
     }
     public static final class menu {
         public static final int actionmenu=0x7f080000;

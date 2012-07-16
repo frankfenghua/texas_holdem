@@ -18,7 +18,7 @@ public class Pokerspiel
 	private int pot;		//Wieviel ist im Pot
 	private int einsatz=0;  //nötiger Gesamteinsatz eines Spielers um in der Runde zu bleiben 
 	private Spieler aktiverSpieler =null; 
-	private Spieler smallBlindSpieler =null;
+	Spieler smallBlindSpieler =null;
 	private ArrayList<Spieler> alleSpieler = new ArrayList<Spieler>();
 	private boolean singlePlayer;	//Ist dieses Spiel ein Offline oder Online-Spiel
 	private int blindBetrag;		//Gibt den aktuellen BigBlind Betrag an
@@ -41,8 +41,8 @@ public class Pokerspiel
 	
 	public Pokerspiel(){
 		blindModus=1;
-		//leere Konstruktor zur Spieleršffnung
-		//austeilen();
+		this.gemeinschaftskarten = new Gemeinschaftskarten();
+		
 		Log.d("Leerer Pokerkonstruktor","aufgerufen");
 	}
 	
@@ -54,7 +54,7 @@ public class Pokerspiel
 		blindBetrag=bigblind;
 		startzeit=System.currentTimeMillis();
 		
-		if(online)			//BISSCHEN VERWIRREND ABER WENN MAN MAL FALSCH ANFANGT
+		if(online)			//BISSCHEN VERWIRREND ABER WENN MAN MAL FALSCH ANFANGT (sehr ordentlich)
 		{singlePlayer=false;}	//DIE VARIABLE DREHEN
 		else{singlePlayer=true;}
 		
@@ -321,7 +321,8 @@ public class Pokerspiel
 	
 	public void blindWeitergeben()
 	{
-
+		Log.d("Kucke blindWeitergeben", "Small blind SPIELER" + App.pokerspiel.getSmallBlindSpieler().getProfil().getName());
+		 
 	 	int temp=getAlleSpieler().indexOf(smallBlindSpieler);
 		smallBlindSpieler.setZustand("Dealer");
 		getAlleSpieler().get(verschieben(temp+1)).setZustand("Small Blind");
@@ -712,6 +713,9 @@ public class Pokerspiel
 				n.ergebnis[y]=ergebnismatrix[z][y];
 			}
 		}//ENDE SPIELER AUSWERTUNG
+		
+//		Hier mŸsste man die Ergebnisse weiterschicken Ÿber StatisticFunctions()
+		
 		
 		//TASK WIEDER ANSCHALTEN
 		setWettrunde(0);

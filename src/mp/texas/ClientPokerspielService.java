@@ -231,9 +231,13 @@ public class ClientPokerspielService extends Service {
 		App.pokerspiel.setAlleSpieler(App.pokerspiel.spielerMischen(App.Mitspieler)); 
 		
 		App.pokerspiel.setEinsatz(0);
-		
-		App.pokerspiel.setSmallBlindSpieler(App.pokerspiel.getAlleSpieler().get(0));
-		App.pokerspiel.austeilen();
+		App.pokerspiel.setWettrunde(0);
+		App.pokerspiel.setPot(0);
+		App.pokerspiel.setStartzeit(System.currentTimeMillis());
+		App.pokerspiel.smallBlindSpieler = App.pokerspiel.getAlleSpieler().get(0);
+		log("Small blind SPIELER" + App.pokerspiel.getSmallBlindSpieler().getProfil().getName());
+
+		App.pokerspiel.spielablauf();
 		
 		
 		PushService.actionPublishStart(getApplicationContext());

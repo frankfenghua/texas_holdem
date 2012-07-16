@@ -96,16 +96,12 @@ public class BeitretenActivity extends Activity {
 		beitretenbutton.setOnClickListener(new OnClickListener() {		    				
 			public void onClick(View v) 		        								
 			{		        															
-				startActivity(new Intent(getApplicationContext(),SpielActivity.class));
+				startActivity(new Intent(getApplicationContext(),WartenActivity.class));
 			
-				// Die AUswahl im Spinner muss hier noch mitimplimentiert werden
-				// Danach muss 			
-				// ClientPokerspielService.actionBeitreten(getApplicationContext())
-				// an das dazugehšrige SPiel (ID) geschickt werden;  //test		
 				
 				ClientPokerspielService.actionSpielBeitreten(getApplicationContext());
 				PushService.actionUnsubscribe(getApplicationContext()); //um sich wieder von den Themen abzumelden
-
+				
 			}		        															
 		}); 		
 	 }

@@ -2,8 +2,12 @@ package mp.texas;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.ibm.mqtt.MqttConnect;
 
+import mp.texas.db.StatistikFunctions;
 import mp.texas.push.*;
 
 import android.app.Activity;
@@ -29,6 +33,7 @@ public class startActivity extends Activity
 	String deviceID; //test
 	App app;
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -42,8 +47,7 @@ public class startActivity extends Activity
 		app=(App)getApplication();
 		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);		//test	
  	  	App.selbst.getProfil().setId(deviceID);
- 	  	Log.d("ProfilID","gesetzt");
- 
+ 	  	App.interacted=false;
 
 		neuesSpiel=(Button) findViewById(R.id.button1);
 		neuesSpiel.setOnClickListener(
@@ -67,8 +71,38 @@ public class startActivity extends Activity
 					startActivity(new Intent(getApplicationContext(),profilActivity.class));
 					}         
 				});
-	
-	}
+		
+	///TEST	
+//				
+// 		StatistikFunctions statistikFunction1 = new StatistikFunctions();
+//
+//		
+//	    String KEY_SUCCESS = "success";
+//	    String KEY_ERROR = "error";
+//						
+//        JSONObject json = statistikFunction1.statistikSpeichern(deviceID, 576);
+//
+//         // checken der response
+//         try {
+////               streckenMsg.setText("Statistik erfolgreich gespeichert");
+//                 String res = json.getString(KEY_SUCCESS);
+//                 if(Integer.parseInt(res) == 1){
+//                	 Log.d("Ergebnis speichern", KEY_SUCCESS);
+//
+//                 }else{
+//                    // Error beim Speichern der Statistik
+//                	 Log.d("Statistik nicht gespeichert", KEY_ERROR);
+//                 }
+//             
+//         } catch (JSONException e) {
+//             e.printStackTrace();
+//         }
+//	
+////        int test = statistikFunction1.statistikLaden(deviceID);
+////        Log.d("Statistik Testwert = ",String.valueOf(test));
+//	
+//	//Ende des Testst
+}
 							
 
 	@Override

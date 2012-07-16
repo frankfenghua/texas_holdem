@@ -122,7 +122,18 @@ public class GegnerEinstellungenActivity extends Activity
 						if(App.singlegame==false)
 						{
 							ClientPokerspielService.actionSpielErstellen(getApplicationContext());
+							Log.d("KUCKE","bis hier alles gut");
 							ClientPokerspielService.actionUpdate(getApplicationContext());
+							Log.d("KUCKE1","bis hier alles gut");
+
+						//	App.pokerspiel.spielablauf();
+							Log.d("KUCKE2","bis hier alles gut");
+
+						//	ClientPokerspielService.actionUpdate(getApplicationContext());
+							Log.d("KUCKE3","bis hier alles gut");
+
+							startActivity(new Intent(getApplicationContext(),SpielActivity.class));
+
 						}
 						else
 						{

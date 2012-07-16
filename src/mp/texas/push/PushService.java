@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +12,12 @@ import java.util.Map;
 import mp.texas.App;
 import mp.texas.BeitretenActivity;
 import mp.texas.GegnerEinstellungenActivity;
+import mp.texas.Hand;
+import mp.texas.Karte;
 import mp.texas.Pokerspiel;
+import mp.texas.SpielActivity;
 import mp.texas.Spieler;
+import mp.texas.WartenActivity;
 import mp.texas.push.ConnectionLog;
 
 import com.ibm.mqtt.IMqttClient;
@@ -850,7 +855,7 @@ public class PushService extends Service {
 			List<String> items = Arrays.asList(s.split("\\s*,\\s*"));
 			log("payload =" + items.toString());
 
-			if(items.get(0).equalsIgnoreCase("OPEN") && App.spielErstellt == false && App.singlegame == false)
+			if(items.get(0).equalsIgnoreCase("OPEN") && App.singlegame == false)
 			{	
 			
 			String message_s = items.get(1);
@@ -908,6 +913,8 @@ public class PushService extends Service {
 			
 			else if (items.get(0).equalsIgnoreCase("STARTEN") && App.spielErstellt == false && App.singlegame == false)
 			{
+				App.pokerspiel = new Pokerspiel();
+				
 			log(items.get(1) + "," +items.get(2) + "," +items.get(3) + "," +items.get(4) + "," +items.get(5) + "," +items.get(6) 
 					+ "," +items.get(7) + "," +items.get(8) + "," +items.get(9) + "," +items.get(10) + "," +items.get(11) + "," +items.get(12) 
 					+ "," +items.get(13) + "," +items.get(14) );
@@ -919,30 +926,40 @@ public class PushService extends Service {
 				App.pokerspiel.setName(items.get(1));
 				App.pokerspiel.setSinglePlayer(false);
 				App.pokerspiel.setStartkapital(Integer.parseInt( items.get(5)));
-				App.pokerspiel.setWettrunde(1);			
+				App.pokerspiel.setWettrunde(0);	
+				App.pokerspiel.setEinsatz(0);
+				App.pokerspiel.setPot(0);
+				App.pokerspiel.setStartzeit(System.currentTimeMillis());
+				//MAN MUSS NOCH UEBERLEGEN, WIE GENAU MIT DEM SELBST UMGEGANGEN WIRD (SPIELT DAS HIER EINE ROLLE
+				
+				
 				
 				int size = Integer.parseInt(items.get(3));
 				ArrayList<Spieler> temp = new ArrayList<Spieler>();
 				
+				
 				for(int j=10; j< (13+4*size); j++){
 					if(items.get(j).equalsIgnoreCase("Spieler")) {
 						Spieler spielerTemp = new Spieler(items.get(j+1), items.get(j+2) , App.pokerspiel.getStartkapital(), Integer.parseInt(items.get(j+4)), Integer.parseInt(items.get(j+5)), Integer.parseInt(items.get(j+6)), Integer.parseInt(items.get(j+7)));
-//						spielerTemp.getProfil().setUri(items.get(j+3)); //erst auskommentieren, wenn das Bilderhochladen klappt.
+						spielerTemp.setHand(new Hand(new Karte(0,0), new Karte(0,0)));
 						temp.add(spielerTemp);
 					}
 				}
 				App.pokerspiel.setAlleSpieler(temp);
 				
-				log("READOUT der eingetragenen Spieler");
-				
-				for(int k=0; k<size; k++){
-				log(App.pokerspiel.getAlleSpieler().get(k).getProfil().getName());
-				log(App.pokerspiel.getAlleSpieler().get(k).getProfil().getId());
-				log(Integer.toString(App.pokerspiel.getAlleSpieler().get(k).getChips()));
-				}
+
+//				for(int k=0; k<size-1; k++){
+//				log(App.pokerspiel.getAlleSpieler().get(k).getProfil().getName());
+//				log(App.pokerspiel.getAlleSpieler().get(k).getProfil().getId());
+//				log(Integer.toString(App.pokerspiel.getAlleSpieler().get(k).getChips()));
+//				}
 			}
-			else if (items.get(0).equalsIgnoreCase("UPDATEN") && App.singlegame == false && App.aktuellesSpielID == items.get(1))
+			else if (items.get(0).equalsIgnoreCase("UPDATEN") && App.singlegame == false)
 			{
+				
+				
+				log("Gamestate Ÿbermittelt?");			
+
 				//Hier kann noch ein Test eingebaut werden, ob die Poker App gerade offen ist, und falls nicht eine notification Ÿber den
 				
 				App.pokerspiel.setPot(Integer.parseInt(items.get(3)));
@@ -952,19 +969,19 @@ public class PushService extends Service {
 				App.pokerspiel.setComputergegnerLevel(Integer.parseInt(items.get(14)));
 				App.pokerspiel.setName(items.get(2));
 				App.pokerspiel.setStartkapital(Integer.parseInt( items.get(5)));
-				App.pokerspiel.setEinsatz(Integer.parseInt(items.get(7)));
-				App.pokerspiel.setWettrunde(Integer.parseInt(items.get(11)));
-				App.pokerspiel.setRundenzahler(Integer.parseInt(items.get(13)));
-				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(0).setFarbe(Integer.parseInt(items.get(16)));
-				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(0).setWert(Integer.parseInt(items.get(17)));
-				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(1).setFarbe(Integer.parseInt(items.get(18)));
-				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(1).setWert(Integer.parseInt(items.get(19)));
-				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(2).setFarbe(Integer.parseInt(items.get(20)));
-				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(2).setWert(Integer.parseInt(items.get(21)));
-				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(3).setFarbe(Integer.parseInt(items.get(22)));
-				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(3).setWert(Integer.parseInt(items.get(23)));
-				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(4).setFarbe(Integer.parseInt(items.get(24)));
-				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(4).setWert(Integer.parseInt(items.get(25)));
+				App.pokerspiel.setEinsatz(Integer.parseInt(items.get(6)));
+				App.pokerspiel.setWettrunde(Integer.parseInt(items.get(10)));
+				App.pokerspiel.setRundenzahler(Integer.parseInt(items.get(12)));
+				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(0).setFarbe(Integer.parseInt(items.get(15)));
+				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(0).setWert(Integer.parseInt(items.get(16)));
+				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(1).setFarbe(Integer.parseInt(items.get(17)));
+				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(1).setWert(Integer.parseInt(items.get(18)));
+				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(2).setFarbe(Integer.parseInt(items.get(19)));
+				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(2).setWert(Integer.parseInt(items.get(20)));
+				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(3).setFarbe(Integer.parseInt(items.get(21)));
+				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(3).setWert(Integer.parseInt(items.get(22)));
+				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(4).setFarbe(Integer.parseInt(items.get(23)));
+				App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(4).setWert(Integer.parseInt(items.get(24)));
 				
 				
 				//SpielerList wird gesetzt
@@ -989,23 +1006,30 @@ public class PushService extends Service {
 				
 				
 				for(int i=0; i<App.pokerspiel.getAlleSpieler().size(); i++){
-					if(App.pokerspiel.getAlleSpieler().get(i).getProfil().getId().equalsIgnoreCase(items.get(8)))
+					if(App.pokerspiel.getAlleSpieler().get(i).getProfil().getId().equalsIgnoreCase(items.get(8))){
 					App.pokerspiel.setAktiverSpieler(App.pokerspiel.getAlleSpieler().get(i));
+					App.pokerspiel.getAktiverSpieler().getProfil().setId(App.pokerspiel.getAlleSpieler().get(i).getProfil().getId());
+					App.pokerspiel.getAktiverSpieler().getProfil().setName(App.pokerspiel.getAlleSpieler().get(i).getProfil().getName());
+					}
 				}
 				
 				for(int i=0; i<App.pokerspiel.getAlleSpieler().size(); i++){
-					if(App.pokerspiel.getAlleSpieler().get(i).getProfil().getId().equalsIgnoreCase(items.get(9)))
+					if(App.pokerspiel.getAlleSpieler().get(i).getProfil().getId().equalsIgnoreCase(items.get(9))){
 					App.pokerspiel.setSmallBlindSpieler(App.pokerspiel.getAlleSpieler().get(i));
+					App.pokerspiel.getSmallBlindSpieler().getProfil().setId(App.pokerspiel.getAlleSpieler().get(i).getProfil().getId());
+					App.pokerspiel.getSmallBlindSpieler().getProfil().setName(App.pokerspiel.getAlleSpieler().get(i).getProfil().getName());
 				}
-				
+				}
 //				for(int i=0; i<App.pokerspiel.getAlleSpieler().size(); i++){
 //					if(App.pokerspiel.getAlleSpieler().get(i).getProfil().getId().equalsIgnoreCase(items.get(12)))
 //					App.pokerspiel.setLastRaise(App.pokerspiel.getAlleSpieler().get(i));
 //				}
-			
+
 						
 				log("Gamestate Ÿbermittelt");			
-			
+				
+				WartenActivity.setSpielda(true);
+
 				}		
 			
 			log("Got message: " + s);

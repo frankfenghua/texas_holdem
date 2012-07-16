@@ -12,17 +12,18 @@ public class Humanspieler extends Spieler
 	
 	public Humanspieler(Spieler selbst, int chips)
 	{
-		profil=App.selbst.getProfil();
+		profil=selbst.getProfil();
 		this.chips=chips;
 	}
 	
 	
 	public Humanspieler() 
 	{
-		profil=new Profil();
+		
 	}
 	
 	
+
 	public int setzen(Pokerspiel pokerspiel)
 	{
 		Log.d("Human","setzen");

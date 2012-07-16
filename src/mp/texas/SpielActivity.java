@@ -86,6 +86,10 @@ public class SpielActivity extends Activity
 		gemeinschaftsKarte5=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte5);
 		meineKarte1=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte1);
 		meineKarte2=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte2);
+		for(int n=0; n<7;n++)
+		{
+		((ImageView)gegnerLayout[n].getChildAt(0)).setImageBitmap(Karte.getKartenBild(0,0, gemeinschaftsKarte1.getWidth(), gemeinschaftsKarte1.getHeight(), getApplicationContext()));
+		}
 	}
 
 
@@ -104,22 +108,54 @@ public class SpielActivity extends Activity
 	        	
 	        		if(App.pokerspiel.isSinglePlayer()==true)
 	        		{
-	        			if((App.pokerspiel.getAktiverSpieler().getProfil().getId()!=App.selbst.getProfil().getId())||(App.interacted==true))
-	        			{
+
+	        			if(App.pokerspiel.getAktiverSpieler().getProfil().getId()!=App.selbst.getProfil().getId())
+	        			{	//ICH BIN NICHT DER AKTIVE SPIELER
+	        				Log.d("Fall","NICHT ICH");
 	        				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show();          
 	        				draw();
 	        			}
+	        			
 	        			else
 	        			{
-	        				if(App.pokerspiel.getEinsatz()==App.pokerspiel.getAktiverSpieler().getChipsImPot())
+	        				//ICH BIN DER AKTIVE SPIELER
+	        				if(App.interacted==true)
 	        				{
-	            				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show();          
+		        				Log.d("Fall","1");
+		        				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show();          
 		        				draw();
-	        				}
+	        				}			
+	        				
+	        				
+	        				
 	        				else
 	        				{
-	        					Toast.makeText(getApplicationContext(), "Sie sind an der Reihe", Toast.LENGTH_SHORT).show();          
+	        					int anzahlaktive=0;
+	        					for(Spieler n:App.pokerspiel.getAlleSpieler())
+	        					{
+	        						if(n.isNochDrin()==true)
+	        						{anzahlaktive++;}
+	        					}
+	        					
+	        					if((App.pokerspiel.getAktiverSpieler().getSidepot()!=0)||(App.pokerspiel.getWettrunde()==0)||(anzahlaktive==1)||((App.pokerspiel.getAktiverSpieler().schongesetzt==true)&&(App.pokerspiel.getAktiverSpieler().getChipsImPot()==App.pokerspiel.getEinsatz())))
+
+	        					{ //MAN IST EINZIGSTER SPIELER NOCH IN DER WETTRUNDE, ODER MAN IST WIEDER DRAN HAT ABER SCHON GESETZT UND IST AUF DEM EINSATZ
+		        					          
+		        					Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show();          
+			        				draw();          
+
+	        					}
+	        					else
+	        					{
+		        					Toast.makeText(getApplicationContext(), "Sie sind an der Reihe", Toast.LENGTH_SHORT).show();  
+
+	        					}
+	    
+	        					
+	        					
 	        				}
+	        				
+	        		
 	        			}
 	        		}
 	        		
@@ -134,17 +170,32 @@ public class SpielActivity extends Activity
 	        		{
 	        			
 	        			
-	        			//ICH BIN DRAN UND HABE NICHT GESETZT
-	        			if((App.pokerspiel.getAktiverSpieler().getProfil().getId()==App.selbst.getProfil().getId())&&(App.interacted==false))
+	        			//ICH BIN DRAN 
+	        			if(App.pokerspiel.getAktiverSpieler().getProfil().getId()==App.selbst.getProfil().getId())
 	        			{
-        					Toast.makeText(getApplicationContext(), "Sie sind an der Reihe", Toast.LENGTH_SHORT).show();          
-	        			}
-
-	        			//ICH BIN DRAN UND HABE GESETZT
-	        			if((App.pokerspiel.getAktiverSpieler().getProfil().getId()==App.selbst.getProfil().getId())&&(App.interacted==true))
-	        			{	
-	        				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show(); 
-	        				ClientPokerspielService.actionUpdate(getApplicationContext());
+	        				if(App.interacted==false)
+	        				{
+	        					int anzahlaktive=0;
+	        					for(Spieler n:App.pokerspiel.getAlleSpieler())
+	        					{
+	        						if(n.isNochDrin()==true)
+	        						{anzahlaktive++;}
+	        					}
+	        					if((App.pokerspiel.getAktiverSpieler().getSidepot()!=0)||(App.pokerspiel.getWettrunde()==0)||(anzahlaktive==1)||((App.pokerspiel.getAktiverSpieler().schongesetzt==true)&&(App.pokerspiel.getAktiverSpieler().getChipsImPot()==App.pokerspiel.getEinsatz())))
+	        					{
+			        				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show(); 
+			        				ClientPokerspielService.actionUpdate(getApplicationContext());
+	        					}
+	        					else
+	        					{
+		        					Toast.makeText(getApplicationContext(), "Sie sind an der Reihe", Toast.LENGTH_SHORT).show();  
+	        					}
+	        				}
+	        				else
+	        				{
+		        				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show(); 
+		        				ClientPokerspielService.actionUpdate(getApplicationContext());
+	        				}
 	        			}
 	        			
 	        			
@@ -182,9 +233,25 @@ public class SpielActivity extends Activity
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);		//test	
- 	  	App.selbst.getProfil().setId(deviceID);
- 	  	Log.d("ProfilID","gesetzt");
+		//String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);		//test	
+ 	  	//App.selbst.getProfil().setId(deviceID);
+ 	  	//Log.d("ProfilID","gesetzt");
+ 	  	potText=(TextView)findViewById(R.id.textViewSpielPot);
+		gegnerLayout=new LinearLayout[7];
+		gegnerLayout[0]=(LinearLayout)findViewById(R.id.LinearLayoutGegner1);
+		gegnerLayout[1]=(LinearLayout)findViewById(R.id.LinearLayoutGegner2);
+		gegnerLayout[2]=(LinearLayout)findViewById(R.id.LinearLayoutGegner3);
+		gegnerLayout[3]=(LinearLayout)findViewById(R.id.LinearLayoutGegner4);
+		gegnerLayout[4]=(LinearLayout)findViewById(R.id.LinearLayoutGegner5);
+		gegnerLayout[5]=(LinearLayout)findViewById(R.id.LinearLayoutGegner6);
+		gegnerLayout[6]=(LinearLayout)findViewById(R.id.LinearLayoutGegner7);
+		gemeinschaftsKarte1=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte1);
+		gemeinschaftsKarte2=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte2);			
+		gemeinschaftsKarte3=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte3);
+		gemeinschaftsKarte4=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte4);
+		gemeinschaftsKarte5=(ImageView) findViewById(R.id.ImageViewSpielGemeinsschaftskarte5);
+		meineKarte1=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte1);
+		meineKarte2=(ImageView) findViewById(R.id.ImageViewSpielMeineKarte2);
 		draw();
 		myTimer=new Timer();
 	    myTimer.schedule(new TimerTask() 
@@ -274,15 +341,16 @@ private void call() {
 }
 
 
-
 //Funktion um den Aktuellen SPielstand zu zeichnen
 public void draw()
 {
-	//HERAUSFINDEN WELCHER SPIELER DER SPIELER AM GERÄT IST PETER
+
+			
+			//HERAUSFINDEN WELCHER SPIELER DER SPIELER AM GERÄT IST PETER
 			mainspielernummer=-1;
 			for(int i=0; i<App.pokerspiel.getAlleSpieler().size();i++)
 			{
-				if(App.pokerspiel.getAlleSpieler().get(i).profil.getName().equals(App.selbst.getProfil().getName())) //HIER DER VERGLEICH MIT DER ID
+				if(App.pokerspiel.getAlleSpieler().get(i).profil.getName()==App.selbst.getProfil().getName()) //HIER DER VERGLEICH MIT DER ID
 				{
 					mainspielernummer=i;
 					derSpieler=App.pokerspiel.getAlleSpieler().get(mainspielernummer);
@@ -305,7 +373,7 @@ public void draw()
 			
 			
 			//ORDNE JEDEM GEGNER EIN LAYOUT ZU
-			for(int i=0; i<App.pokerspiel.getAlleSpieler().size()-1;i++)
+			for(int i=0; i<Math.min(App.pokerspiel.getAlleSpieler().size()-1,4);i++)
 			{
 				int tempint=mainspielernummer+i+1;
 				if(tempint>=App.pokerspiel.getAlleSpieler().size())
@@ -314,6 +382,88 @@ public void draw()
 				}
 					App.pokerspiel.getAlleSpieler().get(tempint).layoutondevice=gegnerLayout[i];
 			}
+			if(App.pokerspiel.getAlleSpieler().size()==6)
+			{
+				for(int i=0; i<Math.min(App.pokerspiel.getAlleSpieler().size()-1,4);i++)
+				{
+					int tempint=mainspielernummer+i+2;
+					if(tempint>=App.pokerspiel.getAlleSpieler().size())
+					{
+						tempint-=App.pokerspiel.getAlleSpieler().size();
+					}
+						App.pokerspiel.getAlleSpieler().get(tempint).layoutondevice=gegnerLayout[i];
+				}
+				App.pokerspiel.getAlleSpieler().get(verschieben(mainspielernummer+1)).layoutondevice=gegnerLayout[4];
+
+				
+			}
+			if(App.pokerspiel.getAlleSpieler().size()==7)
+			{
+				for(int i=0; i<Math.min(App.pokerspiel.getAlleSpieler().size()-1,4);i++)
+				{
+					int tempint=mainspielernummer+i+3;
+					if(tempint>=App.pokerspiel.getAlleSpieler().size())
+					{
+						tempint-=App.pokerspiel.getAlleSpieler().size();
+					}
+						App.pokerspiel.getAlleSpieler().get(tempint).layoutondevice=gegnerLayout[i];
+				}
+				App.pokerspiel.getAlleSpieler().get(verschieben(mainspielernummer+1)).layoutondevice=gegnerLayout[4];
+				App.pokerspiel.getAlleSpieler().get(verschieben(mainspielernummer+2)).layoutondevice=gegnerLayout[5];
+				
+			}
+			if(App.pokerspiel.getAlleSpieler().size()==8)
+			{
+				for(int i=0; i<Math.min(App.pokerspiel.getAlleSpieler().size()-1,4);i++)
+				{
+					int tempint=mainspielernummer+i+4;
+					if(tempint>=App.pokerspiel.getAlleSpieler().size())
+					{
+						tempint-=App.pokerspiel.getAlleSpieler().size();
+					}
+						App.pokerspiel.getAlleSpieler().get(tempint).layoutondevice=gegnerLayout[i];
+				}
+				App.pokerspiel.getAlleSpieler().get(verschieben(mainspielernummer+1)).layoutondevice=gegnerLayout[4];
+				App.pokerspiel.getAlleSpieler().get(verschieben(mainspielernummer+2)).layoutondevice=gegnerLayout[5];
+				App.pokerspiel.getAlleSpieler().get(verschieben(mainspielernummer+3)).layoutondevice=gegnerLayout[6];
+
+				
+			}
+
+				int anzahlaktive=0;
+				for(Spieler n:App.pokerspiel.getAlleSpieler())
+				{
+					if(n.isNochDrin()==true)
+					{anzahlaktive++;}
+				}
+			
+			
+			if((App.pokerspiel.getWettrunde()==4)&&(((App.pokerspiel.getAktiverSpieler().schongesetzt==true)&&(App.pokerspiel.getAktiverSpieler().getChipsImPot()==App.pokerspiel.getEinsatz())))&&(anzahlaktive!=1))
+			{
+				for(Spieler n:App.pokerspiel.getAlleSpieler())
+				{
+					if(n.isNochDrin()==true)
+					{
+						drawCardShowDown(n);
+					}
+				}
+			}
+	else{
+		for(Spieler n:App.pokerspiel.getAlleSpieler())
+		{
+				removeCardShowDown(n);	
+		}
+		for(int i=0;i<App.pokerspiel.getAlleSpieler().size();i++)
+		{
+			setName(App.pokerspiel.getAlleSpieler().get(i));
+			setChips(App.pokerspiel.getAlleSpieler().get(i));
+			setImPot(App.pokerspiel.getAlleSpieler().get(i));
+			setZustand(App.pokerspiel.getAlleSpieler().get(i));
+			setBackground(App.pokerspiel.getAlleSpieler().get(i));
+
+		}	
+		
+	}
 			
 			
 	
@@ -343,21 +493,21 @@ public void draw()
 	}
 	
 	
-	for(int i=0;i<App.pokerspiel.getAlleSpieler().size();i++)
-	{
-		setName(App.pokerspiel.getAlleSpieler().get(i));
-		setChips(App.pokerspiel.getAlleSpieler().get(i));
-		setImPot(App.pokerspiel.getAlleSpieler().get(i));
-		setZustand(App.pokerspiel.getAlleSpieler().get(i));
-		setBackground(App.pokerspiel.getAlleSpieler().get(i));
 
-	}	
 	
 	potText.setText(String.valueOf(App.pokerspiel.getPot()));
 	}
 }
 
 
+public int verschieben(int zahl)
+{
+if(zahl>=App.pokerspiel.getAlleSpieler().size())
+{
+	zahl-=App.pokerspiel.getAlleSpieler().size();
+}
+return zahl;
+}
 
 //FUNKTIONEN UM DIE TEXTE UPZUDATEN
 
@@ -431,6 +581,36 @@ public void setBackground(Spieler spieler)
 }
 
 
+public void drawCardShowDown(Spieler spieler)
+{
+	if(spieler.mainspieler==false)
+	{
+	((ImageView)(spieler.layoutondevice.getChildAt(0))).setImageBitmap(Karte.getKartenBild(spieler.getHand().getKarte1(), meineKarte1.getWidth(), meineKarte1.getHeight(),getApplicationContext()));
+	spieler.layoutondevice.addView(new ImageView(getApplicationContext()), 1);
+	((ImageView)(spieler.layoutondevice.getChildAt(1))).setImageBitmap(Karte.getKartenBild(spieler.getHand().getKarte2(), meineKarte1.getWidth(), meineKarte2.getHeight(),getApplicationContext()));
+	spieler.layoutondevice.getChildAt(2).setVisibility(View.INVISIBLE);
+	((ImageView)(spieler.layoutondevice.getChildAt(0))).setMaxWidth(spieler.layoutondevice.getChildAt(0).getWidth());
+	}
+}
+
+public void removeCardShowDown(Spieler spieler)
+{
+	if((spieler.mainspieler==false))
+	{
+		if(spieler.layoutondevice.getChildCount()==3)
+		{
+				spieler.layoutondevice.removeViewAt(1);
+				((ImageView)(spieler.layoutondevice.getChildAt(0))).setImageBitmap(Karte.getKartenBild(0,0, meineKarte1.getWidth(), meineKarte1.getHeight(),getApplicationContext()));
+				spieler.layoutondevice.getChildAt(1).setVisibility(View.VISIBLE);
+		}
+		Log.d("Anzahl Childs",String.valueOf(spieler.layoutondevice.getChildCount()));
+
+	}
+
+	
+}
+
+
 
 
 @Override
@@ -450,7 +630,7 @@ protected Dialog onCreateDialog(int id) {
 	dialogRaise.setTitle("Raise");
 	
 	final EditText text = (EditText) dialogRaise.findViewById(R.id.editTextRaise);
-	text.setText(String.valueOf(App.pokerspiel.getEinsatz()));
+	text.setText(String.valueOf(App.pokerspiel.getEinsatz()+App.pokerspiel.blindBestimmer()));
 	Button button=(Button) dialogRaise.findViewById(R.id.buttonDialogRaise);
 	button.setOnClickListener(new OnClickListener() {
 		
@@ -468,14 +648,14 @@ protected Dialog onCreateDialog(int id) {
 
 	
 	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	builder.setMessage("Are you sure you want to exit?")
+	builder.setMessage("Spiel beenden?")
 	       .setCancelable(false)
-	       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+	       .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 	           public void onClick(DialogInterface dialog, int id) {
 	                SpielActivity.this.finish();
 	           }
 	       })
-	       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+	       .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
 	           public void onClick(DialogInterface dialog, int id) {
 	                dialog.cancel();
 	           }

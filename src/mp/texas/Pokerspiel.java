@@ -197,7 +197,6 @@ public class Pokerspiel
 					{	info="Flop";
 						Flop();}
 				
-
 		}
 			
 		else{
@@ -210,8 +209,9 @@ public class Pokerspiel
 			{ 	info=aktiverSpieler.getProfil().getName()+" ALL IN mit "+String.valueOf(aktiverSpieler.getChips());
 				Log.d(aktiverSpieler.getProfil().getName(),"ALL IN");
 				aktiverSpieler.setChipsImPot(aktiverSpieler.getChipsImPot()+aktiverSpieler.getChips()); // Chips im Pot beim Spieler aktualisieren
+				aktiverSpieler.setSidepot(getPot()+aktiverSpieler.getChips()*spielerinderRunde);
 				einzahlen(aktiverSpieler.getChips());	//Die restlichen Chips noch einzahlen
-				aktiverSpieler.setSidepot(getPot());	//Den Sidepot füllen
+					//Den Sidepot füllen
 				aktiverSpieler.setZustand("ALL IN");
 				
 				if(aktiverSpieler.getChips()>getEinsatz())
@@ -256,13 +256,14 @@ public class Pokerspiel
 			}
 			
 		}
+		else{info=getAktiverSpieler().getProfil().getName()+ "schon All In";}
+		
 		nachsterSpieler();
 		}		//Ende der else für Beenden der Wettrunde
 		}		//Ende der else für nur noch ein Spieler
 		}		//Ende der else für neue Runde
 		//HIER EINEN HANDLER DER DIE DRAW FUNKTION DER ACTIVITY AKTIVIERT
 		
-		update();
 		return info;
 	}
 	
@@ -303,12 +304,12 @@ public class Pokerspiel
 		if(blindModus==1)
 		{
 			int temp=(int)(Rundenzahler/blindZeitRundenWert)+1;
-			return getBlindBetrag()*temp;
+			return getBlindBetrag()*(int)Math.pow(2, temp);
 		}
 		else
 		{
-			int temp=(int)((System.currentTimeMillis()-startzeit)/1000/60/blindZeitRundenWert)+1;
-			return getBlindBetrag()*temp;
+			int temp=(int)((System.currentTimeMillis()-startzeit)/1000./60./blindZeitRundenWert)+1;
+			return getBlindBetrag()*(int)Math.pow(2, temp);
 		}
 	}
 	
@@ -921,32 +922,7 @@ public class Pokerspiel
 		}
 	return zahl;
 	}
-	
-	
-	public void update()
-	{
-		// wird aufgerufen, wenn ein update versendet werden soll
-		//ClientPokerService.actionUpdate(getApplicationContex);
-		
-	}
-	
-	
-	
-	public  void receive() 
-	{	
-		
-		if(singlePlayer==true)
-		{while(getAlleSpieler().size()>1)
-			{spielablauf();}
-		
-// 			if(ich == aktiver Spieler)
-//				{
-//				 SPielablauf starten
-//				}
-//			
-		
-		}
-	}
+
 	
 	
 	

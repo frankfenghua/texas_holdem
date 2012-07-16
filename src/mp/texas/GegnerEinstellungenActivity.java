@@ -95,7 +95,7 @@ public class GegnerEinstellungenActivity extends Activity
 				Log.d("beigetreten", App.selbst.getProfil().getName() + " has joined the game");
 
 
-				App.selbst = new Humanspieler();
+				//App.selbst = new Humanspieler();
 
 
 		

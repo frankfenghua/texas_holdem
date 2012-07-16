@@ -93,7 +93,7 @@ public class Karte
 			Farbe=4;
 		}
 		
-		return Bitmap.createBitmap(blatt, blatt.getWidth()/13*Wert, blatt.getHeight()/5*Farbe, blatt.getWidth()/13, blatt.getHeight()/5);
+		return Bitmap.createBitmap(blatt, (int)((blatt.getWidth()-2)/13.*Wert), (int)(blatt.getHeight()/5.*Farbe), (int)(blatt.getWidth()/13.),(int)(blatt.getHeight()/5.));
 	}
 	
 	//Erstellung der Bitmap mit einer Karte
@@ -135,7 +135,7 @@ public class Karte
 			farbe=4;
 		}
 	
-		return Bitmap.createBitmap(blatt, blatt.getWidth()/13*wert, blatt.getHeight()/5*farbe, blatt.getWidth()/13, blatt.getHeight()/5);
+		return Bitmap.createBitmap(blatt, (int)((blatt.getWidth()-2)/13.*wert), (int)(blatt.getHeight()/5.*farbe), (int)(blatt.getWidth()/13.),(int)(blatt.getHeight()/5.));
 	}
 	
 	

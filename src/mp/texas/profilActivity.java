@@ -94,7 +94,8 @@ public class profilActivity extends Activity
 		{name.setText(App.selbst.getProfil().getName());}
 	}
 	
-								
+			
+	
 							
 
 	@Override
@@ -253,7 +254,7 @@ public class profilActivity extends Activity
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		App.selbst.getProfil().setName(name.getText().toString());
-		
+		Log.d("Profil",name.getText().toString());
 		super.onBackPressed();
 	}
 	

@@ -208,8 +208,8 @@ public class App extends Application
 	/**
 	 * @param setzwert the setzwert to set
 	 */
-	public void setSetzwert(int setzwert) {
-		this.setzwert = setzwert;
+	public static void setSetzwert(int setzwertarg) {
+		setzwert = setzwertarg;
 	}
 	
 	

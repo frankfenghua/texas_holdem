@@ -50,6 +50,7 @@ public class startActivity extends Activity
 				{             
 					public void onClick(View v) 
 					{                Log.d("Button", "Neues Spiel"); // Perform action on click 
+				
 					startActivity(new Intent(getApplicationContext(),spielModusActivity.class));
 					}         
 				});

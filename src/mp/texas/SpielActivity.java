@@ -107,10 +107,7 @@ public class SpielActivity extends Activity
 	        {
 	        	public void run() 
 	        	{
-<<<<<<< HEAD
-//					App.pokerspiel.setSinglePlayer(false);
-=======
->>>>>>> origin/michael5
+
 	        		if(App.pokerspiel.isSinglePlayer()==true)
 	        		{
 
@@ -594,19 +591,11 @@ public void drawCardShowDown(Spieler spieler)
 {
 	if(spieler.mainspieler==false)
 	{
-<<<<<<< HEAD
-	((ImageView)(spieler.layoutondevice.getChildAt(0))).setImageBitmap(Karte.getKartenBild(spieler.getHand().getKarte1(), meineKarte1.getWidth(), meineKarte1.getHeight(),getApplicationContext()));
-	spieler.layoutondevice.addView(new ImageView(getApplicationContext()), 1);
-	((ImageView)(spieler.layoutondevice.getChildAt(1))).setImageBitmap(Karte.getKartenBild(spieler.getHand().getKarte2(), meineKarte1.getWidth(), meineKarte2.getHeight(),getApplicationContext()));
-	spieler.layoutondevice.getChildAt(2).setVisibility(View.INVISIBLE);
-	((ImageView)(spieler.layoutondevice.getChildAt(1))).setMaxWidth(spieler.layoutondevice.getChildAt(0).getWidth());
-=======
 	((ImageView)(spieler.layoutondevice.getChildAt(0))).setImageBitmap(Karte.getKartenBild(spieler.getHand().getKarte1(), ((ImageView)(spieler.layoutondevice.getChildAt(0))).getWidth(), ((ImageView)(spieler.layoutondevice.getChildAt(0))).getHeight(),getApplicationContext()));
 	((ImageView)(spieler.layoutondevice.getChildAt(1))).setImageBitmap(Karte.getKartenBild(spieler.getHand().getKarte2(), ((ImageView)(spieler.layoutondevice.getChildAt(0))).getWidth(), ((ImageView)(spieler.layoutondevice.getChildAt(0))).getHeight(),getApplicationContext()));
 	
 	((ImageView)(spieler.layoutondevice.getChildAt(1))).setVisibility(View.VISIBLE);
 	spieler.layoutondevice.getChildAt(2).setVisibility(View.GONE);
->>>>>>> origin/michael5
 	}
 }
 

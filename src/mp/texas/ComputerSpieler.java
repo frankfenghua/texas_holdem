@@ -36,15 +36,7 @@ public class ComputerSpieler extends Spieler
 	
 	public int setzen(Pokerspiel pokerspiel)
 	{
-<<<<<<< HEAD
-		int rand=(int) (Math.random()*300);
 
-		schongesetzt=true;
-		
-	
-		return 100;
-
-=======
 		int rand=(int) (Math.random()*4);
 		if(rand==0)
 		{
@@ -61,7 +53,6 @@ public class ComputerSpieler extends Spieler
 		}
 	
 		return 0;
->>>>>>> origin/michael5
 	}
 
 	

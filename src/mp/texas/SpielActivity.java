@@ -106,7 +106,7 @@ public class SpielActivity extends Activity
 	        {
 	        	public void run() 
 	        	{
-					App.pokerspiel.setSinglePlayer(false);
+//					App.pokerspiel.setSinglePlayer(false);
 	        		if(App.pokerspiel.isSinglePlayer()==true)
 	        		{
 
@@ -119,16 +119,11 @@ public class SpielActivity extends Activity
 	        			
 	        			else
 	        			{
-<<<<<<< HEAD
-	        				if((App.pokerspiel.getEinsatz()==App.pokerspiel.getAktiverSpieler().getChipsImPot())&&(App.pokerspiel.getEinsatz()!=0))	        				{
-	            				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show();          
-=======
 	        				//ICH BIN DER AKTIVE SPIELER
 	        				if(App.interacted==true)
 	        				{
 		        				Log.d("Fall","1");
 		        				Toast.makeText(getApplicationContext(), App.pokerspiel.spielablauf(),Toast.LENGTH_SHORT).show();          
->>>>>>> origin/michael5
 		        				draw();
 	        				}			
 	        				
@@ -176,16 +171,8 @@ public class SpielActivity extends Activity
 	        		{
 	        			
 	        			
-<<<<<<< HEAD
-	        			//ICH BIN DRAN UND HABE NICHT GESETZT
-	        			Log.d("adsadsasd",App.pokerspiel.getAktiverSpieler().getProfil().getId());
-	        			Log.d("adsadsasd",App.selbst.getProfil().getId());
-
-	        			if((App.pokerspiel.getAktiverSpieler().getProfil().getId()==App.selbst.getProfil().getId())&&(App.interacted==false))
-=======
 	        			//ICH BIN DRAN 
 	        			if(App.pokerspiel.getAktiverSpieler().getProfil().getId()==App.selbst.getProfil().getId())
->>>>>>> origin/michael5
 	        			{
 	        				if(App.interacted==false)
 	        				{
@@ -378,7 +365,7 @@ public void draw()
 			{//TASK HIER DER ÜBERGANG ZUR PLAZIERUNGSANZEIGE UND DANN ZUM MENU
 			//	Toast.makeText(getApplicationContext(), "Du wurdest "+String.valueOf(App.pokerspiel.getAlleSpieler().size()+1)+".", Toast.LENGTH_LONG).show();
 			//	App.pokerspiel=null;
-				startActivity(new Intent(getApplicationContext(),startActivity.class));
+			//	startActivity(new Intent(getApplicationContext(),startActivity.class));
 			}
 			else{
 			for(int i=App.pokerspiel.getAlleSpieler().size()-1;i<7;i++)
@@ -604,7 +591,7 @@ public void drawCardShowDown(Spieler spieler)
 	spieler.layoutondevice.addView(new ImageView(getApplicationContext()), 1);
 	((ImageView)(spieler.layoutondevice.getChildAt(1))).setImageBitmap(Karte.getKartenBild(spieler.getHand().getKarte2(), meineKarte1.getWidth(), meineKarte2.getHeight(),getApplicationContext()));
 	spieler.layoutondevice.getChildAt(2).setVisibility(View.INVISIBLE);
-	((ImageView)(spieler.layoutondevice.getChildAt(0))).setMaxWidth(spieler.layoutondevice.getChildAt(0).getWidth());
+	((ImageView)(spieler.layoutondevice.getChildAt(1))).setMaxWidth(spieler.layoutondevice.getChildAt(0).getWidth());
 	}
 }
 

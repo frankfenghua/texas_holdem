@@ -37,10 +37,7 @@ public class startActivity extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		if(App.pokerspiel!=null)
-		{
-			startActivity(new Intent(getApplicationContext(),SpielActivity.class));
-		}
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
@@ -55,13 +52,11 @@ public class startActivity extends Activity
 				{             
 					public void onClick(View v) 
 					{                Log.d("Button", "Neues Spiel"); // Perform action on click 
-<<<<<<< HEAD
+
 					PushService.actionUnsubscribe(getApplicationContext());
 					App.Mitspieler.clear();
 					App.Mitspieler = new ArrayList<Spieler>();
-=======
-				
->>>>>>> origin/michael5
+
 					startActivity(new Intent(getApplicationContext(),spielModusActivity.class));
 					}         
 				});

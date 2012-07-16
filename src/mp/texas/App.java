@@ -154,6 +154,7 @@ public class App extends Application
 				Integer.toString(App.pokerspiel.getGemeinschaftskarten().getGemeinschaftskarten().get(4).getWert());//24
 				;
 				
+				
 				//Spieler
 				
 		

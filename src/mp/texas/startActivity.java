@@ -55,9 +55,13 @@ public class startActivity extends Activity
 				{             
 					public void onClick(View v) 
 					{                Log.d("Button", "Neues Spiel"); // Perform action on click 
+<<<<<<< HEAD
 					PushService.actionUnsubscribe(getApplicationContext());
 					App.Mitspieler.clear();
 					App.Mitspieler = new ArrayList<Spieler>();
+=======
+				
+>>>>>>> origin/michael5
 					startActivity(new Intent(getApplicationContext(),spielModusActivity.class));
 					}         
 				});

@@ -29,12 +29,14 @@ public class ComputerSpieler extends Spieler
 		// TODO Auto-generated constructor stub
 		super(new Profil(id), chipsarg);
 		intelligenz=computerlevel;
+		getProfil().setId("COMPUTERGEGNER");
 	}
 
 	
 	
 	public int setzen(Pokerspiel pokerspiel)
 	{
+<<<<<<< HEAD
 		int rand=(int) (Math.random()*300);
 
 		schongesetzt=true;
@@ -42,6 +44,24 @@ public class ComputerSpieler extends Spieler
 	
 		return 100;
 
+=======
+		int rand=(int) (Math.random()*4);
+		if(rand==0)
+		{
+			return App.pokerspiel.getEinsatz();
+		}
+		
+		if(rand==1)
+		{
+			return App.pokerspiel.getEinsatz();
+		}
+		if(rand==2)
+		{
+			return App.pokerspiel.getEinsatz()+App.pokerspiel.blindBestimmer();
+		}
+	
+		return 0;
+>>>>>>> origin/michael5
 	}
 
 	

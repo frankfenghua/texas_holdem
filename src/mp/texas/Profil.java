@@ -49,13 +49,13 @@ public class Profil
 	//TASK auch gleich noch Bild einfügen
 	public Profil(int id)
 	{
-		name=namen[id];
+		name=namen[id-1];
 		this.id=App.selbst.getProfil().getId();
 	}
 	
 	public Profil()
 	{
-		name="MICHAEL";
+		name="Mustermann";
 	}
 	
 	//Erstellt komplettes Profil 
@@ -68,7 +68,6 @@ public class Profil
 	public Profil(String name)
 	{
 		this.name=name;
-
 	}
 	
 }

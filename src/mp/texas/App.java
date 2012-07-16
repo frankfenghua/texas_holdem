@@ -39,6 +39,7 @@ public class App extends Application
 
 	public static boolean interacted=false;
 	public static int setzwert=0;
+	public static boolean call;
 
 	
 

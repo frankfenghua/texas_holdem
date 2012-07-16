@@ -31,6 +31,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -106,7 +107,10 @@ public class SpielActivity extends Activity
 	        {
 	        	public void run() 
 	        	{
+<<<<<<< HEAD
 //					App.pokerspiel.setSinglePlayer(false);
+=======
+>>>>>>> origin/michael5
 	        		if(App.pokerspiel.isSinglePlayer()==true)
 	        		{
 
@@ -264,7 +268,7 @@ public class SpielActivity extends Activity
 	        										TimerMethod();
 	        									}
 
-	        								}, 0, 3000);
+	        								}, 1000, 3600);
 	        
 	        }
 
@@ -303,15 +307,18 @@ public boolean onOptionsItemSelected(MenuItem item)
 	{
 	case R.id.itemcall:
 		call();
+		App.call=true;
 		Log.d("Item","Call");
 		break;
 	case R.id.itemraise:
 		Log.d("Item","Raise");
 		raise();
+		App.call=false;
 		break;
 		
 	case R.id.itemfold:
 		fold();
+		App.call=false;
 		Log.d("Item","Fold");
 	}
 	return true;
@@ -523,7 +530,7 @@ public void setName(Spieler spieler)
 	}
 	else{
 		Log.d("KUCKE HIER PETER!", "geht immer noch");
-		LinearLayout temp=((LinearLayout)spieler.layoutondevice.getChildAt(1));
+		LinearLayout temp=((LinearLayout)spieler.layoutondevice.getChildAt(2));
 		((TextView)temp.getChildAt(0)).setText(spieler.getProfil().getName());
 	}
 }
@@ -537,7 +544,7 @@ public void setChips(Spieler spieler)
 		((TextView)temp.getChildAt(1)).setText(String.valueOf(spieler.getChips()));
 	}
 	else{
-		LinearLayout temp=((LinearLayout)spieler.layoutondevice.getChildAt(1));
+		LinearLayout temp=((LinearLayout)spieler.layoutondevice.getChildAt(2));
 		((TextView)temp.getChildAt(1)).setText(String.valueOf(spieler.getChips()));
 	}
 }
@@ -550,7 +557,7 @@ public void setImPot(Spieler spieler)
 		((TextView)temp.getChildAt(2)).setText(String.valueOf(spieler.getChipsImPot()));
 	}
 	else{
-		LinearLayout temp=((LinearLayout)spieler.layoutondevice.getChildAt(1));
+		LinearLayout temp=((LinearLayout)spieler.layoutondevice.getChildAt(2));
 		((TextView)temp.getChildAt(2)).setText(String.valueOf(spieler.getChipsImPot()));
 	}
 }
@@ -563,7 +570,7 @@ public void setZustand(Spieler spieler)
 		((TextView)temp.getChildAt(3)).setText(spieler.getZustand());
 	}
 	else{
-		LinearLayout temp=((LinearLayout)spieler.layoutondevice.getChildAt(1));
+		LinearLayout temp=((LinearLayout)spieler.layoutondevice.getChildAt(2));
 		((TextView)temp.getChildAt(3)).setText(spieler.getZustand());
 	}
 }
@@ -587,11 +594,19 @@ public void drawCardShowDown(Spieler spieler)
 {
 	if(spieler.mainspieler==false)
 	{
+<<<<<<< HEAD
 	((ImageView)(spieler.layoutondevice.getChildAt(0))).setImageBitmap(Karte.getKartenBild(spieler.getHand().getKarte1(), meineKarte1.getWidth(), meineKarte1.getHeight(),getApplicationContext()));
 	spieler.layoutondevice.addView(new ImageView(getApplicationContext()), 1);
 	((ImageView)(spieler.layoutondevice.getChildAt(1))).setImageBitmap(Karte.getKartenBild(spieler.getHand().getKarte2(), meineKarte1.getWidth(), meineKarte2.getHeight(),getApplicationContext()));
 	spieler.layoutondevice.getChildAt(2).setVisibility(View.INVISIBLE);
 	((ImageView)(spieler.layoutondevice.getChildAt(1))).setMaxWidth(spieler.layoutondevice.getChildAt(0).getWidth());
+=======
+	((ImageView)(spieler.layoutondevice.getChildAt(0))).setImageBitmap(Karte.getKartenBild(spieler.getHand().getKarte1(), ((ImageView)(spieler.layoutondevice.getChildAt(0))).getWidth(), ((ImageView)(spieler.layoutondevice.getChildAt(0))).getHeight(),getApplicationContext()));
+	((ImageView)(spieler.layoutondevice.getChildAt(1))).setImageBitmap(Karte.getKartenBild(spieler.getHand().getKarte2(), ((ImageView)(spieler.layoutondevice.getChildAt(0))).getWidth(), ((ImageView)(spieler.layoutondevice.getChildAt(0))).getHeight(),getApplicationContext()));
+	
+	((ImageView)(spieler.layoutondevice.getChildAt(1))).setVisibility(View.VISIBLE);
+	spieler.layoutondevice.getChildAt(2).setVisibility(View.GONE);
+>>>>>>> origin/michael5
 	}
 }
 
@@ -599,11 +614,11 @@ public void removeCardShowDown(Spieler spieler)
 {
 	if((spieler.mainspieler==false))
 	{
-		if(spieler.layoutondevice.getChildCount()==3)
+		if(spieler.layoutondevice.getChildAt(1).getVisibility()==View.VISIBLE)
 		{
-				spieler.layoutondevice.removeViewAt(1);
 				((ImageView)(spieler.layoutondevice.getChildAt(0))).setImageBitmap(Karte.getKartenBild(0,0, meineKarte1.getWidth(), meineKarte1.getHeight(),getApplicationContext()));
-				spieler.layoutondevice.getChildAt(1).setVisibility(View.VISIBLE);
+				spieler.layoutondevice.getChildAt(1).setVisibility(View.GONE);
+				spieler.layoutondevice.getChildAt(2).setVisibility(View.VISIBLE);
 		}
 		Log.d("Anzahl Childs",String.valueOf(spieler.layoutondevice.getChildCount()));
 

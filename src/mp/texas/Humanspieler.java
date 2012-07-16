@@ -9,6 +9,7 @@ import android.util.Log;
 public class Humanspieler extends Spieler 
 {
 
+	boolean call=false;
 	
 	public Humanspieler(Spieler selbst, int chips)
 	{
@@ -28,6 +29,12 @@ public class Humanspieler extends Spieler
 	{
 		Log.d("Human","setzen");
 		App.setInteracted(false);
+		if(App.call==true)
+		{
+			Log.d("Call","Call gesetzt");
+			App.call=false;
+			return App.pokerspiel.getEinsatz();
+		}
 		return App.setzwert;
 		
 	}

@@ -303,12 +303,12 @@ public class Pokerspiel
 	{
 		if(blindModus==1)
 		{
-			int temp=(int)(Rundenzahler/blindZeitRundenWert)+1;
+			int temp=(int)(Rundenzahler/blindZeitRundenWert);
 			return getBlindBetrag()*(int)Math.pow(2, temp);
 		}
 		else
 		{
-			int temp=(int)((System.currentTimeMillis()-startzeit)/1000./60./blindZeitRundenWert)+1;
+			int temp=(int)((System.currentTimeMillis()-startzeit)/1000./60./blindZeitRundenWert);
 			return getBlindBetrag()*(int)Math.pow(2, temp);
 		}
 	}

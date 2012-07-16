@@ -42,6 +42,12 @@ public final class R {
         public static final int ImageView06=0x7f090028;
         public static final int ImageView07=0x7f090024;
         public static final int ImageView08=0x7f090018;
+        public static final int ImageView09=0x7f090061;
+        public static final int ImageView10=0x7f090063;
+        public static final int ImageView11=0x7f090066;
+        public static final int ImageView12=0x7f09006b;
+        public static final int ImageView13=0x7f09006d;
+        public static final int ImageView14=0x7f09006f;
         public static final int ImageViewSpielGemeinsschaftskarte1=0x7f090046;
         public static final int ImageViewSpielGemeinsschaftskarte2=0x7f090047;
         public static final int ImageViewSpielGemeinsschaftskarte3=0x7f090048;
@@ -52,12 +58,12 @@ public final class R {
         public static final int LinearLayout1=0x7f090003;
         public static final int LinearLayoutGegner1=0x7f09005e;
         public static final int LinearLayoutGegner2=0x7f090060;
-        public static final int LinearLayoutGegner3=0x7f090061;
-        public static final int LinearLayoutGegner4=0x7f090063;
-        public static final int LinearLayoutGegner5=0x7f090069;
-        public static final int LinearLayoutGegner6=0x7f090068;
-        public static final int LinearLayoutGegner7=0x7f090067;
-        public static final int LinearLayoutMainSpieler=0x7f09006e;
+        public static final int LinearLayoutGegner3=0x7f090062;
+        public static final int LinearLayoutGegner4=0x7f090065;
+        public static final int LinearLayoutGegner5=0x7f09006e;
+        public static final int LinearLayoutGegner6=0x7f09006c;
+        public static final int LinearLayoutGegner7=0x7f09006a;
+        public static final int LinearLayoutMainSpieler=0x7f090074;
         public static final int RelativeLayout1=0x7f090017;
         public static final int SpielBlindZahl=0x7f09004f;
         public static final int SpielNeedZahl=0x7f09004e;
@@ -86,14 +92,14 @@ public final class R {
         public static final int TextView22=0x7f09001b;
         public static final int TextView23=0x7f09001a;
         public static final int TextView24=0x7f090023;
-        public static final int TextView25=0x7f09006a;
-        public static final int TextView26=0x7f09006b;
-        public static final int TextView27=0x7f09006c;
-        public static final int TextView28=0x7f09006d;
-        public static final int TextView29=0x7f090062;
+        public static final int TextView25=0x7f090070;
+        public static final int TextView26=0x7f090071;
+        public static final int TextView27=0x7f090072;
+        public static final int TextView28=0x7f090073;
+        public static final int TextView29=0x7f090064;
         public static final int TextView30=0x7f09005f;
-        public static final int TextView31=0x7f090065;
-        public static final int TextView32=0x7f090064;
+        public static final int TextView31=0x7f090068;
+        public static final int TextView32=0x7f090067;
         public static final int button1=0x7f090011;
         public static final int button2=0x7f09001c;
         public static final int buttonDialogRaise=0x7f090022;
@@ -138,7 +144,7 @@ public final class R {
         public static final int textView8=0x7f090043;
         public static final int textView9=0x7f090044;
         public static final int textViewGegnerMenschlich=0x7f090013;
-        public static final int textViewSpielPot=0x7f090066;
+        public static final int textViewSpielPot=0x7f090069;
     }
     public static final class layout {
         public static final int actionmenu=0x7f030000;

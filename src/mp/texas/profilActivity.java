@@ -176,6 +176,8 @@ public class profilActivity extends Activity
 		startActivityForResult(i, 2);
 	}
 	
+	
+	
 	private void TakePicture(int actionCode) 
 	{    
 		
@@ -202,6 +204,8 @@ public class profilActivity extends Activity
 		else{Toast.makeText(getApplicationContext(), "Keine Kamera-App verfügbar", Toast.LENGTH_LONG);}
 	}
 
+	
+	
 	
 	
 	public static boolean isIntentAvailable(Context context, String action) 

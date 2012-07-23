@@ -152,6 +152,12 @@ public class Pokerspiel
 		String info=" ";
 	//Aktueller Spieler wird aufgerufen und setzt temp
 		
+		if(getAlleSpieler().size()==1)
+		{
+			info="HERZLICH GLÜCKWUNSCH";
+		}
+		else{
+			
 		if(getWettrunde()==0)
 		{
 			info= "Neue Runde";
@@ -256,14 +262,14 @@ public class Pokerspiel
 			}
 			
 		}
-		else{info=getAktiverSpieler().getProfil().getName()+ "schon All In";}
+		else{info=getAktiverSpieler().getProfil().getName()+ " schon All In";}
 		
 		nachsterSpieler();
 		}		//Ende der else für Beenden der Wettrunde
 		}		//Ende der else für nur noch ein Spieler
 		}		//Ende der else für neue Runde
 		//HIER EINEN HANDLER DER DIE DRAW FUNKTION DER ACTIVITY AKTIVIERT
-		
+		}
 		return info;
 	}
 	
@@ -426,7 +432,6 @@ public class Pokerspiel
 	public String ShowDown()
 	{
 		String info=" ";
-		Log.d("SHOWDOWN","OH yeah");
 		 // gibt die Siegerreihenfolge zurück
 		ArrayList<Spieler> aktive=new ArrayList<Spieler>(); // wählt alle Spieler aus die noch im Spiel sind
 		

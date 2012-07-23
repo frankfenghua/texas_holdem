@@ -25,6 +25,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -70,7 +71,6 @@ public class SpielActivity extends Activity
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.spielneu);
-		
 		potText=(TextView)findViewById(R.id.textViewSpielPot);
 		gegnerLayout=new LinearLayout[7];
 		gegnerLayout[0]=(LinearLayout)findViewById(R.id.LinearLayoutGegner1);
@@ -216,6 +216,10 @@ public class SpielActivity extends Activity
 
 	
 	
+
+
+
+
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
@@ -294,6 +298,8 @@ public boolean onCreateOptionsMenu(Menu menu)
 	
 	
 
+
+
 @Override
 public boolean onOptionsItemSelected(MenuItem item)
 {
@@ -350,6 +356,7 @@ public void draw()
 
 			
 			//HERAUSFINDEN WELCHER SPIELER DER SPIELER AM GERÄT IST PETER
+			
 			mainspielernummer=-1;
 			for(int i=0; i<App.pokerspiel.getAlleSpieler().size();i++)
 			{
@@ -360,6 +367,12 @@ public void draw()
 					App.pokerspiel.getAlleSpieler().get(i).mainspieler=true;
 					App.pokerspiel.getAlleSpieler().get(i).layoutondevice=(LinearLayout) findViewById(R.id.LinearLayoutMainSpieler);
 			//		Toast.makeText(getApplicationContext(), String.valueOf(i), Toast.LENGTH_LONG).show();
+					if(App.pokerspiel.getAlleSpieler().size()==1)
+					{
+						Toast.makeText(getApplicationContext(), "HERZLICHEN GLÜCKWUNSCH", Toast.LENGTH_LONG).show();
+						App.pokerspiel=null;
+						startActivity(new Intent(this,startActivity.class));
+					}
 				}
 			}
 			if(mainspielernummer==-1)
@@ -432,12 +445,20 @@ public void draw()
 
 				
 			}
+			
+			
 
 				int anzahlaktive=0;
 				for(Spieler n:App.pokerspiel.getAlleSpieler())
 				{
 					if(n.isNochDrin()==true)
-					{anzahlaktive++;}
+					{					
+						anzahlaktive++;
+					n.layoutondevice.getChildAt(0).setVisibility(View.VISIBLE);
+					n.layoutondevice.getChildAt(1).setVisibility(View.VISIBLE);}
+					else{n.layoutondevice.getChildAt(0).setVisibility(View.INVISIBLE);
+					n.layoutondevice.getChildAt(1).setVisibility(View.INVISIBLE);
+							}
 				}
 			
 			
@@ -523,7 +544,6 @@ public void setName(Spieler spieler)
 		((TextView)temp.getChildAt(0)).setText(spieler.getProfil().getName());
 	}
 	else{
-		Log.d("KUCKE HIER PETER!", "geht immer noch");
 		LinearLayout temp=((LinearLayout)spieler.layoutondevice.getChildAt(2));
 		((TextView)temp.getChildAt(0)).setText(spieler.getProfil().getName());
 	}
